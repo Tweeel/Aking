@@ -7,4 +7,30 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="grey">#C8C6C6</color>
+    <color name="grey_mate">#6D8299</color>
+    <color name="grey2">#B2B1B9</color>
+
+
+    <color name="colorPrimary">#2196F3</color>
+    <color name="colorPrimaryLight">#64b5f6</color>
+    <color name="colorPrimaryDark">#1976D2</color>
+    <color name="colorAccent">#FFFF9800</color>
+    <color name="colorTextPrimary">@android:color/white</color>
+    <color name="colorScreenBackground">#fff3e0</color>
+    <color name="colorTextHint">#E0E0E0</color>
+
+
+
+    /*Color Pallette*/
+    <color name="pink">#f96060</color>
+    <color name="blue">#6074f9</color>
+    <color name="dark">#313131</color>
+
+    /*Custom buttons Colors */
+    <color name="button_blue">#6174F9</color>
+    <color name="button_pink">#E52B6A</color>
+    <color name="button_green">#5BBB56</color>
+    <color name="button_purple">#3D3B62</color>
+    <color name="button_beige">#F5CA90</color>
 </resources>

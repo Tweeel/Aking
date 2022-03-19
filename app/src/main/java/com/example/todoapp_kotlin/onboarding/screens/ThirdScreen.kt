@@ -9,10 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.viewpager2.widget.ViewPager2
-import com.example.todoapp_kotlin.MainActivity
+import com.example.todoapp_kotlin.mainPage.MainActivity
 import com.example.todoapp_kotlin.R
 
 class ThirdScreen : Fragment() {
@@ -27,7 +26,7 @@ class ThirdScreen : Fragment() {
         val viewPager = activity?.findViewById<ViewPager2>(R.id.viewPager)
 
         view.findViewById<Button>(R.id.skip_btn).setOnClickListener{
-            val intent = Intent(activity,MainActivity::class.java)
+            val intent = Intent(activity, MainActivity::class.java)
             activity?.startActivity(intent)
             onBoardingFinished()
             activity?.finish()

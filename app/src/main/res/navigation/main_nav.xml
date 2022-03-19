@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav"
+    app:startDestination="@id/tasksFragment">
+
+    <fragment
+        android:id="@+id/tasksFragment"
+        android:name="com.example.todoapp_kotlin.mainPage.fragments.TasksFragment"
+        android:label="TASKS"
+        tools:layout="@layout/fragment_tasks" />
+    <fragment
+        android:id="@+id/monthFragment"
+        android:name="com.example.todoapp_kotlin.mainPage.fragments.MonthFragment"
+        android:label="MONTHS"
+        tools:layout="@layout/fragment_month" />
+    <fragment
+        android:id="@+id/categiriesFragment"
+        android:name="com.example.todoapp_kotlin.mainPage.fragments.CategiriesFragment"
+        android:label="CATEGORIES"
+        tools:layout="@layout/fragment_categiries" />
+    <fragment
+        android:id="@+id/notesFragment"
+        android:name="com.example.todoapp_kotlin.mainPage.fragments.NotesFragment"
+        android:label="NOTES"
+        tools:layout="@layout/fragment_notes" />
+</navigation>

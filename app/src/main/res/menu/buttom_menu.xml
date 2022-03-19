@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/tasksFragment"
+        android:title="My Tasks"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/my_task"/>
+    <item
+        android:id="@+id/monthFragment"
+        android:title="Month"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/calender"/>
+    <item
+        android:id="@+id/empty"
+        android:title=""
+        app:showAsAction="ifRoom"
+        android:enabled="false"/>
+    <item
+        android:id="@+id/categiriesFragment"
+        android:title="Lists"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/quick"/>
+    <item
+        android:id="@+id/notesFragment"
+        android:title="Notes"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/note"/>
+
+</menu>

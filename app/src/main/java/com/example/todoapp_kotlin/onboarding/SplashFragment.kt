@@ -35,7 +35,7 @@ class SplashFragment : Fragment() {
                 val intent = Intent(activity, MainActivity::class.java)
                 activity?.startActivity(intent)
                 activity?.finish()
-            },2000)
+            },1000)
         }else{
             Handler().postDelayed({
                 findNavController().navigate(R.id.action_splashScreen_to_viewPagerFragment)

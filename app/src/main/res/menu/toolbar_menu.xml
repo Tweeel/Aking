@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/myTask"
+        android:title="Settings"
+        app:showAsAction="always"
+        android:icon="@drawable/menu">
+        <menu>
+            <item
+            android:id="@+id/incomplete"
+            android:title="Incomplete Tasks" />
+
+            <item
+                android:id="@+id/completed"
+                android:title="Completed Tasks"/>
+
+            <item
+                android:id="@+id/all"
+                android:title="All Tasks" />
+        </menu>
+    </item>
+
+</menu>

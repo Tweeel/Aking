@@ -6,12 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".mainPage.MainActivity">
 
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_title_layout"/>
     <fragment
         android:id="@+id/fragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="?android:attr/actionBarSize"
+        android:layout_marginTop="?android:attr/actionBarSize"
         app:defaultNavHost="true"
         app:navGraph="@navigation/main_nav" />
 

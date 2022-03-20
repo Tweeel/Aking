@@ -13,9 +13,6 @@
             android:name=".mainPage.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".mainPage.MainActivity"
-            android:exported="false" />
-        <activity
             android:name=".onboarding.IntroActivity"
             android:exported="true">
             <intent-filter>

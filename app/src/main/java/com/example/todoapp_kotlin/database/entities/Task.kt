@@ -1,4 +1,4 @@
-package com.example.todoapp_kotlin.entities
+package com.example.todoapp_kotlin.database.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -6,10 +6,11 @@ import androidx.room.PrimaryKey
 @Entity
 data class Task(
     @PrimaryKey(autoGenerate = true)
-    val id : Int,
+    val idTask : Int,
     val name : String,
     val date : String,
     val time : String,
-    val caterogie: String
+    val caterogieName : String,
+    val state : Boolean
 
 )

@@ -1,4 +1,4 @@
-package com.example.todoapp_kotlin.entities
+package com.example.todoapp_kotlin.database.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -6,8 +6,8 @@ import androidx.room.PrimaryKey
 @Entity
 data class Note(
     @PrimaryKey(autoGenerate = true)
-    val id : Int,
+    val idTile : Int,
     val title : String,
     val description : String,
-    val caterogie: String
+    val caterogieName : String
 )

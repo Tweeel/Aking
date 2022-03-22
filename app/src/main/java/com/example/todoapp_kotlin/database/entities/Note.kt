@@ -9,5 +9,5 @@ data class Note(
     val idTile : Int,
     val title : String,
     val description : String,
-    val caterogieName : String
+    val categoryName : String
 )

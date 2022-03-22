@@ -5,11 +5,11 @@ import androidx.room.Relation
 import com.example.todoapp_kotlin.database.entities.Caterogy
 import com.example.todoapp_kotlin.database.entities.Note
 
-data class CategorieAndNote (
-    @Embedded val categorie: Caterogy,
+data class CategoryAndNote (
+    @Embedded val category: Caterogy,
     @Relation(
-        parentColumn = "caterogieName",
-        entityColumn = "caterogieName"
+        parentColumn = "categoryName",
+        entityColumn = "categoryName"
     )
     val note : List<Note>
 )

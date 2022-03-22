@@ -4,8 +4,8 @@ import androidx.room.*
 import com.example.todoapp_kotlin.database.entities.Caterogy
 import com.example.todoapp_kotlin.database.entities.Note
 import com.example.todoapp_kotlin.database.entities.Task
-import com.example.todoapp_kotlin.database.entities.relations.CategorieAndNote
-import com.example.todoapp_kotlin.database.entities.relations.CategorieAndTask
+import com.example.todoapp_kotlin.database.entities.relations.CategoryAndNote
+import com.example.todoapp_kotlin.database.entities.relations.CategoryAndTask
 
 @Dao
 interface TaskDao {
@@ -14,8 +14,8 @@ interface TaskDao {
     suspend fun insertTask(task : Task)
     @Insert
     suspend fun insertNote(note : Note)
-    @Insert
-    suspend fun  insertCategorie(categorie : Caterogy)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun  insertCategory(category : Caterogy)
 
     /*get all*/
     @Query("SELECT * FROM Task")
@@ -29,12 +29,12 @@ interface TaskDao {
 
     /*get all with category*/
     @Transaction
-    @Query("SELECT * FROM Task WHERE caterogieName = :categorieName")
-    suspend fun getTaskAWithCategorie (categorieName : String) : List<CategorieAndTask>
+    @Query("SELECT * FROM Task WHERE categoryName = :categorieName")
+    suspend fun getTaskAWithCategorie (categorieName : String) : List<CategoryAndTask>
 
     @Transaction
-    @Query("SELECT * FROM Note WHERE caterogieName = :categorieName")
-    suspend fun getNoteAWithCategorie (categorieName : String) : List<CategorieAndNote>
+    @Query("SELECT * FROM Note WHERE categoryName = :categorieName")
+    suspend fun getNoteAWithCategory (categorieName : String) : List<CategoryAndNote>
 
     /*Update*/
     @Update
@@ -57,11 +57,11 @@ interface TaskDao {
     suspend fun deleteCaterogy(category : Caterogy)
 
     /*specifics queries*/
-    @Query("SELECT * FROM Task WHERE state = 1")
-    suspend fun getCompeletedTasks()
-
-    @Query("SELECT * FROM Task WHERE state = 0")
-    suspend fun getIncompeletedTasks()
+//    @Query("SELECT * FROM Task WHERE state = 1")
+//    suspend fun getCompeletedTasks()
+//
+//    @Query("SELECT * FROM Task WHERE state = 0")
+//    suspend fun getIncompeletedTasks()
 
     @Query("SELECT * FROM Task ORDER BY date DESC")
     suspend fun getTasksDesc() : List<Task>

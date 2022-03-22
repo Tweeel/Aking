@@ -10,7 +10,7 @@ data class Task(
     val name : String,
     val date : String,
     val time : String,
-    val caterogieName : String,
-    val state : Boolean
+    val categoryName : String,
+    val state : Int
 
 )

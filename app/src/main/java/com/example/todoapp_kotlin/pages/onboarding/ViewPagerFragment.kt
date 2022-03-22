@@ -1,16 +1,15 @@
-package com.example.todoapp_kotlin.onboarding
+package com.example.todoapp_kotlin.pages.onboarding
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.example.todoapp_kotlin.R
-import com.example.todoapp_kotlin.onboarding.screens.FirstScreen
-import com.example.todoapp_kotlin.onboarding.screens.SeconScreen
-import com.example.todoapp_kotlin.onboarding.screens.ThirdScreen
+import com.example.todoapp_kotlin.pages.onboarding.screens.FirstScreen
+import com.example.todoapp_kotlin.pages.onboarding.screens.SeconScreen
+import com.example.todoapp_kotlin.pages.onboarding.screens.ThirdScreen
 
 
 class ViewPagerFragment : Fragment() {

@@ -1,14 +1,18 @@
-package com.example.todoapp_kotlin.database.DAOS
+package com.example.todoapp_kotlin.database
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
+import androidx.room.Dao
 import com.example.todoapp_kotlin.database.entities.Caterogy
 import com.example.todoapp_kotlin.database.entities.Note
 import com.example.todoapp_kotlin.database.entities.Task
 import com.example.todoapp_kotlin.database.entities.relations.CategoryAndNote
 import com.example.todoapp_kotlin.database.entities.relations.CategoryAndTask
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
 
 @Dao
-interface TaskDao {
+interface Dao {
     /*insert*/
     @Insert
     suspend fun insertTask(task : Task)
@@ -19,22 +23,22 @@ interface TaskDao {
 
     /*get all*/
     @Query("SELECT * FROM Task")
-    suspend fun getTasks() : List<Task>
+    fun getTasks() : Flow<List<Task>>
 
     @Query("SELECT * FROM Note")
-    suspend fun getNotes() : List<Note>
+    fun getNotes() : Flow<List<Note>>
 
     @Query("SELECT * FROM Caterogy")
-    suspend fun getCategories() : List<Caterogy>
+    fun getCategories() : Flow<List<Caterogy>>
 
     /*get all with category*/
     @Transaction
     @Query("SELECT * FROM Task WHERE categoryName = :categorieName")
-    suspend fun getTaskAWithCategorie (categorieName : String) : List<CategoryAndTask>
+    suspend fun getTaskAWithCategorie (categorieName : String) : Flow<List<CategoryAndTask>>
 
     @Transaction
     @Query("SELECT * FROM Note WHERE categoryName = :categorieName")
-    suspend fun getNoteAWithCategory (categorieName : String) : List<CategoryAndNote>
+    suspend fun getNoteAWithCategory (categorieName : String) : Flow<List<CategoryAndNote>>
 
     /*Update*/
     @Update
@@ -64,5 +68,15 @@ interface TaskDao {
 //    suspend fun getIncompeletedTasks()
 
     @Query("SELECT * FROM Task ORDER BY date DESC")
-    suspend fun getTasksDesc() : List<Task>
+    suspend fun getTasksDesc() : Flow<List<Task>>
+
+    /*delete all*/
+    @Query("DELETE FROM Task")
+    suspend fun deleteAllTasks()
+
+    @Query("DELETE FROM Note")
+    suspend fun deleteAllNotes()
+
+    @Query("DELETE FROM Caterogy")
+    suspend fun deleteAllCaterogies()
 }

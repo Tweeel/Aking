@@ -1,4 +1,4 @@
-package com.example.todoapp_kotlin.onboarding
+package com.example.todoapp_kotlin.pages.onboarding
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

@@ -1,4 +1,4 @@
-package com.example.todoapp_kotlin.onboarding
+package com.example.todoapp_kotlin.pages.onboarding
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

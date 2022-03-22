@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/splashScreen"
-        android:name="com.example.todoapp_kotlin.onboarding.SplashFragment"
+        android:name="com.example.todoapp_kotlin.pages.onboarding.SplashFragment"
         android:label="fragment_splash_screen"
         tools:layout="@layout/fragment_splash_screen" >
         <action
@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/viewPagerFragment"
-        android:name="com.example.todoapp_kotlin.onboarding.ViewPagerFragment"
+        android:name="com.example.todoapp_kotlin.pages.onboarding.ViewPagerFragment"
         android:label="fragment_view_pager"
         tools:layout="@layout/fragment_view_pager" />
 </navigation>

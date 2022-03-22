@@ -10,10 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ToDoAppkotlin">
         <activity
-            android:name=".mainPage.MainActivity"
+            android:name=".pages.addPage.AddActivity"
             android:exported="false" />
         <activity
-            android:name=".onboarding.IntroActivity"
+            android:name=".pages.mainPage.MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".pages.onboarding.IntroActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

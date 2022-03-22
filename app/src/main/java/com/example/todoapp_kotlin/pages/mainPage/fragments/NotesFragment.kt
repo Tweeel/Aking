@@ -1,12 +1,11 @@
-package com.example.todoapp_kotlin.mainPage.fragments
+package com.example.todoapp_kotlin.pages.mainPage.fragments
 
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import com.example.todoapp_kotlin.R
 
-
-class MonthFragment : Fragment() {
+class NotesFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,7 +17,8 @@ class MonthFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_month, container, false)
+        val view = inflater.inflate(R.layout.fragment_notes, container, false)
+        return view
     }
 
     //hide the menu

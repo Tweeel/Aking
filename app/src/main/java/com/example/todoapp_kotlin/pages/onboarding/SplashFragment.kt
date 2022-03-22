@@ -1,4 +1,4 @@
-package com.example.todoapp_kotlin.onboarding
+package com.example.todoapp_kotlin.pages.onboarding
 
 import android.content.Context
 import android.content.Intent
@@ -12,7 +12,7 @@ import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.example.todoapp_kotlin.mainPage.MainActivity
+import com.example.todoapp_kotlin.pages.mainPage.MainActivity
 import com.example.todoapp_kotlin.R
 
 class SplashFragment : Fragment() {

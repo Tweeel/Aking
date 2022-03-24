@@ -1,5 +1,6 @@
 package com.example.todoapp_kotlin.database.entities
 
+import android.accounts.AuthenticatorDescription
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -7,7 +8,8 @@ import androidx.room.PrimaryKey
 data class Task(
     @PrimaryKey(autoGenerate = true)
     val idTask : Int,
-    val name : String,
+    val title : String,
+    val description: String,
     val date : String,
     val time : String,
     val categoryName : String,

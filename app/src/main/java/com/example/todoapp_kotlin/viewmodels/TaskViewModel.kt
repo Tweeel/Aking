@@ -5,7 +5,6 @@ import com.example.todoapp_kotlin.database.Dao
 import com.example.todoapp_kotlin.database.entities.Caterogy
 import com.example.todoapp_kotlin.database.entities.Note
 import com.example.todoapp_kotlin.database.entities.Task
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class TaskViewModel(private val dao : Dao): ViewModel() {

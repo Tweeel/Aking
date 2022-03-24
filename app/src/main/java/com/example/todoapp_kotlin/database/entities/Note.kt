@@ -7,7 +7,6 @@ import androidx.room.PrimaryKey
 data class Note(
     @PrimaryKey(autoGenerate = true)
     val idTile : Int,
-    val title : String,
-    val description : String,
+    val text : String,
     val categoryName : String
 )

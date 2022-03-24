@@ -12,6 +12,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
         <View
+            android:id="@+id/color"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:background="@drawable/check_blue"
@@ -19,6 +20,7 @@
             android:layout_marginTop="20dp"/>
 
         <TextView
+            android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Personal"
@@ -28,6 +30,7 @@
             android:layout_marginTop="15dp"/>
 
         <TextView
+            android:id="@+id/number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="10 Tasks"

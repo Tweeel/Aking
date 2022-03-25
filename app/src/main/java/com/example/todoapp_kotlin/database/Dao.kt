@@ -34,11 +34,11 @@ interface Dao {
     /*get all with category*/
     @Transaction
     @Query("SELECT * FROM Task WHERE categoryName = :categorieName")
-    suspend fun getTaskAWithCategorie (categorieName : String) : Flow<List<CategoryAndTask>>
+    fun getTaskAWithCategorie (categorieName : String) : Flow<List<CategoryAndTask>>
 
     @Transaction
     @Query("SELECT * FROM Note WHERE categoryName = :categorieName")
-    suspend fun getNoteAWithCategory (categorieName : String) : Flow<List<CategoryAndNote>>
+    fun getNoteAWithCategory (categorieName : String) : Flow<List<CategoryAndNote>>
 
     /*Update*/
     @Update
@@ -68,7 +68,7 @@ interface Dao {
 //    suspend fun getIncompeletedTasks()
 
     @Query("SELECT * FROM Task ORDER BY date DESC")
-    suspend fun getTasksDesc() : Flow<List<Task>>
+    fun getTasksDesc() : Flow<List<Task>>
 
     /*delete all*/
     @Query("DELETE FROM Task")

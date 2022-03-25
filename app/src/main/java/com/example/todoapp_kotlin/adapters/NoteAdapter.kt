@@ -48,6 +48,19 @@ class NoteAdapter (
         return allNotes.size
     }
 
+    // below method is use to update our list of notes.
+    fun updateList(newList: List<Note>) {
+        // on below line we are clearing
+        // our notes array list
+        allNotes.clear()
+        // on below line we are adding a
+        // new list to our all notes list.
+        allNotes.addAll(newList)
+        // on below line we are calling notify data
+        // change method to notify our adapter.
+        notifyDataSetChanged()
+    }
+
     inner class NoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         // on below line we are creating an initializing all our
         // variables which we have added in layout file.

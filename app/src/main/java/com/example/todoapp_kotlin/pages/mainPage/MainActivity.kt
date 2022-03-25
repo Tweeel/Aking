@@ -35,28 +35,28 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
         /*database creation*/
-        val dao = TaskDatabase.getInstance(this).dao
-
-        val categories = listOf(
-            Caterogy("sport"),
-            Caterogy("study"),
-            Caterogy("work"),
-        )
-
-        val tasks = listOf(
-            Task(0,"task 1", "21/03/2022","21:30","sport",0),
-            Task(0,"task 2", "21/03/2022","22:30","study",1),
-            Task(0,"task 3", "20/03/2022","08:00","work",0),
-            Task(0,"task 4", "20/03/2022","10:30","sport",1),
-            Task(0,"task 5", "22/03/2022","15:15","work",0),
-        )
-
-        lifecycleScope.launch {
-            tasks.forEach { dao.insertTask(it) }
-            categories.forEach { dao.insertCategory(it) }
-            //how to get data
-//            val categorywithtask = dao.getTaskAWithCategorie("sport")
-//            categorywithtask.first()
-        }
+//        val dao = TaskDatabase.getInstance(this).dao
+//
+//        val categories = listOf(
+//            Caterogy("sport"),
+//            Caterogy("study"),
+//            Caterogy("work"),
+//        )
+//
+//        val tasks = listOf(
+//            Task(0,"task 1", "task 1 description","21/03/2022","21:30","sport",0),
+//            Task(0,"task 2", "task 2 description","21/03/2022","22:30","study",1),
+//            Task(0,"task 3", "task 3 description", "20/03/2022","08:00","work",0),
+//            Task(0,"task 4", "task 4 description","20/03/2022","10:30","sport",1),
+//            Task(0,"task 5", "task 5 description","22/03/2022","15:15","work",0),
+//        )
+//
+//        lifecycleScope.launch {
+//            tasks.forEach { dao.insertTask(it) }
+//            categories.forEach { dao.insertCategory(it) }
+//            //how to get data
+////            val categorywithtask = dao.getTaskAWithCategorie("sport")
+////            categorywithtask.first()
+//        }
     }
 }

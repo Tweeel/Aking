@@ -31,8 +31,9 @@ class CategoryAdapter (
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
         // on below line we are setting data to item of recycler view.
-        holder.text.setText(allCategories.get(position).categoryName)
-        holder.text.setText(getItemCount().toString()+" Tasks")
+        holder.text.text = allCategories[position].categoryName
+        val number = "$itemCount Tasks"
+        holder.text.text = number
         TODO("add the color")
 
         // on below line we are adding click listener
@@ -48,6 +49,19 @@ class CategoryAdapter (
         // on below line we are
         // returning our list size.
         return allCategories.size
+    }
+
+    // below method is use to update our list of notes.
+    fun updateList(newList: List<Caterogy>) {
+        // on below line we are clearing
+        // our notes array list
+        allCategories.clear()
+        // on below line we are adding a
+        // new list to our all notes list.
+        allCategories.addAll(newList)
+        // on below line we are calling notify data
+        // change method to notify our adapter.
+        notifyDataSetChanged()
     }
 
     inner class CategoryViewHolder(itemView: View) :

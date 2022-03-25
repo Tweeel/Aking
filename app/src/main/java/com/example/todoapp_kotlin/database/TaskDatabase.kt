@@ -10,7 +10,7 @@ import com.example.todoapp_kotlin.database.entities.Note
 import com.example.todoapp_kotlin.database.entities.Task
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import java.security.Provider
+
 
 
 @Database(
@@ -44,7 +44,7 @@ abstract class TaskDatabase : RoomDatabase(){
         }
     }
 
-    abstract class callback (
+    abstract class callback  (
         private val applicationScope: CoroutineScope
             ) : RoomDatabase.Callback() {
 

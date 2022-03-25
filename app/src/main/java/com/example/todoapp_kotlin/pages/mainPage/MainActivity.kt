@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
 import android.view.ViewGroup
-import android.view.Window
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -63,5 +62,6 @@ class MainActivity : AppCompatActivity() {
             // Showing the dialog_new here
             dialog_new.show();
         }
+
     }
 }

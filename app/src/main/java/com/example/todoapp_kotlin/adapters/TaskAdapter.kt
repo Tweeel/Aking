@@ -1,25 +1,21 @@
 package com.example.todoapp_kotlin.adapters
 
 import android.content.Context
-import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todoapp_kotlin.R
-import com.example.todoapp_kotlin.database.entities.Note
 import com.example.todoapp_kotlin.database.entities.Task
 
 class TaskAdapter(
     val context: Context,
-    val taskClickInterface: TaskClickInterface,
-    val taskDoneClickInterface: TaskDoneClickInterface
-) :
-    RecyclerView.Adapter<TaskAdapter.TaskViewHolder>(){
+    private val taskClickInterface: TaskClickInterface,
+    private val taskDoneClickInterface: TaskDoneClickInterface
+) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>(){
 
     // on below line we are creating a
     // variable for our all notes list.
@@ -43,7 +39,7 @@ class TaskAdapter(
         holder.image.setOnClickListener{
             taskDoneClickInterface.onDoneClick(allTasks[position])
         }
-        TODO("add the colors")
+        //add the colors
     }
 
     override fun getItemCount() = allTasks.size

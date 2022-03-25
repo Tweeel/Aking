@@ -9,41 +9,27 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todoapp_kotlin.R
 import com.example.todoapp_kotlin.adapters.TaskAdapter
-import com.example.todoapp_kotlin.database.TaskApplication
 import com.example.todoapp_kotlin.database.entities.Task
 import com.example.todoapp_kotlin.viewmodels.TaskViewModel
-import com.example.todoapp_kotlin.viewmodels.TaskViewModelFactory
 
 class TasksFragment : Fragment(), TaskAdapter.TaskClickInterface,
     TaskAdapter.TaskDoneClickInterface {
 
-    // on below line we are
-    // initializing our view modal.
-//    private val viewModel : TaskViewModel by activityViewModels {
-//        TaskViewModelFactory(
-//            (activity?.application as TaskApplication).database.dao
-//        )
-//    }
-    private val viewModel = ViewModelProvider(requireActivity())[TaskViewModel::class.java]
-
-    lateinit var recyclerView: RecyclerView
-    lateinit var menu: ImageView
+    private lateinit var viewModel: TaskViewModel
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var menu: ImageView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view= inflater.inflate(R.layout.fragment_tasks, container, false)
-
-        return view
+        return inflater.inflate(R.layout.fragment_tasks, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -64,15 +50,21 @@ class TasksFragment : Fragment(), TaskAdapter.TaskClickInterface,
         recyclerView.adapter = noteRVAdapter
         recyclerView.setHasFixedSize(true)
 
+        // on below line we are
+        // initializing our view modal.
+        viewModel = ViewModelProvider(
+            requireActivity(),
+            ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
+        )[TaskViewModel::class.java]
 
         // on below line we are calling all notes method
         // from our view modal class to observer the changes on list.
-        viewModel.allTasks.observe(requireActivity(), Observer { list ->
+        viewModel.allTasks.observe(requireActivity()) { list ->
             list?.let {
                 // on below line we are updating our list.
                 noteRVAdapter.updateList(it)
             }
-        })
+        }
 
         registerForContextMenu(menu)
         menu.setOnClickListener{

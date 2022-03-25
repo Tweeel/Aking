@@ -1,24 +1,27 @@
 package com.example.todoapp_kotlin.pages.mainPage
 
+import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
+import android.view.Gravity
+import android.view.ViewGroup
+import android.view.Window
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.todoapp_kotlin.R
-import com.example.todoapp_kotlin.database.TaskDatabase
-import com.example.todoapp_kotlin.database.entities.Caterogy
-import com.example.todoapp_kotlin.database.entities.Task
+import com.example.todoapp_kotlin.pages.addPage.AddActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        supportActionBar?.hide()
 
         /*setup the bottomNavigationView*/
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
@@ -32,31 +35,33 @@ class MainActivity : AppCompatActivity() {
         ))
         setupActionBarWithNavController(navController,appBarConfiguration)
         bottomNavigationView.setupWithNavController(navController)
-        supportActionBar?.hide()
 
-        /*database creation*/
-//        val dao = TaskDatabase.getInstance(this).dao
-//
-//        val categories = listOf(
-//            Caterogy("sport"),
-//            Caterogy("study"),
-//            Caterogy("work"),
-//        )
-//
-//        val tasks = listOf(
-//            Task(0,"task 1", "task 1 description","21/03/2022","21:30","sport",0),
-//            Task(0,"task 2", "task 2 description","21/03/2022","22:30","study",1),
-//            Task(0,"task 3", "task 3 description", "20/03/2022","08:00","work",0),
-//            Task(0,"task 4", "task 4 description","20/03/2022","10:30","sport",1),
-//            Task(0,"task 5", "task 5 description","22/03/2022","15:15","work",0),
-//        )
-//
-//        lifecycleScope.launch {
-//            tasks.forEach { dao.insertTask(it) }
-//            categories.forEach { dao.insertCategory(it) }
-//            //how to get data
-////            val categorywithtask = dao.getTaskAWithCategorie("sport")
-////            categorywithtask.first()
-//        }
+        /*setup the fab*/
+        val fab = findViewById<FloatingActionButton>(R.id.fab)
+        val dialog_new = Dialog(this)
+        dialog_new.setContentView(R.layout.create_new)
+        dialog_new.window?.setBackgroundDrawable(getDrawable(R.drawable.back_round_white))
+        dialog_new.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+
+        val window_new = dialog_new.window
+        window_new?.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT)
+        window_new?.setGravity(Gravity.CENTER)
+
+        val task = dialog_new.findViewById<TextView>(R.id.task)
+        val note = dialog_new.findViewById<TextView>(R.id.note)
+        val list = dialog_new.findViewById<TextView>(R.id.list)
+
+        task.setOnClickListener {
+            val intent = Intent(this,AddActivity::class.java);
+            startActivity(intent)
+            dialog_new.dismiss()
+        }
+        note.setOnClickListener{ }
+        list.setOnClickListener {  }
+
+        fab.setOnClickListener {
+            // Showing the dialog_new here
+            dialog_new.show();
+        }
     }
 }

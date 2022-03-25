@@ -23,7 +23,7 @@ import java.security.Provider
 )
 abstract class TaskDatabase : RoomDatabase(){
 
-    abstract val dao : Dao
+    abstract fun dao() : Dao
 
     companion object {
         @Volatile
@@ -53,7 +53,7 @@ abstract class TaskDatabase : RoomDatabase(){
 
             INSTANCE?.let { database ->
                 applicationScope.launch {
-                    val dao = database.dao
+                    val dao = database.dao()
 
                     applicationScope.launch {
                         val categories = listOf(

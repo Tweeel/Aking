@@ -1,13 +1,17 @@
 package com.example.todoapp_kotlin.viewmodels
 
+import android.app.Application
 import androidx.lifecycle.*
 import com.example.todoapp_kotlin.database.Dao
+import com.example.todoapp_kotlin.database.TaskDatabase
 import com.example.todoapp_kotlin.database.entities.Caterogy
 import com.example.todoapp_kotlin.database.entities.Note
 import com.example.todoapp_kotlin.database.entities.Task
 import kotlinx.coroutines.launch
 
-class TaskViewModel(private val dao : Dao): ViewModel() {
+class TaskViewModel(application : Application): AndroidViewModel(application) {
+
+    val dao = TaskDatabase.getInstance(application).dao()
     // on below line we are creating a variable for our list
     // and we are getting all the notes from our DAO class.
     val allTasks : LiveData<List<Task>> = dao.getTasks().asLiveData()
@@ -71,16 +75,16 @@ class TaskViewModel(private val dao : Dao): ViewModel() {
         }
     }
 }
-
-class TaskViewModelFactory(
-    private val taskDao: Dao
-) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if(modelClass.isAssignableFrom(TaskViewModel::class.java)){
-            @Suppress("UNCHECKED_CAST")
-            return  TaskViewModel(taskDao) as T
-        }
-        throw  IllegalAccessException("Unkown Viewmodel Class")
-    }
-
-}
+//
+//class TaskViewModelFactory(
+//    private val taskDao: Dao
+//) : ViewModelProvider.Factory {
+//    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+//        if(modelClass.isAssignableFrom(TaskViewModel::class.java)){
+//            @Suppress("UNCHECKED_CAST")
+//            return  TaskViewModel(taskDao) as T
+//        }
+//        throw  IllegalAccessException("Unkown Viewmodel Class")
+//    }
+//
+//}

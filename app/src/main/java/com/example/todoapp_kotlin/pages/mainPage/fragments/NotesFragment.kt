@@ -1,5 +1,6 @@
 package com.example.todoapp_kotlin.pages.mainPage.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.todoapp_kotlin.R
 import com.example.todoapp_kotlin.adapters.NoteAdapter
 import com.example.todoapp_kotlin.database.entities.Note
+import com.example.todoapp_kotlin.pages.appNotePage.AddNoteActivity
 import com.example.todoapp_kotlin.viewmodels.MyViewModel
 
 class NotesFragment : Fragment(), NoteAdapter.NoteClickInterface {
@@ -60,6 +62,6 @@ class NotesFragment : Fragment(), NoteAdapter.NoteClickInterface {
     }
 
     override fun onNoteClick(note: Note) {
-        TODO("Not yet implemented")
+        startActivity(Intent(this.activity, AddNoteActivity::class.java))
     }
 }

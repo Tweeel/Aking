@@ -1,5 +1,6 @@
 package com.example.todoapp_kotlin.pages.mainPage.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.ContextMenu
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.todoapp_kotlin.R
 import com.example.todoapp_kotlin.adapters.TaskAdapter
 import com.example.todoapp_kotlin.database.entities.Task
+import com.example.todoapp_kotlin.pages.addTaskPage.AddTaskActivity
 import com.example.todoapp_kotlin.viewmodels.MyViewModel
 
 class TasksFragment : Fragment(), TaskAdapter.TaskClickInterface,
@@ -85,6 +87,7 @@ class TasksFragment : Fragment(), TaskAdapter.TaskClickInterface,
     }
 
     override fun onEditClick(task: Task) {
+        startActivity(Intent(this.activity, AddTaskActivity::class.java))
     }
 
     override fun onDoneClick(task: Task) {

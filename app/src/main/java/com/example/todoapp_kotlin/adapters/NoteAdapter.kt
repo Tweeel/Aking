@@ -11,7 +11,8 @@ import com.example.todoapp_kotlin.database.entities.Note
 
 class NoteAdapter (
     val context: Context,
-    val noteClickInterface: NoteClickInterface
+
+    private val noteClickInterface: NoteAdapter.NoteClickInterface
         ) :
     RecyclerView.Adapter<NoteAdapter.NoteViewHolder>(){
 
@@ -39,7 +40,7 @@ class NoteAdapter (
         holder.itemView.setOnClickListener {
             // on below line we are calling a note click interface
             // and we are passing a position to it.
-            noteClickInterface.onNoteClick(allNotes.get(position))
+            noteClickInterface.onNoteClick(allNotes[position])
         }
     }
 

@@ -63,6 +63,5 @@ class CategiriesFragment : Fragment(), CategoryAdapter.CategoryClickInterface {
     }
 
     override fun oneCategoryClick(caterogy: Caterogy) {
-        TODO("Not yet implemented")
     }
 }

@@ -10,7 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ToDoAppkotlin">
         <activity
-            android:name=".pages.addPage.AddActivity"
+            android:name=".pages.appNotePage.AddNoteActivity"
+            android:exported="false" />
+        <activity
+            android:name=".pages.addTaskPage.AddTaskActivity"
             android:exported="false" />
         <activity
             android:name=".pages.mainPage.MainActivity"

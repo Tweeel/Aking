@@ -12,7 +12,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.todoapp_kotlin.R
-import com.example.todoapp_kotlin.pages.addPage.AddActivity
+import com.example.todoapp_kotlin.pages.addTaskPage.AddTaskActivity
+import com.example.todoapp_kotlin.pages.appNotePage.AddNoteActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -51,11 +52,13 @@ class MainActivity : AppCompatActivity() {
         val list = dialog_new.findViewById<TextView>(R.id.list)
 
         task.setOnClickListener {
-            val intent = Intent(this,AddActivity::class.java);
-            startActivity(intent)
+            startActivity(Intent(this,AddTaskActivity::class.java))
             dialog_new.dismiss()
         }
-        note.setOnClickListener{ }
+        note.setOnClickListener{
+            startActivity(Intent(this,AddNoteActivity::class.java))
+            dialog_new.dismiss()
+        }
         list.setOnClickListener {  }
 
         fab.setOnClickListener {

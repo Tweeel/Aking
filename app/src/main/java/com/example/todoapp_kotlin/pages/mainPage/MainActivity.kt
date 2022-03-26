@@ -62,6 +62,5 @@ class MainActivity : AppCompatActivity() {
             // Showing the dialog_new here
             dialog_new.show();
         }
-
     }
 }

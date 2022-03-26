@@ -85,11 +85,9 @@ class TasksFragment : Fragment(), TaskAdapter.TaskClickInterface,
     }
 
     override fun onEditClick(task: Task) {
-        TODO("Not yet implemented")
     }
 
     override fun onDoneClick(task: Task) {
-        TODO("Not yet implemented")
     }
 
 }

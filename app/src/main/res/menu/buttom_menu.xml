@@ -19,9 +19,9 @@
         android:enabled="false"/>
     <item
         android:id="@+id/categiriesFragment"
-        android:title="Lists"
+        android:title="Categories"
         app:showAsAction="ifRoom"
-        android:icon="@drawable/quick"/>
+        android:icon="@drawable/categories"/>
     <item
         android:id="@+id/notesFragment"
         android:title="Notes"

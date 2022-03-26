@@ -54,6 +54,7 @@
                 android:layout_below="@id/text_view_title"
                 android:layout_marginTop="8dp"
                 android:background="@color/white"
+                android:maxLines="1"
                 android:text="description"
                 android:textColor="@color/grey_mate"
                 android:textSize="15sp" />

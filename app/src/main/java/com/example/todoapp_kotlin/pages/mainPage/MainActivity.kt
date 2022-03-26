@@ -62,5 +62,28 @@ class MainActivity : AppCompatActivity() {
             // Showing the dialog_new here
             dialog_new.show();
         }
+
+//        fun dao() = TaskDatabase.getInstance(this).dao()
+//        val notes = listOf(
+//            Note(1,"note 1","sport"),
+//            Note(2,"note 2","study"),
+//            Note(3,"note 3","sport"),
+//            Note(4,"note 4","work"),
+//        )
+//        val categories = listOf(
+//            Caterogy("sport"),
+//            Caterogy("study"),
+//            Caterogy("work"),
+//        )
+//
+//        val tasks = listOf(
+//            Task(4,"task 5", "task 5 description","22/03/2022","15:15","work",0)
+//        )
+//
+//        lifecycleScope.launch {
+//            notes.forEach { dao().insertNote(it) }
+//            categories.forEach { dao().insertCategory(it) }
+//            tasks.forEach { dao().insertTask(it) }
+//        }
     }
 }

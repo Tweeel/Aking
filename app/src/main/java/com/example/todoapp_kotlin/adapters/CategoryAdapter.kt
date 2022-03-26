@@ -8,8 +8,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todoapp_kotlin.R
 import com.example.todoapp_kotlin.database.entities.Caterogy
-import java.util.*
-import kotlin.collections.ArrayList
 
 class CategoryAdapter (
     val context: Context,
@@ -34,8 +32,8 @@ class CategoryAdapter (
         holder.text.text = allCategories[position].categoryName
         val number = "$itemCount Tasks"
         holder.text.text = number
-        TODO("add the color")
 
+        /*add the color*/
         // on below line we are adding click listener
         // to our recycler view item.
         holder.itemView.setOnClickListener {

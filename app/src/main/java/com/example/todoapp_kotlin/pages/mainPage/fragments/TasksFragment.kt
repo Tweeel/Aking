@@ -15,12 +15,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.todoapp_kotlin.R
 import com.example.todoapp_kotlin.adapters.TaskAdapter
 import com.example.todoapp_kotlin.database.entities.Task
-import com.example.todoapp_kotlin.viewmodels.TaskViewModel
+import com.example.todoapp_kotlin.viewmodels.MyViewModel
 
 class TasksFragment : Fragment(), TaskAdapter.TaskClickInterface,
     TaskAdapter.TaskDoneClickInterface {
 
-    private lateinit var viewModel: TaskViewModel
+    private lateinit var viewModel: MyViewModel
     private lateinit var recyclerView: RecyclerView
     private lateinit var menu: ImageView
 
@@ -55,7 +55,7 @@ class TasksFragment : Fragment(), TaskAdapter.TaskClickInterface,
         viewModel = ViewModelProvider(
             requireActivity(),
             ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
-        )[TaskViewModel::class.java]
+        )[MyViewModel::class.java]
 
         // on below line we are calling all notes method
         // from our view modal class to observer the changes on list.

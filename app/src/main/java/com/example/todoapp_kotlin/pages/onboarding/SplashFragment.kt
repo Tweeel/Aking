@@ -12,8 +12,9 @@ import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.example.todoapp_kotlin.pages.mainPage.MainActivity
+import com.bumptech.glide.Glide
 import com.example.todoapp_kotlin.R
+import com.example.todoapp_kotlin.pages.mainPage.MainActivity
 
 class SplashFragment : Fragment() {
 
@@ -27,6 +28,8 @@ class SplashFragment : Fragment() {
 
         val  animation : Animation= AnimationUtils.loadAnimation(activity,R.anim.splash_animation)
         val logo : ImageView = view.findViewById(R.id.logo)
+        Glide.with(this).load(R.drawable.logo).into(logo)
+
         logo.animation = animation
 
         if(onBoardingFinished()){

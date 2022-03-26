@@ -1,15 +1,17 @@
 package com.example.todoapp_kotlin.viewmodels
 
 import android.app.Application
-import androidx.lifecycle.*
-import com.example.todoapp_kotlin.database.Dao
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.todoapp_kotlin.database.TaskDatabase
 import com.example.todoapp_kotlin.database.entities.Caterogy
 import com.example.todoapp_kotlin.database.entities.Note
 import com.example.todoapp_kotlin.database.entities.Task
 import kotlinx.coroutines.launch
 
-class TaskViewModel(application : Application): AndroidViewModel(application) {
+class MyViewModel(application : Application): AndroidViewModel(application) {
 
     val dao = TaskDatabase.getInstance(application).dao()
     // on below line we are creating a variable for our list

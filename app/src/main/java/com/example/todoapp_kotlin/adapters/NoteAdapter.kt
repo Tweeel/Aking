@@ -31,7 +31,8 @@ class NoteAdapter (
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         // on below line we are setting data to item of recycler view.
         holder.text.setText(allNotes.get(position).text)
-        TODO("add the category")
+
+        /*add the category*/
 
         // on below line we are adding click listener
         // to our recycler view item.

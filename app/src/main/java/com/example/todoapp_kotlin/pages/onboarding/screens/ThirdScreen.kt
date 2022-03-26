@@ -4,15 +4,16 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Html
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
-import com.example.todoapp_kotlin.pages.mainPage.MainActivity
+import com.bumptech.glide.Glide
 import com.example.todoapp_kotlin.R
+import com.example.todoapp_kotlin.pages.mainPage.MainActivity
 
 class ThirdScreen : Fragment() {
 
@@ -24,6 +25,7 @@ class ThirdScreen : Fragment() {
         val view = inflater.inflate(R.layout.fragment_third_screen, container, false)
 
         val viewPager = activity?.findViewById<ViewPager2>(R.id.viewPager)
+        Glide.with(this).load(R.drawable.slide_image_3).into(view.findViewById(R.id.imageView))
 
         view.findViewById<Button>(R.id.skip_btn).setOnClickListener{
             val intent = Intent(activity, MainActivity::class.java)

@@ -2,13 +2,14 @@ package com.example.todoapp_kotlin.pages.onboarding.screens
 
 import android.os.Bundle
 import android.text.Html
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.Glide
 import com.example.todoapp_kotlin.R
 
 class SeconScreen : Fragment() {
@@ -21,6 +22,8 @@ class SeconScreen : Fragment() {
         val view = inflater.inflate(R.layout.fragment_secon_screen, container, false)
 
         val viewPager = activity?.findViewById<ViewPager2>(R.id.viewPager)
+        Glide.with(this).load(R.drawable.slide_image_2).into(view.findViewById(R.id.imageView))
+
 
         view.findViewById<Button>(R.id.skip_btn).setOnClickListener{
             viewPager?.currentItem =2

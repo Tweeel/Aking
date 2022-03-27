@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".pages.appNotePage.AddNoteActivity">
+    tools:context=".pages.appNotePage.AddNoteActivity"
+    android:background="#F5F5F5">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout"
@@ -64,48 +65,54 @@
         android:gravity="start"
         android:hint="Notes..."
         android:padding="20dp"
-        android:textColorHint="#546E7A"
         android:textColor="@color/black"
+        android:textColorHint="#546E7A"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/colors" />
 
     <RadioGroup
         android:id="@+id/colors"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="#F5F5F5"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:orientation="horizontal">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintBottom_toTopOf="@+id/note">
+
         <RadioButton
             android:id="@+id/blue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:buttonTint="@color/button_blue"/>
+            android:buttonTint="@color/button_blue"
+            android:checked="true"/>
 
         <RadioButton
             android:id="@+id/pink"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:buttonTint="@color/button_pink"/>
+            android:buttonTint="@color/button_pink" />
+
         <RadioButton
             android:id="@+id/green"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:buttonTint="@color/button_green"/>
+            android:buttonTint="@color/button_green" />
+
         <RadioButton
             android:id="@+id/purple"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:buttonTint="@color/button_purple"/>
+            android:buttonTint="@color/button_purple" />
+
         <RadioButton
             android:id="@+id/beige"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:buttonTint="@color/button_beige"/>
+            android:buttonTint="@color/button_beige" />
     </RadioGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

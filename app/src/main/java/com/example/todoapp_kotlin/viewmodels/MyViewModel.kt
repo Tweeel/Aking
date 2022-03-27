@@ -77,16 +77,3 @@ class MyViewModel(application : Application): AndroidViewModel(application) {
         }
     }
 }
-//
-//class TaskViewModelFactory(
-//    private val taskDao: Dao
-//) : ViewModelProvider.Factory {
-//    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-//        if(modelClass.isAssignableFrom(TaskViewModel::class.java)){
-//            @Suppress("UNCHECKED_CAST")
-//            return  TaskViewModel(taskDao) as T
-//        }
-//        throw  IllegalAccessException("Unkown Viewmodel Class")
-//    }
-//
-//}

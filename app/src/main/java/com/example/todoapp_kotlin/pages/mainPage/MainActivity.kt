@@ -68,11 +68,11 @@ class MainActivity : AppCompatActivity() {
 
 //        fun dao() = TaskDatabase.getInstance(this).dao()
 //        val notes = listOf(
-//            Note(1,"note 1","sport"),
-//            Note(2,"note 2","study"),
-//            Note(3,"note 3","sport"),
-//            Note(4,"note 4","work"),
-//            Note(5,"note 5","work"),
+//            Note(null,"note 1","sport"),
+//            Note(null,"note 2","study"),
+//            Note(null,"note 3","sport"),
+//            Note(null,"note 4","work"),
+//            Note(null,"note 5","work"),
 //        )
 //        val categories = listOf(
 //            Caterogy("sport"),
@@ -81,11 +81,11 @@ class MainActivity : AppCompatActivity() {
 //        )
 //
 //        val tasks = listOf(
-//            Task(1,"task 1", "task 5 description","22/03/2022","15:15","work",0),
-//            Task(2,"task 2", "task 5 description","22/03/2022","15:15","study",0),
-//            Task(3,"task 3", "task 5 description","22/03/2022","15:15","sport",0),
-//            Task(4,"task 4", "task 5 description","22/03/2022","15:15","study",0),
-//            Task(5,"task 5", "task 5 description","22/03/2022","15:15","work",0)
+//            Task(null,"task 1", "task 5 description","22/03/2022","15:15","work",0),
+//            Task(null,"task 2", "task 5 description","22/03/2022","15:15","study",0),
+//            Task(null,"task 3", "task 5 description","22/03/2022","15:15","sport",0),
+//            Task(null,"task 4", "task 5 description","22/03/2022","15:15","study",0),
+//            Task(null,"task 5", "task 5 description","22/03/2022","15:15","work",0)
 //        )
 //
 //        lifecycleScope.launch {

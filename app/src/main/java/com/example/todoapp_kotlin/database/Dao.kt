@@ -1,15 +1,12 @@
 package com.example.todoapp_kotlin.database
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import androidx.room.Dao
 import com.example.todoapp_kotlin.database.entities.Caterogy
 import com.example.todoapp_kotlin.database.entities.Note
 import com.example.todoapp_kotlin.database.entities.Task
-import com.example.todoapp_kotlin.database.entities.relations.CategoryAndNote
 import com.example.todoapp_kotlin.database.entities.relations.CategoryAndTask
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.StateFlow
 
 @Dao
 interface Dao {
@@ -35,10 +32,6 @@ interface Dao {
     @Transaction
     @Query("SELECT * FROM Task WHERE categoryName = :categorieName")
     fun getTaskAWithCategorie (categorieName : String) : Flow<List<CategoryAndTask>>
-
-    @Transaction
-    @Query("SELECT * FROM Note WHERE categoryName = :categorieName")
-    fun getNoteAWithCategory (categorieName : String) : Flow<List<CategoryAndNote>>
 
     /*Update*/
     @Update

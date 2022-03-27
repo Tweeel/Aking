@@ -1,6 +1,7 @@
 package com.example.todoapp_kotlin.adapters
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,9 +32,16 @@ class NoteAdapter (
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         // on below line we are setting data to item of recycler view.
-        holder.text.setText(allNotes.get(position).text)
+        holder.text.text = allNotes[position].text
 
-        /*add the category*/
+        when(allNotes[position].color){
+            "blue" -> holder.category.setBackgroundColor(Color.parseColor("#6174F9"))
+            "pink" -> holder.category.setBackgroundColor(Color.parseColor("#E52B6A"))
+            "green" -> holder.category.setBackgroundColor(Color.parseColor("#5BBB56"))
+            "purple" -> holder.category.setBackgroundColor(Color.parseColor("#3D3B62"))
+            "beige" -> holder.category.setBackgroundColor(Color.parseColor("#F5CA90"))
+            else -> holder.category.setBackgroundColor(Color.parseColor("#000000"))
+        }
 
         // on below line we are adding click listener
         // to our recycler view item.
@@ -66,8 +74,8 @@ class NoteAdapter (
     inner class NoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         // on below line we are creating an initializing all our
         // variables which we have added in layout file.
-        val category = itemView.findViewById<View>(R.id.category)
-        val text = itemView.findViewById<TextView>(R.id.text)
+        val category: View = itemView.findViewById(R.id.category)
+        val text: TextView = itemView.findViewById(R.id.text)
     }
 
     interface NoteClickInterface {

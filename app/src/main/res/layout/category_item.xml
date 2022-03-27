@@ -4,8 +4,7 @@
     android:layout_height="160dp"
     xmlns:cardview="http://schemas.android.com/apk/res-auto"
     cardview:cardCornerRadius="11dp"
-    android:layout_marginTop="20dp"
-    android:layout_marginLeft="20dp"
+    android:layout_margin="10dp"
     android:background="@color/white">
 
     <LinearLayout

@@ -149,55 +149,37 @@
             </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="#F5F5F5"
-            android:layout_marginTop="20dp"
-            android:paddingVertical="10dp"
-            android:paddingHorizontal="20dp">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Title"
-                android:textColor="@color/dark"
-                android:textSize="20dp"
-                android:textStyle="bold" />
+            android:hint="Title"
+            android:padding="20dp"
+            app:boxStrokeColor="@color/button_purple"
+            app:hintTextColor="@color/button_purple">
 
-            <EditText
-                android:id="@+id/editTextTitle"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/title_text"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:minHeight="48dp"
-                android:shadowColor="@color/grey"
-                android:textColor="@color/black"
-                android:textColorHint="@color/grey" />
-        </LinearLayout>
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editTexDescription"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="20dp"
-            android:text="Description"
-            android:textColor="@color/grey"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:hint="Description"
+            android:padding="20dp"
+            app:boxStrokeColor="@color/button_purple"
+            app:hintTextColor="@color/button_purple">
 
-        <EditText
-            android:id="@+id/editTexDescription"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="5dp"
-            android:ems="10"
-            android:background="@drawable/back_white_black_border"
-            android:minHeight="48dp"
-            android:shadowColor="@color/grey"
-            android:textColor="@color/black"
-            android:textColorHint="@color/grey" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/Description"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:gravity="start" />
+        </com.google.android.material.textfield.TextInputLayout>
 
 
         <LinearLayout

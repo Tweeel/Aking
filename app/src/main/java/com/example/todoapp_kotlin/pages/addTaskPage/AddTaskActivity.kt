@@ -13,8 +13,6 @@ import com.example.todoapp_kotlin.database.entities.Task
 import com.example.todoapp_kotlin.pages.mainPage.MainActivity
 import com.example.todoapp_kotlin.viewmodels.MyViewModel
 import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
-import kotlinx.android.synthetic.main.note_item.view.*
 
 class AddTaskActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,8 +33,8 @@ class AddTaskActivity : AppCompatActivity() {
             val title = findViewById<TextInputEditText>(R.id.title_text).text.toString()
             Log.d("test", "title added = $title")
             var description = ""
-            findViewById<TextInputLayout>(R.id.editTexDescription).text?.let{ it->
-                description=findViewById<TextInputEditText>(R.id.editTexDescription).text.toString()
+            findViewById<TextInputEditText>(R.id.Description).text?.let{ it->
+                description=it.toString()
                 Log.d("test","description added = $description")
             }
             Log.d("test","description = $description")

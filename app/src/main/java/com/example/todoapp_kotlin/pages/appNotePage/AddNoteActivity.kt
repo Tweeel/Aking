@@ -29,21 +29,21 @@ class AddNoteActivity : AppCompatActivity() {
         if(intent.getStringExtra("id")!=null &&
             intent.getStringExtra("text")!=null &&
             intent.getStringExtra("color")!=null){
+                findViewById<TextView>(R.id.title).text = "Edit Note"
+                id = intent.getStringExtra("id")!!.toInt()
+                val text = intent.getStringExtra("text")
+                val color = intent.getStringExtra("color")
 
-            id = intent.getStringExtra("id")!!.toInt()
-            val text = intent.getStringExtra("text")
-            val color = intent.getStringExtra("color")
+                val radioButton =  findViewById<RadioGroup>(R.id.colors)
 
-            val radioButton =  findViewById<RadioGroup>(R.id.colors)
-
-            findViewById<EditText>(R.id.note).setText(text)
-            when(color){
-                "blue" -> radioButton.findViewById<RadioButton>(R.id.blue).isChecked = true
-                "pink" -> radioButton.findViewById<RadioButton>(R.id.pink).isChecked = true
-                "green" -> radioButton.findViewById<RadioButton>(R.id.green).isChecked = true
-                "purple" -> radioButton.findViewById<RadioButton>(R.id.purple).isChecked = true
-                "beige" -> radioButton.findViewById<RadioButton>(R.id.beige).isChecked = true
-            }
+                findViewById<EditText>(R.id.note).setText(text)
+                when(color){
+                    "blue" -> radioButton.findViewById<RadioButton>(R.id.blue).isChecked = true
+                    "pink" -> radioButton.findViewById<RadioButton>(R.id.pink).isChecked = true
+                    "green" -> radioButton.findViewById<RadioButton>(R.id.green).isChecked = true
+                    "purple" -> radioButton.findViewById<RadioButton>(R.id.purple).isChecked = true
+                    "beige" -> radioButton.findViewById<RadioButton>(R.id.beige).isChecked = true
+                }
         }
 
         findViewById<ImageView>(R.id.rollback).setOnClickListener {

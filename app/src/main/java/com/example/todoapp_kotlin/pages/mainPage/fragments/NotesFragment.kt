@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todoapp_kotlin.R
@@ -37,11 +38,11 @@ class NotesFragment : Fragment(), NoteAdapter.NoteClickInterface {
         // manager to our recycler view.
         recyclerView.layoutManager = LinearLayoutManager(activity)
         // on below line we are initializing our adapter class.
-        val noteRVAdapter = NoteAdapter(requireActivity(),this)
+        val noteAdapter = NoteAdapter(requireActivity(),this)
 
         // on below line we are setting
         // adapter to our recycler view.
-        recyclerView.adapter = noteRVAdapter
+        recyclerView.adapter = noteAdapter
         recyclerView.setHasFixedSize(true)
 
         // on below line we are
@@ -56,9 +57,25 @@ class NotesFragment : Fragment(), NoteAdapter.NoteClickInterface {
         viewModel.allNotes.observe(requireActivity()) { list ->
             list?.let {
                 // on below line we are updating our list.
-                noteRVAdapter.updateList(it)
+                noteAdapter.updateList(it)
             }
         }
+
+        //add the onswipe to delete a note
+        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT){
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val note = noteAdapter.allNotes[viewHolder.adapterPosition]
+                viewModel.deleteNote(note)
+            }
+        }).attachToRecyclerView(recyclerView)
     }
 
     override fun onNoteClick(note: Note) {

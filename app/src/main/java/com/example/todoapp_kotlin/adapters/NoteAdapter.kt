@@ -19,7 +19,7 @@ class NoteAdapter (
 
     // on below line we are creating a
     // variable for our all notes list.
-    private val allNotes = ArrayList<Note>()
+    val allNotes = ArrayList<Note>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         // inflating our layout file for each item of recycler view.

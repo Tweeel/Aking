@@ -9,6 +9,4 @@ data class Note(
     val idTile : Int? = null,
     val text : String,
     val color : String
-){
-
-}
+)

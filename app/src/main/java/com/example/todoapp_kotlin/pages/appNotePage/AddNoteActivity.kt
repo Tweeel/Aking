@@ -62,7 +62,7 @@ class AddNoteActivity : AppCompatActivity() {
             }
             if(note.isNotEmpty()){
                 if(id==0)
-                    viewModel.insertNote(Note(null,note,color))
+                    viewModel.insertNote(Note(text=note,color=color))
                 else
                     viewModel.updateNote(Note(id,note,color))
                 startActivity(Intent(this,MainActivity::class.java))

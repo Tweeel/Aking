@@ -9,9 +9,9 @@ data class Task(
     val idTask : Int? = null,
     val title : String,
     val description: String,
-    val date : String,
-    val time : String,
-    val categoryName : String,
-    val state : Int
+    val date : String? = "",
+    val time : String? = "",
+    val categoryName : String? = "",
+    val state : Int? = 0
 
 )

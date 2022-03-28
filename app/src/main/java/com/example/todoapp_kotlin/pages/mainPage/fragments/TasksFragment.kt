@@ -11,6 +11,7 @@ import android.widget.ImageView
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todoapp_kotlin.R
@@ -45,11 +46,11 @@ class TasksFragment : Fragment(), TaskAdapter.TaskClickInterface,
         // manager to our recycler view.
         recyclerView.layoutManager = LinearLayoutManager(activity)
         // on below line we are initializing our adapter class.
-        val noteRVAdapter = TaskAdapter(requireActivity(), this,this)
+        val taskAdapter = TaskAdapter(requireActivity(), this,this)
 
         // on below line we are setting
         // adapter to our recycler view.
-        recyclerView.adapter = noteRVAdapter
+        recyclerView.adapter = taskAdapter
         recyclerView.setHasFixedSize(true)
 
         // on below line we are
@@ -64,9 +65,25 @@ class TasksFragment : Fragment(), TaskAdapter.TaskClickInterface,
         viewModel.allTasks.observe(requireActivity()) { list ->
             list?.let {
                 // on below line we are updating our list.
-                noteRVAdapter.updateList(it)
+                taskAdapter.updateList(it)
             }
         }
+
+        //add the onswipe to delete a note
+        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT){
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val task = taskAdapter.allTasks[viewHolder.adapterPosition]
+                viewModel.deleteTask(task)
+            }
+        }).attachToRecyclerView(recyclerView)
 
         registerForContextMenu(menu)
         menu.setOnClickListener{

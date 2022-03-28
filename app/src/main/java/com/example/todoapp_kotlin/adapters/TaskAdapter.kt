@@ -19,7 +19,7 @@ class TaskAdapter(
 
     // on below line we are creating a
     // variable for our all notes list.
-    private val allTasks = ArrayList<Task>()
+    val allTasks = ArrayList<Task>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         // inflating our layout file for each item of recycler view.

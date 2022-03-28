@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity() {
 
         fab.setOnClickListener {
             // Showing the dialog_new here
-            dialog_new.show();
+            dialog_new.show()
         }
 
 //        fun dao() = TaskDatabase.getInstance(this).dao()

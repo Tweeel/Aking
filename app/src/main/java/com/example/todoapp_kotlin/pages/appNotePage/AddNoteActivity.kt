@@ -2,10 +2,7 @@ package com.example.todoapp_kotlin.pages.appNotePage
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.RadioGroup
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.todoapp_kotlin.R
@@ -16,6 +13,7 @@ import com.example.todoapp_kotlin.viewmodels.MyViewModel
 class AddNoteActivity : AppCompatActivity() {
 
     lateinit var color : String
+    var id : Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +23,28 @@ class AddNoteActivity : AppCompatActivity() {
         val viewModel = ViewModelProvider(
             this, ViewModelProvider.AndroidViewModelFactory.getInstance(this.application)
         )[MyViewModel::class.java]
+
+        /*receive data from the coming note*/
+        val intent = intent
+        if(intent.getStringExtra("id")!=null &&
+            intent.getStringExtra("text")!=null &&
+            intent.getStringExtra("color")!=null){
+
+            id = intent.getStringExtra("id")!!.toInt()
+            val text = intent.getStringExtra("text")
+            val color = intent.getStringExtra("color")
+
+            val radioButton =  findViewById<RadioGroup>(R.id.colors)
+
+            findViewById<EditText>(R.id.note).setText(text)
+            when(color){
+                "blue" -> radioButton.findViewById<RadioButton>(R.id.blue).isChecked = true
+                "pink" -> radioButton.findViewById<RadioButton>(R.id.pink).isChecked = true
+                "green" -> radioButton.findViewById<RadioButton>(R.id.green).isChecked = true
+                "purple" -> radioButton.findViewById<RadioButton>(R.id.purple).isChecked = true
+                "beige" -> radioButton.findViewById<RadioButton>(R.id.beige).isChecked = true
+            }
+        }
 
         findViewById<ImageView>(R.id.rollback).setOnClickListener {
             startActivity(Intent(this,MainActivity::class.java))
@@ -41,7 +61,10 @@ class AddNoteActivity : AppCompatActivity() {
                 R.id.beige -> color ="beige"
             }
             if(note.isNotEmpty()){
-                viewModel.insertNote(Note(null,note,color))
+                if(id==0)
+                    viewModel.insertNote(Note(null,note,color))
+                else
+                    viewModel.updateNote(Note(id,note,color))
                 startActivity(Intent(this,MainActivity::class.java))
                 finish()
             }else{

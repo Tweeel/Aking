@@ -62,6 +62,10 @@ class NotesFragment : Fragment(), NoteAdapter.NoteClickInterface {
     }
 
     override fun onNoteClick(note: Note) {
-        startActivity(Intent(this.activity, AddNoteActivity::class.java))
+        val intent = Intent(this.activity, AddNoteActivity::class.java)
+        intent.putExtra("id",note.idTile.toString())
+        intent.putExtra("text",note.text)
+        intent.putExtra("color",note.color)
+        startActivity(intent)
     }
 }

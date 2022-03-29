@@ -3,7 +3,6 @@ package com.example.todoapp_kotlin.pages.mainPage
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
-import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -41,11 +40,12 @@ class MainActivity : AppCompatActivity() {
         val dialog_new = Dialog(this)
         dialog_new.setContentView(R.layout.create_new)
         dialog_new.window?.setBackgroundDrawable(getDrawable(R.drawable.back_round_white))
-        dialog_new.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        dialog_new.window?.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
 
-        val window_new = dialog_new.window
-        window_new?.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT)
-        window_new?.setGravity(Gravity.CENTER)
+        val new_category_dialog = Dialog(this)
+        new_category_dialog.setContentView(R.layout.new_category)
+        new_category_dialog.window?.setBackgroundDrawable(getDrawable(R.drawable.back_round_white))
+        new_category_dialog.window?.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
 
         val task = dialog_new.findViewById<TextView>(R.id.task)
         val note = dialog_new.findViewById<TextView>(R.id.note)
@@ -59,7 +59,10 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this,AddNoteActivity::class.java))
             dialog_new.dismiss()
         }
-        list.setOnClickListener {  }
+        list.setOnClickListener {
+            new_category_dialog.show()
+            dialog_new.dismiss()
+        }
 
         fab.setOnClickListener {
             // Showing the dialog_new here

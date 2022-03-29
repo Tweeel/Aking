@@ -2,6 +2,8 @@ package com.example.todoapp_kotlin.pages.mainPage
 
 import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.widget.RadioGroup
 import android.widget.TextView
@@ -46,6 +48,14 @@ class MainActivity : AppCompatActivity() {
 
         /*setup the fab*/
         val fab = findViewById<FloatingActionButton>(R.id.fab)
+
+        //get the drawable
+
+        //change the fab icon color
+        val myFabSrc = resources.getDrawable(R.drawable.add)
+        myFabSrc.mutate().setColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY)
+        fab.setImageDrawable(myFabSrc)
+
         val dialog_new = Dialog(this)
         dialog_new.setContentView(R.layout.create_new)
         dialog_new.window?.setBackgroundDrawable(getDrawable(R.drawable.back_round_white))

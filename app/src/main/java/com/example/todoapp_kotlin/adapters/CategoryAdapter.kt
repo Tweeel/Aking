@@ -30,6 +30,13 @@ class CategoryAdapter (
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
         // on below line we are setting data to item of recycler view.
         holder.text.text = allCategories[position].categoryName
+        when(allCategories[position].color){
+            "blue" -> holder.color.setBackgroundResource(R.drawable.check_blue)
+            "pink" -> holder.color.setBackgroundResource(R.drawable.check_pink)
+            "green" -> holder.color.setBackgroundResource(R.drawable.check_green)
+            "purple" -> holder.color.setBackgroundResource(R.drawable.check_purple)
+            "beige" -> holder.color.setBackgroundResource(R.drawable.check_beige)
+        }
 
         //to show the number of tasks of this category try yo call the function
         // to get the count of all the task with the same category as this one

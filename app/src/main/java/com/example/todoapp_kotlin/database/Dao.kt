@@ -5,7 +5,6 @@ import androidx.room.Dao
 import com.example.todoapp_kotlin.database.entities.Caterogy
 import com.example.todoapp_kotlin.database.entities.Note
 import com.example.todoapp_kotlin.database.entities.Task
-import com.example.todoapp_kotlin.database.entities.relations.CategoryAndTask
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -28,10 +27,7 @@ interface Dao {
     @Query("SELECT * FROM Caterogy")
     fun getCategories() : Flow<List<Caterogy>>
 
-    /*get all with category*/
-    @Transaction
-    @Query("SELECT * FROM Task WHERE categoryName = :categorieName")
-    fun getTaskAWithCategorie (categorieName : String) : Flow<List<CategoryAndTask>>
+
 
     /*Update*/
     @Update

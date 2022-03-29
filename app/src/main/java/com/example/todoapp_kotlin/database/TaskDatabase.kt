@@ -57,9 +57,9 @@ abstract class TaskDatabase : RoomDatabase(){
 
                     applicationScope.launch {
                         val categories = listOf(
-                            Caterogy("sport"),
-                            Caterogy("study"),
-                            Caterogy("work"),
+                            Caterogy("sport","blue"),
+                            Caterogy("study","green"),
+                            Caterogy("work","pink"),
                         )
 
                         val tasks = listOf(

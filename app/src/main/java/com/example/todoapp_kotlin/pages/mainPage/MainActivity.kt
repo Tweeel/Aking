@@ -78,8 +78,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         category.setOnClickListener {
-            new_category_dialog.findViewById<TextInputEditText>(R.id.title_text).text?.let{ it->
-                var color = "blue"
+            if(new_category_dialog.findViewById<TextInputEditText>(R.id.title_text).text.toString().isNotEmpty()){
+                lateinit var color : String
                 when(new_category_dialog.findViewById<RadioGroup>(R.id.colors).checkedRadioButtonId){
                     R.id.blue -> color ="blue"
                     R.id.pink -> color ="pink"
@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity() {
                     R.id.purple -> color ="purple"
                     R.id.beige -> color ="beige"
                 }
-                viewModel.insertCategory(Caterogy(it.toString()))
+                viewModel.insertCategory(Caterogy(new_category_dialog.findViewById<TextInputEditText>(R.id.title_text).text.toString(),color))
                 new_category_dialog.dismiss()
             }
         }

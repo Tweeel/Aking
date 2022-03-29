@@ -8,5 +8,6 @@ import androidx.room.PrimaryKey
 data class Caterogy(
     @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = "categoryName")
-    val categoryName : String
+    val categoryName : String,
+    val color: String
 )

@@ -11,7 +11,7 @@ import com.example.todoapp_kotlin.database.entities.Caterogy
 
 class CategoryAdapter (
     val context: Context,
-    val categoryClickInterface: CategoryAdapter.CategoryClickInterface
+    private val categoryClickInterface: CategoryAdapter.CategoryClickInterface
 ) :
     RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>(){
 
@@ -30,8 +30,9 @@ class CategoryAdapter (
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
         // on below line we are setting data to item of recycler view.
         holder.text.text = allCategories[position].categoryName
-        val number = "$itemCount Tasks"
-        holder.text.text = number
+
+        //to show the number of tasks of this category try yo call the function
+        // to get the count of all the task with the same category as this one
 
         /*add the color*/
         // on below line we are adding click listener
@@ -39,7 +40,7 @@ class CategoryAdapter (
         holder.itemView.setOnClickListener {
             // on below line we are calling a note click interface
             // and we are passing a position to it.
-            categoryClickInterface.oneCategoryClick(allCategories.get(position))
+            categoryClickInterface.oneCategoryClick(allCategories[position])
         }
     }
 

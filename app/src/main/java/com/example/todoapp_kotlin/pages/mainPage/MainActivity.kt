@@ -3,7 +3,6 @@ package com.example.todoapp_kotlin.pages.mainPage
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity

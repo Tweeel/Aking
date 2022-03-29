@@ -1,20 +1,26 @@
 package com.example.todoapp_kotlin.pages.appNotePage
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.todoapp_kotlin.R
 import com.example.todoapp_kotlin.database.entities.Note
 import com.example.todoapp_kotlin.pages.mainPage.MainActivity
 import com.example.todoapp_kotlin.viewmodels.MyViewModel
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 class AddNoteActivity : AppCompatActivity() {
 
     lateinit var color : String
     var id : Int = 0
+    var date = "created"
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_note)
@@ -23,6 +29,12 @@ class AddNoteActivity : AppCompatActivity() {
         val viewModel = ViewModelProvider(
             this, ViewModelProvider.AndroidViewModelFactory.getInstance(this.application)
         )[MyViewModel::class.java]
+
+        val currentDate= LocalDate.now()
+        val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+        val date = currentDate.format(formatter)
+
+        findViewById<TextView>(R.id.date).text = "created $date"
 
         /*receive data from the coming note*/
         val intent = intent
@@ -33,17 +45,20 @@ class AddNoteActivity : AppCompatActivity() {
                 id = intent.getStringExtra("id")!!.toInt()
                 val text = intent.getStringExtra("text")
                 val color = intent.getStringExtra("color")
-
+//                val thisdate = intent.getStringExtra("date")!!
                 val radioButton =  findViewById<RadioGroup>(R.id.colors)
 
+//                findViewById<TextView>(R.id.date).text = thisdate
+
+
                 findViewById<EditText>(R.id.note).setText(text)
-                when(color){
-                    "blue" -> radioButton.findViewById<RadioButton>(R.id.blue).isChecked = true
-                    "pink" -> radioButton.findViewById<RadioButton>(R.id.pink).isChecked = true
-                    "green" -> radioButton.findViewById<RadioButton>(R.id.green).isChecked = true
-                    "purple" -> radioButton.findViewById<RadioButton>(R.id.purple).isChecked = true
-                    "beige" -> radioButton.findViewById<RadioButton>(R.id.beige).isChecked = true
-                }
+                    when(color){
+                        "blue" -> radioButton.findViewById<RadioButton>(R.id.blue).isChecked = true
+                        "pink" -> radioButton.findViewById<RadioButton>(R.id.pink).isChecked = true
+                        "green" -> radioButton.findViewById<RadioButton>(R.id.green).isChecked = true
+                        "purple" -> radioButton.findViewById<RadioButton>(R.id.purple).isChecked = true
+                        "beige" -> radioButton.findViewById<RadioButton>(R.id.beige).isChecked = true
+                    }
         }
 
         findViewById<ImageView>(R.id.rollback).setOnClickListener {

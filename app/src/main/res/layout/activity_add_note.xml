@@ -57,20 +57,18 @@
             app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <EditText
-        android:id="@+id/note"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="#F5F5F5"
-        android:gravity="start"
-        android:hint="Notes..."
-        android:padding="20dp"
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="created 28/03/2022"
         android:textColor="@color/black"
-        android:textColorHint="#546E7A"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/colors"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/colors" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        android:layout_margin="10dp"
+        android:textSize="15dp"/>
 
     <RadioGroup
         android:id="@+id/colors"
@@ -80,7 +78,7 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintTop_toBottomOf="@+id/date"
         app:layout_constraintBottom_toTopOf="@+id/note">
 
         <RadioButton
@@ -114,5 +112,20 @@
             android:layout_height="wrap_content"
             android:buttonTint="@color/button_beige" />
     </RadioGroup>
+
+    <EditText
+        android:id="@+id/note"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#F5F5F5"
+        android:gravity="start"
+        android:hint="Notes..."
+        android:padding="20dp"
+        android:textColor="@color/black"
+        android:textColorHint="#546E7A"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/colors" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

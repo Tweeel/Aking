@@ -33,6 +33,7 @@ class NoteAdapter (
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         // on below line we are setting data to item of recycler view.
         holder.text.text = allNotes[position].text
+        holder.date.text = allNotes[position].date
 
         when(allNotes[position].color){
             "blue" -> holder.category.setBackgroundColor(Color.parseColor("#6174F9"))
@@ -42,7 +43,6 @@ class NoteAdapter (
             "beige" -> holder.category.setBackgroundColor(Color.parseColor("#F5CA90"))
             else -> holder.category.setBackgroundColor(Color.parseColor("#000000"))
         }
-
         // on below line we are adding click listener
         // to our recycler view item.
         holder.itemView.setOnClickListener {
@@ -76,6 +76,7 @@ class NoteAdapter (
         // variables which we have added in layout file.
         val category: View = itemView.findViewById(R.id.category)
         val text: TextView = itemView.findViewById(R.id.text)
+        val date: TextView = itemView.findViewById(R.id.date)
     }
 
     interface NoteClickInterface {

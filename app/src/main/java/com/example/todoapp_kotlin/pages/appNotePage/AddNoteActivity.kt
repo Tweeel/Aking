@@ -12,6 +12,7 @@ import com.example.todoapp_kotlin.database.entities.Note
 import com.example.todoapp_kotlin.pages.mainPage.MainActivity
 import com.example.todoapp_kotlin.viewmodels.MyViewModel
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 class AddNoteActivity : AppCompatActivity() {
@@ -32,7 +33,7 @@ class AddNoteActivity : AppCompatActivity() {
             this, ViewModelProvider.AndroidViewModelFactory.getInstance(this.application)
         )[MyViewModel::class.java]
 
-        val currentDate= LocalDate.now()
+        val currentDate= LocalDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
         val date = currentDate.format(formatter)
 

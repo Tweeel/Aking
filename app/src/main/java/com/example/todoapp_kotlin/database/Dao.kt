@@ -21,7 +21,7 @@ interface Dao {
     @Query("SELECT * FROM Task")
     fun getTasks() : Flow<List<Task>>
 
-    @Query("SELECT * FROM Note")
+    @Query("SELECT * FROM Note ORDER BY idTile DESC")
     fun getNotes() : Flow<List<Note>>
 
     @Query("SELECT * FROM Caterogy")

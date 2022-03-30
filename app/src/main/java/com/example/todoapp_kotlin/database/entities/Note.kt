@@ -8,6 +8,8 @@ data class Note(
     @PrimaryKey(autoGenerate = true)
     val idTile : Int? = null,
     val text : String,
-    val color : String
-//    val date : String?
+    val color : String,
+    val date : String,
+    val version : Int? = 1
+
 )

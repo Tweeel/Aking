@@ -83,7 +83,8 @@ class NotesFragment : Fragment(), NoteAdapter.NoteClickInterface {
         intent.putExtra("id",note.idTile.toString())
         intent.putExtra("text",note.text)
         intent.putExtra("color",note.color)
-//        intent.putExtra("date",note.date)
+        intent.putExtra("date",note.date)
+        intent.putExtra("version",note.version.toString())
         startActivity(intent)
     }
 }

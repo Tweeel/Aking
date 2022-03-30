@@ -36,7 +36,7 @@ class AddNoteActivity : AppCompatActivity() {
         val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
         val date = currentDate.format(formatter)
 
-        findViewById<TextView>(R.id.date).text = "created $date"
+        findViewById<TextView>(R.id.date).text = "Created $date"
 
         /*receive data from the coming note*/
         if(intent.getStringExtra("id")!=null &&
@@ -46,13 +46,14 @@ class AddNoteActivity : AppCompatActivity() {
                 id = intent.getStringExtra("id")!!.toInt()
                 val text = intent.getStringExtra("text")
                 val color = intent.getStringExtra("color")
-//                val thisdate = intent.getStringExtra("date")!!
+                val thisdate = intent.getStringExtra("date")!!
+                val version = intent.getStringExtra("version")!!.toInt()
                 val radioButton =  findViewById<RadioGroup>(R.id.colors)
+                if(version==1)  findViewById<TextView>(R.id.date).text = "Created $thisdate"
+                else findViewById<TextView>(R.id.date).text = "Edited $thisdate"
 
-//                findViewById<TextView>(R.id.date).text = thisdate
 
-
-                findViewById<EditText>(R.id.note).setText(text)
+            findViewById<EditText>(R.id.note).setText(text)
                     when(color){
                         "blue" -> radioButton.findViewById<RadioButton>(R.id.blue).isChecked = true
                         "pink" -> radioButton.findViewById<RadioButton>(R.id.pink).isChecked = true
@@ -79,16 +80,15 @@ class AddNoteActivity : AppCompatActivity() {
             }
             if(note.isNotEmpty()){
                 if(id==0)
-                    viewModel.insertNote(Note(text=note,color=color))
+                    viewModel.insertNote(Note(text=note,color=color,date=date, version = 1))
                 else
-                    viewModel.updateNote(Note(id,note,color))
+                    viewModel.updateNote(Note(idTile = id,text=note,color=color,date=date, version = 2))
                 intentToMain.putExtra("note","that a note")
                 startActivity(intentToMain)
                 finish()
             }else{
                 Toast.makeText(this,"please fill the note",Toast.LENGTH_LONG).show()
             }
-
         }
     }
 }

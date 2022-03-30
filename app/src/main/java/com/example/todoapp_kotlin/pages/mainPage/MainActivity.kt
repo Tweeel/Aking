@@ -98,6 +98,7 @@ class MainActivity : AppCompatActivity() {
         category.setOnClickListener {
             if(new_category_dialog.findViewById<TextInputEditText>(R.id.title_text).text.toString().isNotEmpty()){
                 lateinit var color : String
+                new_category_dialog.findViewById<RadioGroup>(R.id.colors).check(R.id.blue)
                 when(new_category_dialog.findViewById<RadioGroup>(R.id.colors).checkedRadioButtonId){
                     R.id.blue -> color ="blue"
                     R.id.pink -> color ="pink"

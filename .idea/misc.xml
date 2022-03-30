@@ -40,6 +40,8 @@
         <entry key="app/src/main/res/layout/fragment_month.xml" value="0.2586050724637681" />
         <entry key="app/src/main/res/layout/fragment_notes.xml" value="0.26614583333333336" />
         <entry key="app/src/main/res/layout/fragment_tasks.xml" value="0.2586050724637681" />
+        <entry key="app/src/main/res/layout/fragment_third_screen.xml" value="0.23052536231884058" />
+        <entry key="app/src/main/res/layout/new_category.xml" value="0.23052536231884058" />
         <entry key="app/src/main/res/layout/note_item.xml" value="0.26614583333333336" />
         <entry key="app/src/main/res/layout/task_item.xml" value="0.2586050724637681" />
       </map>

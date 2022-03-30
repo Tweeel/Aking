@@ -18,6 +18,7 @@ import com.example.todoapp_kotlin.R
 import com.example.todoapp_kotlin.database.entities.Caterogy
 import com.example.todoapp_kotlin.pages.addTaskPage.AddTaskActivity
 import com.example.todoapp_kotlin.pages.appNotePage.AddNoteActivity
+import com.example.todoapp_kotlin.pages.mainPage.fragments.CategiriesFragment
 import com.example.todoapp_kotlin.pages.mainPage.fragments.NotesFragment
 import com.example.todoapp_kotlin.viewmodels.MyViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -106,35 +107,10 @@ class MainActivity : AppCompatActivity() {
                 }
                 viewModel.insertCategory(Caterogy(new_category_dialog.findViewById<TextInputEditText>(R.id.title_text).text.toString(),color))
                 new_category_dialog.dismiss()
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragment, CategiriesFragment()).commit()
+                bottomNavigationView.selectedItemId = R.id.categiriesFragment
             }
         }
-
-//        fun dao() = TaskDatabase.getInstance(this).dao()
-//        val notes = listOf(
-//            Note(null,"note 1","sport"),
-//            Note(null,"note 2","study"),
-//            Note(null,"note 3","sport"),
-//            Note(null,"note 4","work"),
-//            Note(null,"note 5","work"),
-//        )
-//        val categories = listOf(
-//            Caterogy("sport"),
-//            Caterogy("study"),
-//            Caterogy("work"),
-//        )
-//
-//        val tasks = listOf(
-//            Task(null,"task 1", "task 5 description","22/03/2022","15:15","work",0),
-//            Task(null,"task 2", "task 5 description","22/03/2022","15:15","study",0),
-//            Task(null,"task 3", "task 5 description","22/03/2022","15:15","sport",0),
-//            Task(null,"task 4", "task 5 description","22/03/2022","15:15","study",0),
-//            Task(null,"task 5", "task 5 description","22/03/2022","15:15","work",0)
-//        )
-//
-//        lifecycleScope.launch {
-//            notes.forEach { dao().insertNote(it) }
-//            categories.forEach { dao().insertCategory(it) }
-//            tasks.forEach { dao().insertTask(it) }
-//        }
     }
 }

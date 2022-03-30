@@ -26,6 +26,8 @@ class AddNoteActivity : AppCompatActivity() {
         setContentView(R.layout.activity_add_note)
         supportActionBar?.hide()
 
+        val intentToMain = Intent(this,MainActivity::class.java)
+
         val viewModel = ViewModelProvider(
             this, ViewModelProvider.AndroidViewModelFactory.getInstance(this.application)
         )[MyViewModel::class.java]
@@ -37,7 +39,6 @@ class AddNoteActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.date).text = "created $date"
 
         /*receive data from the coming note*/
-        val intent = intent
         if(intent.getStringExtra("id")!=null &&
             intent.getStringExtra("text")!=null &&
             intent.getStringExtra("color")!=null){
@@ -62,7 +63,8 @@ class AddNoteActivity : AppCompatActivity() {
         }
 
         findViewById<ImageView>(R.id.rollback).setOnClickListener {
-            startActivity(Intent(this,MainActivity::class.java))
+            intentToMain.putExtra("note","that a note")
+            startActivity(intentToMain)
             finish()
         }
 
@@ -80,7 +82,8 @@ class AddNoteActivity : AppCompatActivity() {
                     viewModel.insertNote(Note(text=note,color=color))
                 else
                     viewModel.updateNote(Note(id,note,color))
-                startActivity(Intent(this,MainActivity::class.java))
+                intentToMain.putExtra("note","that a note")
+                startActivity(intentToMain)
                 finish()
             }else{
                 Toast.makeText(this,"please fill the note",Toast.LENGTH_LONG).show()

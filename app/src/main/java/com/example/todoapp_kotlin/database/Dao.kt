@@ -27,8 +27,6 @@ interface Dao {
     @Query("SELECT * FROM Caterogy")
     fun getCategories() : Flow<List<Caterogy>>
 
-
-
     /*Update*/
     @Update
     suspend fun updateTask(task : Task)
@@ -68,4 +66,11 @@ interface Dao {
 
     @Query("DELETE FROM Caterogy")
     suspend fun deleteAllCaterogies()
+
+    /*get where */
+    @Query("SELECT * FROM Task WHERE categoryName =:category")
+    fun getTasksByCategoryName(category: String) : Flow<List<Task>>
+
+    @Query("SELECT * FROM Task WHERE date =:date")
+    fun getTasksByDate(date: String) : Flow<List<Task>>
 }

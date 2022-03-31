@@ -20,6 +20,8 @@ class AddTaskActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
 
     private lateinit var dateText : TextView
     private lateinit var timeText : TextView
+    private lateinit var titleText : TextView
+    private lateinit var descriptionText : TextView
 
     private var description = ""
     private var time = ""
@@ -54,6 +56,8 @@ class AddTaskActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
 
         dateText = findViewById(R.id.datePicker)
         timeText = findViewById(R.id.timePicker)
+        titleText = findViewById(R.id.title_text)
+        descriptionText = findViewById(R.id.Description)
 
         dateText.setOnClickListener {
             getDateTimeCalendar()
@@ -66,9 +70,9 @@ class AddTaskActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
         }
 
         findViewById<AppCompatButton>(R.id.add).setOnClickListener {
-            val title = findViewById<TextInputEditText>(R.id.title_text).text.toString()
+            val title = titleText.text.toString()
             Log.d("test", "title added = $title")
-            findViewById<TextInputEditText>(R.id.Description).text?.let{ text->
+            descriptionText.text?.let{ text->
                 description=text.toString()
             }
             if(title.isNotEmpty()){

@@ -13,10 +13,14 @@ import kotlinx.coroutines.launch
 
 class MyViewModel(application : Application): AndroidViewModel(application) {
 
+    var caterogy: String = "category 1"
+
     val dao = TaskDatabase.getInstance(application).dao()
     // on below line we are creating a variable for our list
     // and we are getting all the notes from our DAO class.
     val allTasks : LiveData<List<Task>> = dao.getTasks().asLiveData()
+    val tasksByCategory : LiveData<List<Task>> = dao.getTasksByCategoryName(caterogy).asLiveData()
+    lateinit var tasksByDate : LiveData<List<Task>>
     val allNotes : LiveData<List<Note>> = dao.getNotes().asLiveData()
     val allCategories : LiveData<List<Caterogy>> = dao.getCategories().asLiveData()
 
@@ -76,4 +80,14 @@ class MyViewModel(application : Application): AndroidViewModel(application) {
             dao.deleteCaterogy(caterogy)
         }
     }
+
+
+//    /*get by*/
+//    fun getTaskByCategory(category: String){
+//        tasksByCategory= dao.getTasksByDate(category).asLiveData()
+//    }
+//
+//    fun getTaskByDate(date: String){
+//        tasksByDate= dao.getTasksByDate(date).asLiveData()
+//    }
 }

@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ToDoAppkotlin">
         <activity
+            android:name=".pages.categoryPage.CategoryActivity"
+            android:exported="false" />
+        <activity
             android:name=".pages.appNotePage.AddNoteActivity"
             android:exported="false" />
         <activity

@@ -1,5 +1,6 @@
 package com.example.todoapp_kotlin.pages.mainPage.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.todoapp_kotlin.R
 import com.example.todoapp_kotlin.adapters.CategoryAdapter
 import com.example.todoapp_kotlin.database.entities.Caterogy
+import com.example.todoapp_kotlin.pages.appNotePage.AddNoteActivity
+import com.example.todoapp_kotlin.pages.categoryPage.CategoryActivity
 import com.example.todoapp_kotlin.viewmodels.MyViewModel
 
 class CategiriesFragment : Fragment(), CategoryAdapter.CategoryClickInterface {
@@ -63,5 +66,8 @@ class CategiriesFragment : Fragment(), CategoryAdapter.CategoryClickInterface {
     }
 
     override fun oneCategoryClick(caterogy: Caterogy) {
+        val intent = Intent(this.activity, CategoryActivity::class.java)
+        intent.putExtra("category",caterogy.categoryName)
+        startActivity(intent)
     }
 }

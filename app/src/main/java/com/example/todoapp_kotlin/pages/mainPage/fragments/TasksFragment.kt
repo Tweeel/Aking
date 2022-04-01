@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -19,7 +18,6 @@ import com.example.todoapp_kotlin.R
 import com.example.todoapp_kotlin.adapters.TaskAdapter
 import com.example.todoapp_kotlin.database.entities.Task
 import com.example.todoapp_kotlin.pages.addTaskPage.AddTaskActivity
-import com.example.todoapp_kotlin.pages.appNotePage.AddNoteActivity
 import com.example.todoapp_kotlin.viewmodels.MyViewModel
 
 class TasksFragment : Fragment(), TaskAdapter.TaskClickInterface,
@@ -113,6 +111,7 @@ class TasksFragment : Fragment(), TaskAdapter.TaskClickInterface,
         intent.putExtra("category",task.categoryName)
         intent.putExtra("date",task.date)
         intent.putExtra("time",task.time)
+        intent.putExtra("state",task.state.toString())
         startActivity(intent)
     }
 

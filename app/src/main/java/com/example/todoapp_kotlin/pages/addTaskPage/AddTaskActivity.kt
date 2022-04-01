@@ -13,7 +13,6 @@ import com.example.todoapp_kotlin.R
 import com.example.todoapp_kotlin.database.entities.Task
 import com.example.todoapp_kotlin.pages.mainPage.MainActivity
 import com.example.todoapp_kotlin.viewmodels.MyViewModel
-import com.google.android.material.textfield.TextInputEditText
 import java.util.*
 
 class AddTaskActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{
@@ -28,6 +27,7 @@ class AddTaskActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
     private var time = ""
     private var date = "anytime"
     private var category = "Uncategorized"
+    private var state = 0
 
     private var day = 0
     private var month = 0
@@ -66,14 +66,17 @@ class AddTaskActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
         /*receive data from the coming note*/
         if(intent.getStringExtra("id")!=null &&
             intent.getStringExtra("title")!=null){
-            findViewById<TextView>(R.id.title).text = "Edit Note"
             id = intent.getStringExtra("id")!!.toInt()
+            Log.d("test",id.toString())
             val title = intent.getStringExtra("title")
             val description = intent.getStringExtra("description")
             val category = intent.getStringExtra("category")
             val date = intent.getStringExtra("date")
             val time = intent.getStringExtra("time")
+            val state = intent.getStringExtra("state")!!.toInt()
 
+            findViewById<TextView>(R.id.title).text = "Edit Task"
+            findViewById<TextView>(R.id.add).text = "Edit"
             titleText.text = title
             descriptionText.text = description
             category?.let{
@@ -82,7 +85,7 @@ class AddTaskActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
             }
 
             date?.let{
-                dateText.text = date
+                dateText.text = date.dropLast(5)
                 this.date=date
             }
 
@@ -90,7 +93,7 @@ class AddTaskActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
                 timeText.text = time
                 this.time=time
             }
-
+            this.state=state
         }
 
         dateText.setOnClickListener {
@@ -109,15 +112,13 @@ class AddTaskActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
                 description=text.toString()
             }
             if(title.isNotEmpty()){
-                if(id==0){
+                if(id==0)
                     viewModel.insertTask(Task(title=title,description= description, categoryName = category,time = time, date = date))
-                    startActivity(Intent(this,MainActivity::class.java))
-                    finish()
-                }else{
-                    viewModel.updateTask(Task(title=title,description= description, time = time, date = date))
-                    startActivity(Intent(this,MainActivity::class.java))
-                    finish()
-                }
+                else
+                    viewModel.updateTask(Task(idTask =id,title=title,description= description, categoryName = category, time = time, date = date, state = state))
+
+                startActivity(Intent(this,MainActivity::class.java))
+                finish()
             }else{
                 Toast.makeText(this,"please enter a title",Toast.LENGTH_SHORT).show()
             }
@@ -134,8 +135,8 @@ class AddTaskActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
     }
 
     override fun onDateSet(p0: DatePicker?, year: Int, month: Int, dayofmonth: Int) {
-        savedday = dayofmonth.toString()
-        savedmonth = month.toString()
+        savedday = if(dayofmonth<10) "0$dayofmonth" else dayofmonth.toString()
+        savedmonth = if(month<10) "0$month" else month.toString()
         savedyear = year.toString()
         dateText.text = "$savedday / $savedmonth"
         date = "$savedday/$savedmonth/$savedyear"

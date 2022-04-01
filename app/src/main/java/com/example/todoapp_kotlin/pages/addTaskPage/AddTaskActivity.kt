@@ -18,10 +18,11 @@ import java.util.*
 
 class AddTaskActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{
 
-    private lateinit var dateText : TextView
-    private lateinit var timeText : TextView
     private lateinit var titleText : TextView
     private lateinit var descriptionText : TextView
+    private lateinit var caegoryText : TextView
+    private lateinit var dateText : TextView
+    private lateinit var timeText : TextView
 
     private var description = ""
     private var time = ""
@@ -40,6 +41,8 @@ class AddTaskActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
     private var savedhour = "0"
     private var savedminute = "0"
 
+    var id = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_task)
@@ -54,10 +57,41 @@ class AddTaskActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
             finish()
         }
 
-        dateText = findViewById(R.id.datePicker)
-        timeText = findViewById(R.id.timePicker)
         titleText = findViewById(R.id.title_text)
         descriptionText = findViewById(R.id.Description)
+        dateText = findViewById(R.id.datePicker)
+        timeText = findViewById(R.id.timePicker)
+        caegoryText = findViewById(R.id.category)
+
+        /*receive data from the coming note*/
+        if(intent.getStringExtra("id")!=null &&
+            intent.getStringExtra("title")!=null){
+            findViewById<TextView>(R.id.title).text = "Edit Note"
+            id = intent.getStringExtra("id")!!.toInt()
+            val title = intent.getStringExtra("title")
+            val description = intent.getStringExtra("description")
+            val category = intent.getStringExtra("category")
+            val date = intent.getStringExtra("date")
+            val time = intent.getStringExtra("time")
+
+            titleText.text = title
+            descriptionText.text = description
+            category?.let{
+                caegoryText.text = category
+                this.category = category
+            }
+
+            date?.let{
+                dateText.text = date
+                this.date=date
+            }
+
+            time?.let{
+                timeText.text = time
+                this.time=time
+            }
+
+        }
 
         dateText.setOnClickListener {
             getDateTimeCalendar()
@@ -71,17 +105,20 @@ class AddTaskActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
 
         findViewById<AppCompatButton>(R.id.add).setOnClickListener {
             val title = titleText.text.toString()
-            Log.d("test", "title added = $title")
             descriptionText.text?.let{ text->
                 description=text.toString()
             }
             if(title.isNotEmpty()){
-                Log.d("test","add the task")
-                viewModel.insertTask(Task(title=title,description= description, time = time, date = date))
-                startActivity(Intent(this,MainActivity::class.java))
-                finish()
+                if(id==0){
+                    viewModel.insertTask(Task(title=title,description= description, categoryName = category,time = time, date = date))
+                    startActivity(Intent(this,MainActivity::class.java))
+                    finish()
+                }else{
+                    viewModel.updateTask(Task(title=title,description= description, time = time, date = date))
+                    startActivity(Intent(this,MainActivity::class.java))
+                    finish()
+                }
             }else{
-                Log.d("test","title empty")
                 Toast.makeText(this,"please enter a title",Toast.LENGTH_SHORT).show()
             }
         }

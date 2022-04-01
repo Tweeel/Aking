@@ -19,6 +19,7 @@ import com.example.todoapp_kotlin.R
 import com.example.todoapp_kotlin.adapters.TaskAdapter
 import com.example.todoapp_kotlin.database.entities.Task
 import com.example.todoapp_kotlin.pages.addTaskPage.AddTaskActivity
+import com.example.todoapp_kotlin.pages.appNotePage.AddNoteActivity
 import com.example.todoapp_kotlin.viewmodels.MyViewModel
 
 class TasksFragment : Fragment(), TaskAdapter.TaskClickInterface,
@@ -105,11 +106,19 @@ class TasksFragment : Fragment(), TaskAdapter.TaskClickInterface,
     }
 
     override fun onEditClick(task: Task) {
-        startActivity(Intent(this.activity, AddTaskActivity::class.java))
+        val intent = Intent(this.activity, AddTaskActivity::class.java)
+        intent.putExtra("id",task.idTask.toString())
+        intent.putExtra("title",task.title)
+        intent.putExtra("description",task.description)
+        intent.putExtra("category",task.categoryName)
+        intent.putExtra("date",task.date)
+        intent.putExtra("time",task.time)
+        startActivity(intent)
     }
 
     override fun onDoneClick(task: Task) {
-        Toast.makeText(activity,"yes body",Toast.LENGTH_SHORT).show()
+        if(task.state==0) viewModel.updateTask(Task(task.idTask,task.title,task.description,task.date,task.time,task.categoryName,1))
+        else viewModel.updateTask(Task(task.idTask,task.title,task.description,task.date,task.time,task.categoryName,0))
     }
 
 }

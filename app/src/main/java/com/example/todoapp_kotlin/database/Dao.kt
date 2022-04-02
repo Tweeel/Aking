@@ -71,8 +71,8 @@ interface Dao {
     suspend fun deleteAllCaterogies()
 
     /*get where */
-    @Query("SELECT * FROM Task WHERE categoryName=:category")
-    fun getTasksByCategoryName(category: String) : Flow<List<Task>>
+    @Query("SELECT * FROM Task WHERE categoryId=:category")
+    fun getTasksByCategoryName(category: Int) : Flow<List<Task>>
 
     @Query("SELECT * FROM Task WHERE date =:date")
     fun getTasksByDate(date: String) : Flow<List<Task>>

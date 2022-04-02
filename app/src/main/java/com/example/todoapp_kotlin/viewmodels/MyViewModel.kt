@@ -19,7 +19,7 @@ class MyViewModel(application : Application): AndroidViewModel(application) {
     var date  = MutableStateFlow("")
 
     val tasksByCategory = caterogy.flatMapLatest {
-        dao.getTasksByCategoryName(it)
+        dao.getTasksByCategoryName(it.toInt())
     }
 
     val tasksByDate = date.flatMapLatest {

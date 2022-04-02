@@ -65,7 +65,7 @@ class CategoryActivity : AppCompatActivity(), TaskAdapter.TaskClickInterface,
                 this, ViewModelProvider.AndroidViewModelFactory.getInstance(this.application)
             )[MyViewModel::class.java]
 
-            viewModel.caterogy.value = categoryName.toString()
+            viewModel.caterogy.value = id.toString()
 
             // on below line we are calling all notes method
             // from our view modal class to observer the changes on list.

@@ -12,6 +12,7 @@ data class Task(
     val date : String? = "Anyday",
     val time : String? = "Anytime",
     val categoryName : String? = "Uncategorized",
+    val categoryId : Int? = 1,
     val state : Int? = 0
 
 )

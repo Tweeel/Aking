@@ -30,6 +30,9 @@ class MyViewModel(application : Application): AndroidViewModel(application) {
     // on below line we are creating a variable for our list
     // and we are getting all the notes from our DAO class.
     val allTasks : LiveData<List<Task>> = dao.getTasks().asLiveData()
+    val completedTasks : LiveData<List<Task>> = dao.getCompeletedTasks().asLiveData()
+    val incompletedTasks : LiveData<List<Task>> = dao.getIncompeletedTasks().asLiveData()
+
     val allNotes : LiveData<List<Note>> = dao.getNotes().asLiveData()
     val allCategories : LiveData<List<Caterogy>> = dao.getCategories().asLiveData()
 

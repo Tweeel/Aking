@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
-
-            <item
+    <group android:checkableBehavior="single">
+        <item
             android:id="@+id/incomplete"
-            android:title="Incomplete Tasks" />
+            android:title="Incomplete Tasks"
+            android:checked="true"/>
 
-            <item
-                android:id="@+id/completed"
-                android:title="Completed Tasks"/>
+        <item
+            android:id="@+id/completed"
+            android:title="Completed Tasks"/>
 
-            <item
-                android:id="@+id/all"
-                android:title="All Tasks" />
-
-
+        <item
+            android:id="@+id/all"
+            android:title="All Tasks" />
+    </group>
 </menu>

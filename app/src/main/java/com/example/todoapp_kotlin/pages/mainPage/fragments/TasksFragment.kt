@@ -1,16 +1,17 @@
 package com.example.todoapp_kotlin.pages.mainPage.fragments
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.ContextMenu
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ImageView
+import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,6 +20,8 @@ import com.example.todoapp_kotlin.adapters.TaskAdapter
 import com.example.todoapp_kotlin.database.entities.Task
 import com.example.todoapp_kotlin.pages.addTaskPage.AddTaskActivity
 import com.example.todoapp_kotlin.viewmodels.MyViewModel
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class TasksFragment : Fragment(), TaskAdapter.TaskClickInterface,
     TaskAdapter.TaskDoneClickInterface {
@@ -26,6 +29,8 @@ class TasksFragment : Fragment(), TaskAdapter.TaskClickInterface,
     private lateinit var viewModel: MyViewModel
     private lateinit var recyclerView: RecyclerView
     private lateinit var menu: ImageView
+
+     lateinit var taskAdapter: TaskAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,6 +40,7 @@ class TasksFragment : Fragment(), TaskAdapter.TaskClickInterface,
         return inflater.inflate(R.layout.fragment_tasks, container, false)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -46,13 +52,18 @@ class TasksFragment : Fragment(), TaskAdapter.TaskClickInterface,
         // manager to our recycler view.
         recyclerView.layoutManager = LinearLayoutManager(activity)
         // on below line we are initializing our adapter class.
-        val taskAdapter = TaskAdapter(requireActivity(), this,this)
+        taskAdapter = TaskAdapter(requireActivity(), this,this)
 
         // on below line we are setting
         // adapter to our recycler view.
         recyclerView.adapter = taskAdapter
         recyclerView.setHasFixedSize(true)
 
+        val currentDate= LocalDateTime.now()
+        val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+        val date = currentDate.format(formatter)
+        Log.d("test",date)
+        viewModel.date.value = date.toString()
         // on below line we are
         // initializing our view modal.
         viewModel = ViewModelProvider(
@@ -62,7 +73,7 @@ class TasksFragment : Fragment(), TaskAdapter.TaskClickInterface,
 
         // on below line we are calling all notes method
         // from our view modal class to observer the changes on list.
-        viewModel.allTasks.observe(requireActivity()) { list ->
+        viewModel.tasksByDate.asLiveData().observe(requireActivity()) { list ->
             list?.let {
                 // on below line we are updating our list.
                 taskAdapter.updateList(it)
@@ -101,6 +112,43 @@ class TasksFragment : Fragment(), TaskAdapter.TaskClickInterface,
     ) {
         super.onCreateContextMenu(menu, v, menuInfo)
         activity?.menuInflater?.inflate(R.menu.toolbar_menu,menu)
+        Toast.makeText(activity,"onCreateContextMenu",Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        super.onOptionsItemSelected(item)
+        Toast.makeText(activity,"onContextItemSelected",Toast.LENGTH_SHORT).show()
+
+        when(item.itemId){
+            R.id.incomplete ->{
+                Toast.makeText(activity,"this is incompleted tasks",Toast.LENGTH_SHORT).show()
+                viewModel.incompletedTasks.observe(requireActivity()) { list ->
+                    list?.let {
+                        // on below line we are updating our list.
+                        taskAdapter.updateList(it)
+                    }
+                }
+            }
+            R.id.completed ->{
+                Toast.makeText(activity,"this is completed tasks",Toast.LENGTH_SHORT).show()
+                viewModel.completedTasks.observe(requireActivity()) { list ->
+                    list?.let {
+                        // on below line we are updating our list.
+                        taskAdapter.updateList(it)
+                    }
+                }
+            }
+            R.id.all ->{
+                Toast.makeText(activity,"this is all tasks",Toast.LENGTH_SHORT).show()
+                viewModel.allTasks.observe(requireActivity()) { list ->
+                    list?.let {
+                        // on below line we are updating our list.
+                        taskAdapter.updateList(it)
+                    }
+                }
+            }
+        }
+        return true
     }
 
     override fun onEditClick(task: Task) {
@@ -120,5 +168,4 @@ class TasksFragment : Fragment(), TaskAdapter.TaskClickInterface,
         else task.state=0
         viewModel.updateTask(task)
     }
-
 }

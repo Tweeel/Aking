@@ -18,7 +18,7 @@ interface Dao {
     suspend fun  insertCategory(category : Caterogy)
 
     /*get all*/
-    @Query("SELECT * FROM Task")
+    @Query("SELECT * FROM Task ORDER BY date ASC")
     fun getTasks() : Flow<List<Task>>
 
     @Query("SELECT * FROM Note ORDER BY idTile DESC")
@@ -51,11 +51,11 @@ interface Dao {
     suspend fun deleteTasksByCategoryName(category: String)
 
     /*specifics queries*/
-//    @Query("SELECT * FROM Task WHERE state = 1")
-//    suspend fun getCompeletedTasks()
-//
-//    @Query("SELECT * FROM Task WHERE state = 0")
-//    suspend fun getIncompeletedTasks()
+    @Query("SELECT * FROM Task WHERE state = 1")
+    fun getCompeletedTasks(): Flow<List<Task>>
+
+    @Query("SELECT * FROM Task WHERE state = 0")
+    fun getIncompeletedTasks(): Flow<List<Task>>
 
     @Query("SELECT * FROM Task ORDER BY date DESC")
     fun getTasksDesc() : Flow<List<Task>>
@@ -74,6 +74,6 @@ interface Dao {
     @Query("SELECT * FROM Task WHERE categoryId=:category")
     fun getTasksByCategoryName(category: Int) : Flow<List<Task>>
 
-    @Query("SELECT * FROM Task WHERE date =:date")
+    @Query("SELECT * FROM Task WHERE date =:date ORDER BY time ASC")
     fun getTasksByDate(date: String) : Flow<List<Task>>
 }

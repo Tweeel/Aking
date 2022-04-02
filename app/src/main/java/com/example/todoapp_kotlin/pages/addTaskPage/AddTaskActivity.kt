@@ -25,8 +25,8 @@ class AddTaskActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
     private lateinit var timeText : TextView
 
     private var description = ""
-    private var time = "Anyday"
-    private var date = "Anytime"
+    private var time = "Anytime"
+    private var date = "Anyday"
     private var category = "Uncategorized"
     private var state = 0
 
@@ -141,6 +141,7 @@ class AddTaskActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
         val cal = Calendar.getInstance()
         day = cal.get(Calendar.DAY_OF_MONTH)
         month = cal.get(Calendar.MONTH)
+        Log.d("test",cal.get(Calendar.MONTH).toString())
         year = cal.get(Calendar.YEAR)
         hour = cal.get(Calendar.HOUR)
         minute = cal.get(Calendar.MINUTE)
@@ -148,7 +149,9 @@ class AddTaskActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
 
     override fun onDateSet(p0: DatePicker?, year: Int, month: Int, dayofmonth: Int) {
         savedday = if(dayofmonth<10) "0$dayofmonth" else dayofmonth.toString()
-        savedmonth = if(month<10) "0$month" else month.toString()
+        savedmonth = if((month+1)<10) "0"+(month+1) else (month+1).toString()
+        Log.d("test",month.toString())
+
         savedyear = year.toString()
         dateText.text = "$savedday / $savedmonth"
         date = "$savedday/$savedmonth/$savedyear"

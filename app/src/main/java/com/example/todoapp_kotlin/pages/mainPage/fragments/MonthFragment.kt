@@ -85,9 +85,9 @@ class MonthFragment : Fragment(), TaskAdapter.TaskClickInterface,
                 taskAdapter.updateList(it)
                 it.forEach { task ->
                     task.date?.let{
-                        if(task.date.drop(6).isDigitsOnly()){
+                        if(task.date[0].isDigit()){
                             val day = Day(task.date.drop(6).toInt(),
-                                task.date.dropLast(5).drop(3).toInt(),
+                                task.date.dropLast(5).drop(3).toInt()-1,
                                 task.date.dropLast(8).toInt())
                             collapsibleCalendar.addEventTag(day.year, day.month, day.day, Color.parseColor("#3D3B62"))
                         }
@@ -114,7 +114,7 @@ class MonthFragment : Fragment(), TaskAdapter.TaskClickInterface,
                 val day: Day = collapsibleCalendar.selectedDay!!
 
                 val thistoday = if(day.day<10) "0"+(day.day).toString() else day.day.toString()
-                val thismonth= if(day.month + 1<10) "0"+(day.month).toString() else (day.month + 1).toString()
+                val thismonth= if(day.month + 1<10) "0"+(day.month+1).toString() else (day.month + 1).toString()
                 Log.d("test" ,thistoday + "/" + thismonth + "/" + day.year.toString())
 
                 viewModel.date.value = thistoday + "/" + thismonth + "/" + day.year.toString()

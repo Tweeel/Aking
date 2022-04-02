@@ -26,6 +26,11 @@ class MyViewModel(application : Application): AndroidViewModel(application) {
         dao.getTasksByDate(it)
     }
 
+    val todayTasks = date.flatMapLatest {
+        dao.getTodayTasks(it)
+    }
+
+
     val dao = TaskDatabase.getInstance(application).dao()
     // on below line we are creating a variable for our list
     // and we are getting all the notes from our DAO class.

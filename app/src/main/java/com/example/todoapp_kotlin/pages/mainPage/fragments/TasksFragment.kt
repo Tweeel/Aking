@@ -62,8 +62,7 @@ class TasksFragment : Fragment(), TaskAdapter.TaskClickInterface,
         val currentDate= LocalDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
         val date = currentDate.format(formatter)
-        Log.d("test",date)
-        viewModel.date.value = date.toString()
+
         // on below line we are
         // initializing our view modal.
         viewModel = ViewModelProvider(
@@ -71,9 +70,11 @@ class TasksFragment : Fragment(), TaskAdapter.TaskClickInterface,
             ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
         )[MyViewModel::class.java]
 
+        viewModel.date.value = date.toString()
+
         // on below line we are calling all notes method
         // from our view modal class to observer the changes on list.
-        viewModel.tasksByDate.asLiveData().observe(requireActivity()) { list ->
+        viewModel.todayTasks.asLiveData().observe(requireActivity()) { list ->
             list?.let {
                 // on below line we are updating our list.
                 taskAdapter.updateList(it)

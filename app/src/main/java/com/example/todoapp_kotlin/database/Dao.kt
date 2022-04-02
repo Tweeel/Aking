@@ -76,4 +76,7 @@ interface Dao {
 
     @Query("SELECT * FROM Task WHERE date =:date ORDER BY time ASC")
     fun getTasksByDate(date: String) : Flow<List<Task>>
+
+    @Query("SELECT * FROM Task WHERE date =:date OR date='Anyday' ORDER BY time ASC")
+    fun getTodayTasks(date: String) : Flow<List<Task>>
 }

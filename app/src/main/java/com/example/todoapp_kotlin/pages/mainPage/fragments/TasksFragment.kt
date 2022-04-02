@@ -116,8 +116,9 @@ class TasksFragment : Fragment(), TaskAdapter.TaskClickInterface,
     }
 
     override fun onDoneClick(task: Task) {
-        if(task.state==0) viewModel.updateTask(Task(task.idTask,task.title,task.description,task.date,task.time,task.categoryName,1))
-        else viewModel.updateTask(Task(task.idTask,task.title,task.description,task.date,task.time,task.categoryName,0))
+        if(task.state==0) task.state=1
+        else task.state=0
+        viewModel.updateTask(task)
     }
 
 }

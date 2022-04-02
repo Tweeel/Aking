@@ -24,8 +24,8 @@ class AddTaskActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
     private lateinit var timeText : TextView
 
     private var description = ""
-    private var time = ""
-    private var date = "anytime"
+    private var time = "Anyday"
+    private var date = "Anytime"
     private var category = "Uncategorized"
     private var state = 0
 
@@ -113,9 +113,11 @@ class AddTaskActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
             }
             if(title.isNotEmpty()){
                 if(id==0)
-                    viewModel.insertTask(Task(title=title,description= description, categoryName = category,time = time, date = date))
+                    viewModel.insertTask(Task(title=title,description= description,
+                        categoryName = category,time = time, date = date))
                 else
-                    viewModel.updateTask(Task(idTask =id,title=title,description= description, categoryName = category, time = time, date = date, state = state))
+                    viewModel.updateTask(Task(idTask =id,title=title,description= description,
+                        categoryName = category, time = time, date = date, state = state))
 
                 startActivity(Intent(this,MainActivity::class.java))
                 finish()

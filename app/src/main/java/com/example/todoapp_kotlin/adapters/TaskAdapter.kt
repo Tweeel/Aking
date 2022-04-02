@@ -27,7 +27,8 @@ class TaskAdapter(
             R.layout.task_item,
             parent, false
         )
-        return TaskViewHolder(itemView)    }
+        return TaskViewHolder(itemView)
+    }
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         // on below line we are setting data to item of recycler view.
@@ -38,6 +39,12 @@ class TaskAdapter(
         }
         holder.image.setOnClickListener{
             taskDoneClickInterface.onDoneClick(allTasks[position])
+        }
+
+        if(allTasks[position].state==0){
+            holder.image.setBackgroundResource(R.drawable.uncheck_beige)
+        }else{
+            holder.image.setBackgroundResource(R.drawable.check_beige)
         }
         //add the colors
     }

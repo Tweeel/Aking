@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.text.isDigitsOnly
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
@@ -84,10 +85,12 @@ class MonthFragment : Fragment(), TaskAdapter.TaskClickInterface,
                 taskAdapter.updateList(it)
                 it.forEach { task ->
                     task.date?.let{
-                        val day = Day(task.date.drop(6).toInt(),
-                            task.date.dropLast(5).drop(3).toInt(),
-                            task.date.dropLast(8).toInt())
-                        collapsibleCalendar.addEventTag(day.year, day.month, day.day, Color.parseColor("#3D3B62"))
+                        if(task.date.drop(6).isDigitsOnly()){
+                            val day = Day(task.date.drop(6).toInt(),
+                                task.date.dropLast(5).drop(3).toInt(),
+                                task.date.dropLast(8).toInt())
+                            collapsibleCalendar.addEventTag(day.year, day.month, day.day, Color.parseColor("#3D3B62"))
+                        }
                     }
                 }
             }

@@ -81,5 +81,4 @@ dependencies {
 
     //calander
     implementation 'com.github.shrikanth7698:Collapsible-Calendar-View-Android:v1.0.3'
-
 }

@@ -1,6 +1,7 @@
 package com.example.todoapp_kotlin.pages.mainPage.fragments
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -57,15 +58,6 @@ class MonthFragment : Fragment(), TaskAdapter.TaskClickInterface,
             ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
         )[MyViewModel::class.java]
 
-        // on below line we are calling all notes method
-        // from our view modal class to observer the changes on list.
-        viewModel.allTasks.observe(requireActivity()) { list ->
-            list?.let {
-                // on below line we are updating our list.
-                taskAdapter.updateList(it)
-            }
-        }
-
         //add the onswipe to delete a note
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT){
             override fun onMove(
@@ -84,21 +76,22 @@ class MonthFragment : Fragment(), TaskAdapter.TaskClickInterface,
 
         val collapsibleCalendar = view.findViewById<CollapsibleCalendar>(R.id.calander)!!
 
-        //To hide or show expand icon
-//        collapsibleCalendar.setExpandIconVisible(true)
-//        val today = GregorianCalendar()
-//
-//        collapsibleCalendar.addEventTag(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(
-//            Calendar.DAY_OF_MONTH))
-//
-//        today.add(Calendar.DATE, 1)
-//        collapsibleCalendar.selectedDay = Day(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(
-//            Calendar.DAY_OF_MONTH))
-//
-//        collapsibleCalendar.addEventTag(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(
-//            Calendar.DAY_OF_MONTH), Color.BLUE)
-//
-//        collapsibleCalendar.params = CollapsibleCalendar.Params(0, 100)
+        // on below line we are calling all notes method
+        // from our view modal class to observer the changes on list.
+        viewModel.allTasks.observe(requireActivity()) { list ->
+            list?.let {
+                // on below line we are updating our list.
+                taskAdapter.updateList(it)
+                it.forEach { task ->
+                    task.date?.let{
+                        val day = Day(task.date.drop(6).toInt(),
+                            task.date.dropLast(5).drop(3).toInt(),
+                            task.date.dropLast(8).toInt())
+                        collapsibleCalendar.addEventTag(day.year, day.month, day.day, Color.parseColor("#3D3B62"))
+                    }
+                }
+            }
+        }
 
         collapsibleCalendar.setCalendarListener(object : CollapsibleCalendar.CalendarListener {
             override fun onDayChanged() {

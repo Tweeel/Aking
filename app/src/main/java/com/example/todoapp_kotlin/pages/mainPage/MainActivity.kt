@@ -54,6 +54,12 @@ class MainActivity : AppCompatActivity() {
             bottomNavigationView.selectedItemId = R.id.notesFragment
         }
 
+        if(intent.getStringExtra("category")!=null){
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment, CategiriesFragment()).commit()
+            bottomNavigationView.selectedItemId = R.id.categiriesFragment
+        }
+
         /*setup the fab*/
         val fab = findViewById<FloatingActionButton>(R.id.fab)
 
@@ -87,6 +93,8 @@ class MainActivity : AppCompatActivity() {
             dialog_new.dismiss()
         }
         list.setOnClickListener {
+            new_category_dialog.findViewById<RadioGroup>(R.id.colors).check(R.id.blue)
+            new_category_dialog.findViewById<TextInputEditText>(R.id.title_text).text = null
             new_category_dialog.show()
             dialog_new.dismiss()
         }
@@ -98,7 +106,6 @@ class MainActivity : AppCompatActivity() {
         category.setOnClickListener {
             if(new_category_dialog.findViewById<TextInputEditText>(R.id.title_text).text.toString().isNotEmpty()){
                 lateinit var color : String
-                new_category_dialog.findViewById<RadioGroup>(R.id.colors).check(R.id.blue)
                 when(new_category_dialog.findViewById<RadioGroup>(R.id.colors).checkedRadioButtonId){
                     R.id.blue -> color ="blue"
                     R.id.pink -> color ="pink"
@@ -106,7 +113,7 @@ class MainActivity : AppCompatActivity() {
                     R.id.purple -> color ="purple"
                     R.id.beige -> color ="beige"
                 }
-                viewModel.insertCategory(Caterogy(new_category_dialog.findViewById<TextInputEditText>(R.id.title_text).text.toString(),color))
+                viewModel.insertCategory(Caterogy(categoryName=new_category_dialog.findViewById<TextInputEditText>(R.id.title_text).text.toString(),color=color))
                 new_category_dialog.dismiss()
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.fragment, CategiriesFragment()).commit()

@@ -47,6 +47,9 @@ interface Dao {
     @Delete
     suspend fun deleteCaterogy(category : Caterogy)
 
+    @Query("DELETE FROM Task WHERE categoryName =:category")
+    suspend fun deleteTasksByCategoryName(category: String)
+
     /*specifics queries*/
 //    @Query("SELECT * FROM Task WHERE state = 1")
 //    suspend fun getCompeletedTasks()
@@ -68,7 +71,7 @@ interface Dao {
     suspend fun deleteAllCaterogies()
 
     /*get where */
-    @Query("SELECT * FROM Task WHERE categoryName =:category")
+    @Query("SELECT * FROM Task WHERE categoryName=:category")
     fun getTasksByCategoryName(category: String) : Flow<List<Task>>
 
     @Query("SELECT * FROM Task WHERE date =:date")

@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.todoapp_kotlin.R
 import com.example.todoapp_kotlin.adapters.CategoryAdapter
 import com.example.todoapp_kotlin.database.entities.Caterogy
-import com.example.todoapp_kotlin.pages.appNotePage.AddNoteActivity
 import com.example.todoapp_kotlin.pages.categoryPage.CategoryActivity
 import com.example.todoapp_kotlin.viewmodels.MyViewModel
 
@@ -67,7 +66,9 @@ class CategiriesFragment : Fragment(), CategoryAdapter.CategoryClickInterface {
 
     override fun oneCategoryClick(caterogy: Caterogy) {
         val intent = Intent(this.activity, CategoryActivity::class.java)
+        intent.putExtra("id",caterogy.idCategory.toString())
         intent.putExtra("category",caterogy.categoryName)
+        intent.putExtra("color",caterogy.color)
         startActivity(intent)
     }
 }

@@ -88,7 +88,7 @@ class TasksFragment : Fragment(), TaskAdapter.TaskClickInterface,
         registerForContextMenu(menu)
         menu.setOnClickListener{
             Log.d("test","test")
-            val popup = PopupMenu(requireContext(), view)
+            val popup = PopupMenu(requireContext(), menu)
             popup.menuInflater.inflate(R.menu.toolbar_menu, popup.menu)
             popup.show()
         }

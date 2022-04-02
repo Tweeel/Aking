@@ -8,6 +8,7 @@ import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
+import androidx.appcompat.widget.PopupMenu
 import androidx.lifecycle.ViewModelProvider
 import com.example.todoapp_kotlin.R
 import com.example.todoapp_kotlin.database.entities.Task
@@ -51,6 +52,15 @@ class AddTaskActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
         val viewModel = ViewModelProvider(
             this, ViewModelProvider.AndroidViewModelFactory.getInstance(this.application)
         )[MyViewModel::class.java]
+
+        val menu = findViewById<TextView>(R.id.category)
+        registerForContextMenu(menu)
+        menu.setOnClickListener{
+            Log.d("test","test")
+            val popup = PopupMenu(this, menu)
+            popup.menuInflater.inflate(R.menu.toolbar_menu, popup.menu)
+            popup.show()
+        }
 
         findViewById<ImageView>(R.id.rollback).setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))

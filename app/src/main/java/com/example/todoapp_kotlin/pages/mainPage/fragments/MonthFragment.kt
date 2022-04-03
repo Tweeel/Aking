@@ -7,7 +7,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.text.isDigitsOnly
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
@@ -150,6 +149,8 @@ class MonthFragment : Fragment(), TaskAdapter.TaskClickInterface,
         intent.putExtra("title",task.title)
         intent.putExtra("description",task.description)
         intent.putExtra("category",task.categoryName)
+        intent.putExtra("color",task.categoryColor)
+        intent.putExtra("catevoryid",task.categoryId)
         intent.putExtra("date",task.date)
         intent.putExtra("time",task.time)
         intent.putExtra("state",task.state.toString())

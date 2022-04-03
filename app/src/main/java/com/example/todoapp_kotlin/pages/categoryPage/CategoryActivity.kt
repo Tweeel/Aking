@@ -143,6 +143,8 @@ class CategoryActivity : AppCompatActivity(), TaskAdapter.TaskClickInterface,
         intent.putExtra("title",task.title)
         intent.putExtra("description",task.description)
         intent.putExtra("category",task.categoryName.toString())
+        intent.putExtra("color",task.categoryColor)
+        intent.putExtra("catevoryid",task.categoryId)
         intent.putExtra("date",task.date)
         intent.putExtra("time",task.time)
         intent.putExtra("state",task.state.toString())

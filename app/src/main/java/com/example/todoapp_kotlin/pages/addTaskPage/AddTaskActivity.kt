@@ -5,10 +5,10 @@ import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
-import androidx.appcompat.widget.PopupMenu
 import androidx.lifecycle.ViewModelProvider
 import com.example.todoapp_kotlin.R
 import com.example.todoapp_kotlin.database.entities.Task
@@ -28,6 +28,8 @@ class AddTaskActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
     private var time = "Anytime"
     private var date = "Anyday"
     private var category = "Uncategorized"
+    private var color = "black"
+    private var idCategory = 1
     private var state = 0
 
     private var day = 0
@@ -53,15 +55,6 @@ class AddTaskActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
             this, ViewModelProvider.AndroidViewModelFactory.getInstance(this.application)
         )[MyViewModel::class.java]
 
-        val menu = findViewById<TextView>(R.id.category)
-        registerForContextMenu(menu)
-        menu.setOnClickListener{
-            Log.d("test","test")
-            val popup = PopupMenu(this, menu)
-            popup.menuInflater.inflate(R.menu.toolbar_menu, popup.menu)
-            popup.show()
-        }
-
         findViewById<ImageView>(R.id.rollback).setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
             finish()
@@ -81,6 +74,8 @@ class AddTaskActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
             val title = intent.getStringExtra("title")
             val description = intent.getStringExtra("description")
             val category = intent.getStringExtra("category")
+            val colorcategory = intent.getStringExtra("color")
+            val categoryid = intent.getStringExtra("catevoryid")?.toInt()
             val date = intent.getStringExtra("date")
             val time = intent.getStringExtra("time")
             val state = intent.getStringExtra("state")!!.toInt()
@@ -94,6 +89,14 @@ class AddTaskActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
                 this.category = category
             }
 
+            categoryid?.let{
+                idCategory = categoryid
+            }
+
+            colorcategory?.let{
+                color = colorcategory
+            }
+
             date?.let{
                 dateText.text = date.dropLast(5)
                 this.date=date
@@ -104,6 +107,39 @@ class AddTaskActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
                 this.time=time
             }
             this.state=state
+        }
+
+        val menu = findViewById<TextView>(R.id.category)
+        val listPopupWindow = ListPopupWindow(this, null)
+        // Set button as the list popup's anchor
+        listPopupWindow.anchorView = menu
+        // Set list popup's content
+        val ides = mutableListOf<Int>()
+        val names = mutableListOf<String>()
+        val colors = mutableListOf<String>()
+        viewModel.allCategories.observe(this) { list ->
+            list?.let {
+                // on below line we are updating our list.
+                it.forEach { item->
+                    ides.add(item.idCategory!!)
+                    names.add(item.categoryName!!)
+                    colors.add(item.color)
+                }
+            }
+        }
+        val adapter = ArrayAdapter(this, R.layout.category_list, names)
+        listPopupWindow.setAdapter(adapter)
+
+        // Set list popup's item click listener
+        listPopupWindow.setOnItemClickListener { parent: AdapterView<*>?, view: View?, position: Int, id: Long ->
+            menu.text = names[position]
+            category= names[position]
+            color= colors[position]
+            idCategory= ides[position]
+            listPopupWindow.dismiss()
+        }
+        menu.setOnClickListener{
+            listPopupWindow.show()
         }
 
         dateText.setOnClickListener {
@@ -124,10 +160,10 @@ class AddTaskActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
             if(title.isNotEmpty()){
                 if(id==0)
                     viewModel.insertTask(Task(title=title,description= description,
-                        categoryName = category,time = time, date = date))
+                        categoryId = idCategory,categoryName = category, categoryColor = color,time = time, date = date))
                 else
                     viewModel.updateTask(Task(idTask =id,title=title,description= description,
-                        categoryName = category, time = time, date = date, state = state))
+                        categoryId = idCategory,categoryName = category, categoryColor = color, time = time, date = date, state = state))
 
                 startActivity(Intent(this,MainActivity::class.java))
                 finish()

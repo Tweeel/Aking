@@ -2,6 +2,7 @@ package com.example.todoapp_kotlin.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,15 +45,17 @@ class TaskAdapter(
         }
 
         when(allTasks[position].categoryColor){
-            "black" -> holder.color.setBackgroundColor(R.color.black)
-            "pink" -> holder.color.setBackgroundColor(R.color.button_pink)
-            "blue" -> holder.color.setBackgroundColor(R.color.button_blue)
-            "green" -> holder.color.setBackgroundColor(R.color.button_green)
-            "purple" -> holder.color.setBackgroundColor(R.color.button_purple)
-            "beige" -> holder.color.setBackgroundColor(R.color.button_beige)
+            "black" -> holder.color.setBackgroundResource(R.color.black)
+            "pink" -> holder.color.setBackgroundResource(R.color.button_pink)
+            "blue" -> holder.color.setBackgroundResource(R.color.button_blue)
+            "green" -> holder.color.setBackgroundResource(R.color.button_green)
+            "purple" -> holder.color.setBackgroundResource(R.color.button_purple)
+            "beige" -> holder.color.setBackgroundResource(R.color.button_beige)
         }
 
         if(allTasks[position].state==0){
+            holder.title.paintFlags = 0
+            holder.description.paintFlags = 0
             when (allTasks[position].categoryColor){
                 "black" -> holder.image.setBackgroundResource(R.drawable.uncheck_black)
                 "pink" -> holder.image.setBackgroundResource(R.drawable.uncheck_pink)
@@ -62,6 +65,8 @@ class TaskAdapter(
                 "beige" -> holder.image.setBackgroundResource(R.drawable.uncheck_beige)
             }
         }else{
+            holder.title.paintFlags = holder.title.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+            holder.description.paintFlags = holder.description.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
             when (allTasks[position].categoryColor){
                 "black" -> holder.image.setBackgroundResource(R.drawable.check_black)
                 "pink" -> holder.image.setBackgroundResource(R.drawable.check_pink)

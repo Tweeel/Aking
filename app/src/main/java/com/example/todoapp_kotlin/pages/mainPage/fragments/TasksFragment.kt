@@ -98,10 +98,8 @@ class TasksFragment : Fragment(), TaskAdapter.TaskClickInterface,
             }
         }).attachToRecyclerView(recyclerView)
 
-        registerForContextMenu(menu)
         menu.setOnClickListener{
             showMenu(it, R.menu.toolbar_menu)
-
         }
     }
 
@@ -164,6 +162,8 @@ class TasksFragment : Fragment(), TaskAdapter.TaskClickInterface,
         intent.putExtra("title",task.title)
         intent.putExtra("description",task.description)
         intent.putExtra("category",task.categoryName)
+        intent.putExtra("color",task.categoryColor)
+        intent.putExtra("catevoryid",task.categoryId.toString())
         intent.putExtra("date",task.date)
         intent.putExtra("time",task.time)
         intent.putExtra("state",task.state.toString())

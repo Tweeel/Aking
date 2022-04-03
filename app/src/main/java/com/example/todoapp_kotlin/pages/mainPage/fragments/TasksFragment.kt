@@ -1,12 +1,13 @@
 package com.example.todoapp_kotlin.pages.mainPage.fragments
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.annotation.MenuRes
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
@@ -24,7 +25,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 class TasksFragment : Fragment(), TaskAdapter.TaskClickInterface,
-    TaskAdapter.TaskDoneClickInterface {
+    TaskAdapter.TaskDoneClickInterface, PopupMenu.OnMenuItemClickListener {
 
     private lateinit var viewModel: MyViewModel
     private lateinit var recyclerView: RecyclerView
@@ -99,10 +100,8 @@ class TasksFragment : Fragment(), TaskAdapter.TaskClickInterface,
 
         registerForContextMenu(menu)
         menu.setOnClickListener{
-            Log.d("test","test")
-            val popup = PopupMenu(requireContext(), menu)
-            popup.menuInflater.inflate(R.menu.toolbar_menu, popup.menu)
-            popup.show()
+            showMenu(it, R.menu.toolbar_menu)
+
         }
     }
 
@@ -116,13 +115,19 @@ class TasksFragment : Fragment(), TaskAdapter.TaskClickInterface,
         Toast.makeText(activity,"onCreateContextMenu",Toast.LENGTH_SHORT).show()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        super.onOptionsItemSelected(item)
-        Toast.makeText(activity,"onContextItemSelected",Toast.LENGTH_SHORT).show()
+    @SuppressLint("RestrictedApi")
+    private fun showMenu(v: View, @MenuRes menuRes: Int) {
+        val popup = PopupMenu(requireContext(), v)
+        popup.menuInflater.inflate(menuRes, popup.menu)
+        popup.setOnMenuItemClickListener(this)
+        // Show the popup menu.
+        popup.show()
+    }
 
-        when(item.itemId){
+    override fun onMenuItemClick(item: MenuItem?): Boolean {
+        when(item?.itemId){
             R.id.incomplete ->{
-                Toast.makeText(activity,"this is incompleted tasks",Toast.LENGTH_SHORT).show()
+                item.isChecked = true
                 viewModel.incompletedTasks.observe(requireActivity()) { list ->
                     list?.let {
                         // on below line we are updating our list.
@@ -131,7 +136,7 @@ class TasksFragment : Fragment(), TaskAdapter.TaskClickInterface,
                 }
             }
             R.id.completed ->{
-                Toast.makeText(activity,"this is completed tasks",Toast.LENGTH_SHORT).show()
+                item.isChecked = true
                 viewModel.completedTasks.observe(requireActivity()) { list ->
                     list?.let {
                         // on below line we are updating our list.
@@ -140,7 +145,7 @@ class TasksFragment : Fragment(), TaskAdapter.TaskClickInterface,
                 }
             }
             R.id.all ->{
-                Toast.makeText(activity,"this is all tasks",Toast.LENGTH_SHORT).show()
+                item.isChecked = true
                 viewModel.allTasks.observe(requireActivity()) { list ->
                     list?.let {
                         // on below line we are updating our list.
@@ -148,6 +153,7 @@ class TasksFragment : Fragment(), TaskAdapter.TaskClickInterface,
                     }
                 }
             }
+            else -> item?.let { super.onOptionsItemSelected(it) }
         }
         return true
     }

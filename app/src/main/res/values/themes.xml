@@ -14,4 +14,14 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <!-- Theme.AppCompat.Light is not a dialog theme -->
+    <style name="DialogTheme" parent="Theme.MaterialComponents.Light">
+        <item name="colorAccent">@color/button_blue</item>
+    </style>
+
+    <style name="AppBaseTheme" parent="android:Theme.Material.Light">
+        ....
+        <item name="android:datePickerDialogTheme">@style/DialogTheme</item>
+    </style>
+
 </resources>

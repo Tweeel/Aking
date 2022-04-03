@@ -131,6 +131,14 @@ class CategoryActivity : AppCompatActivity(), TaskAdapter.TaskClickInterface,
                     }
                     viewModel.updateCaterogy(Caterogy(id,new_category_dialog.findViewById<TextInputEditText>(R.id.title_text).text.toString(),color))
                     findViewById<TextView>(R.id.title).text = new_category_dialog.findViewById<TextInputEditText>(R.id.title_text).text.toString()
+                    viewModel.tasksByCategory.asLiveData().observe(this) { list ->
+                        list?.let {
+                            it.forEach { task ->
+                                viewModel.updateTask(Task(task.idTask,task.title,task.description,task.date,task.time,task.categoryId,
+                                    new_category_dialog.findViewById<TextInputEditText>(R.id.title_text).text.toString(),color,task.state))
+                            }
+                        }
+                    }
                     new_category_dialog.dismiss()
                 }
             }

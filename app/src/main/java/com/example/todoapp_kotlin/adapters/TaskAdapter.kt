@@ -1,5 +1,6 @@
 package com.example.todoapp_kotlin.adapters
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -30,6 +31,7 @@ class TaskAdapter(
         return TaskViewHolder(itemView)
     }
 
+    @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         // on below line we are setting data to item of recycler view.
         holder.title.text = allTasks[position].title
@@ -41,12 +43,34 @@ class TaskAdapter(
             taskDoneClickInterface.onDoneClick(allTasks[position])
         }
 
-        if(allTasks[position].state==0){
-            holder.image.setBackgroundResource(R.drawable.uncheck_beige)
-        }else{
-            holder.image.setBackgroundResource(R.drawable.check_beige)
+        when(allTasks[position].categoryColor){
+            "black" -> holder.color.setBackgroundColor(R.color.black)
+            "pink" -> holder.color.setBackgroundColor(R.color.button_pink)
+            "blue" -> holder.color.setBackgroundColor(R.color.button_blue)
+            "green" -> holder.color.setBackgroundColor(R.color.button_green)
+            "purple" -> holder.color.setBackgroundColor(R.color.button_purple)
+            "beige" -> holder.color.setBackgroundColor(R.color.button_beige)
         }
-        //add the colors
+
+        if(allTasks[position].state==0){
+            when (allTasks[position].categoryColor){
+                "black" -> holder.image.setBackgroundResource(R.drawable.uncheck_black)
+                "pink" -> holder.image.setBackgroundResource(R.drawable.uncheck_pink)
+                "blue" -> holder.image.setBackgroundResource(R.drawable.uncheck_blue)
+                "green" -> holder.image.setBackgroundResource(R.drawable.uncheck_green)
+                "purple" -> holder.image.setBackgroundResource(R.drawable.uncheck_purple)
+                "beige" -> holder.image.setBackgroundResource(R.drawable.uncheck_beige)
+            }
+        }else{
+            when (allTasks[position].categoryColor){
+                "black" -> holder.image.setBackgroundResource(R.drawable.check_black)
+                "pink" -> holder.image.setBackgroundResource(R.drawable.check_pink)
+                "blue" -> holder.image.setBackgroundResource(R.drawable.check_blue)
+                "green" -> holder.image.setBackgroundResource(R.drawable.check_green)
+                "purple" -> holder.image.setBackgroundResource(R.drawable.check_purple)
+                "beige" -> holder.image.setBackgroundResource(R.drawable.check_beige)
+            }
+        }
     }
 
     override fun getItemCount() = allTasks.size

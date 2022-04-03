@@ -79,4 +79,11 @@ interface Dao {
 
     @Query("SELECT * FROM Task WHERE date =:date OR date='Anyday' ORDER BY time ASC")
     fun getTodayTasks(date: String) : Flow<List<Task>>
+
+    /*get category*/
+    @Query("SELECT categoryName FROM Caterogy WHERE idCategory=:id")
+    fun getCategoryNameById(id:Int) : String
+
+    @Query("SELECT color FROM Caterogy WHERE idCategory=:id")
+    fun getCategoryColorById(id:Int) : String
 }

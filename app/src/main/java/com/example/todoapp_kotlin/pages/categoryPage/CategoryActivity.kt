@@ -149,7 +149,7 @@ class CategoryActivity : AppCompatActivity(), TaskAdapter.TaskClickInterface,
         startActivity(intent)    }
 
     override fun onDoneClick(task: Task) {
-        if(task.state==0) viewModel.updateTask(Task(task.idTask,task.title,task.description,task.date,task.time,task.categoryName,1))
-        else viewModel.updateTask(Task(task.idTask,task.title,task.description,task.date,task.time,task.categoryName,0))
+        if(task.state==0) viewModel.updateTask(Task(task.idTask,task.title,task.description,task.date,task.time,task.categoryId,task.categoryName,task.categoryColor,1))
+        else viewModel.updateTask(Task(task.idTask,task.title,task.description,task.date,task.time,task.categoryId,task.categoryName,task.categoryColor,0))
     }
 }

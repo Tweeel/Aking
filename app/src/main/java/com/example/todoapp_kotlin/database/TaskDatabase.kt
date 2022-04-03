@@ -16,7 +16,7 @@ import com.example.todoapp_kotlin.database.entities.Task
         Task::class,
         Note::class
     ],
-    version = 1
+    version = 2
 )
 abstract class TaskDatabase : RoomDatabase(){
 

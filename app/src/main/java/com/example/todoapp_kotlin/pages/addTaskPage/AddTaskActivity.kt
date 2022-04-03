@@ -144,12 +144,12 @@ class AddTaskActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
 
         dateText.setOnClickListener {
             getDateTimeCalendar()
-            DatePickerDialog(this,this,year,month,day).show()
+            DatePickerDialog(this,R.style.DialogTheme,this,year,month,day).show()
         }
 
         timeText.setOnClickListener {
             getDateTimeCalendar()
-            TimePickerDialog(this,this,hour,minute,true).show()
+            TimePickerDialog(this,R.style.DialogTheme,this,hour,minute,true).show()
         }
 
         findViewById<AppCompatButton>(R.id.add).setOnClickListener {

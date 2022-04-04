@@ -17,6 +17,7 @@ class MyViewModel(application : Application): AndroidViewModel(application) {
 
     var caterogy  = MutableStateFlow("")
     var date  = MutableStateFlow("")
+    var id  = MutableStateFlow("")
 
     val tasksByCategory = caterogy.flatMapLatest {
         dao.getTasksByCategoryName(it.toInt())
@@ -28,6 +29,10 @@ class MyViewModel(application : Application): AndroidViewModel(application) {
 
     val todayTasks = date.flatMapLatest {
         dao.getTodayTasks(it)
+    }
+
+    val categoryById = id.flatMapLatest {
+        dao.getCategoryById(it.toInt())
     }
 
 

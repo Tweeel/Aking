@@ -8,5 +8,6 @@ data class Caterogy(
     @PrimaryKey(autoGenerate = true)
     val idCategory : Int? = null,
     val categoryName : String? = "Uncategories",
-    val color: String
+    val color: String,
+    val tasksNumber: Int? = 0
 )

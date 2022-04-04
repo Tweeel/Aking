@@ -1,5 +1,6 @@
 package com.example.todoapp_kotlin.adapters
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -27,9 +28,11 @@ class CategoryAdapter (
         )
         return CategoryViewHolder(itemView)    }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
         // on below line we are setting data to item of recycler view.
         holder.text.text = allCategories[position].categoryName
+//        holder.number.text = allCategories[position].tasksNumber.toString()+" Tasks"
         when(allCategories[position].color){
             "blue" -> holder.color.setBackgroundResource(R.drawable.check_blue)
             "pink" -> holder.color.setBackgroundResource(R.drawable.check_pink)
@@ -38,10 +41,6 @@ class CategoryAdapter (
             "beige" -> holder.color.setBackgroundResource(R.drawable.check_beige)
         }
 
-        //to show the number of tasks of this category try yo call the function
-        // to get the count of all the task with the same category as this one
-
-        /*add the color*/
         // on below line we are adding click listener
         // to our recycler view item.
         holder.itemView.setOnClickListener {
@@ -76,7 +75,7 @@ class CategoryAdapter (
         // variables which we have added in layout file.
         val color = itemView.findViewById<View>(R.id.color)
         val text = itemView.findViewById<TextView>(R.id.title)
-        val number = itemView.findViewById<TextView>(R.id.number)
+//        val number = itemView.findViewById<TextView>(R.id.number)
     }
 
     interface CategoryClickInterface {

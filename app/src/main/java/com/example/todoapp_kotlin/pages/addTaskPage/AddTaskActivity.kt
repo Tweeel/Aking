@@ -160,10 +160,12 @@ class AddTaskActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
             if(title.isNotEmpty()){
                 if(id==0)
                     viewModel.insertTask(Task(title=title,description= description,
-                        categoryId = idCategory,categoryName = category, categoryColor = color,time = time, date = date))
+                        categoryId = idCategory,categoryName = category,
+                        categoryColor = color,time = time, date = date))
                 else
                     viewModel.updateTask(Task(idTask =id,title=title,description= description,
-                        categoryId = idCategory,categoryName = category, categoryColor = color, time = time, date = date, state = state))
+                        categoryId = idCategory,categoryName = category,
+                        categoryColor = color, time = time, date = date, state = state))
 
                 startActivity(Intent(this,MainActivity::class.java))
                 finish()

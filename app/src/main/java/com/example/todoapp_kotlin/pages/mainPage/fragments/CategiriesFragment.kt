@@ -69,6 +69,7 @@ class CategiriesFragment : Fragment(), CategoryAdapter.CategoryClickInterface {
         intent.putExtra("id",caterogy.idCategory.toString())
         intent.putExtra("category",caterogy.categoryName)
         intent.putExtra("color",caterogy.color)
+        intent.putExtra("number",caterogy.tasksNumber.toString())
         startActivity(intent)
     }
 }

@@ -45,6 +45,7 @@ class CategoryActivity : AppCompatActivity(), TaskAdapter.TaskClickInterface,
             val categoryName= intent.getStringExtra("category")
             val color= intent.getStringExtra("color")
             val id= intent.getStringExtra("id")!!.toInt()
+            val number= intent.getStringExtra("number")!!.toInt()
 
             findViewById<TextView>(R.id.title).text = categoryName
             recyclerView = findViewById(R.id.recyclerview)
@@ -129,7 +130,7 @@ class CategoryActivity : AppCompatActivity(), TaskAdapter.TaskClickInterface,
                         R.id.purple -> color ="purple"
                         R.id.beige -> color ="beige"
                     }
-                    viewModel.updateCaterogy(Caterogy(id,new_category_dialog.findViewById<TextInputEditText>(R.id.title_text).text.toString(),color))
+                    viewModel.updateCaterogy(Caterogy(id,new_category_dialog.findViewById<TextInputEditText>(R.id.title_text).text.toString(),color,number))
                     findViewById<TextView>(R.id.title).text = new_category_dialog.findViewById<TextInputEditText>(R.id.title_text).text.toString()
                     viewModel.tasksByCategory.asLiveData().observe(this) { list ->
                         list?.let {

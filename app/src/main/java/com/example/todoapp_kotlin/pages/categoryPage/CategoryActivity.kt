@@ -22,8 +22,7 @@ import com.example.todoapp_kotlin.pages.mainPage.MainActivity
 import com.example.todoapp_kotlin.viewmodels.MyViewModel
 import com.google.android.material.textfield.TextInputEditText
 
-class CategoryActivity : AppCompatActivity(), TaskAdapter.TaskClickInterface,
-    TaskAdapter.TaskDoneClickInterface {
+class CategoryActivity : AppCompatActivity(), TaskAdapter.TaskClickInterface {
 
     private lateinit var viewModel: MyViewModel
     private lateinit var recyclerView: RecyclerView
@@ -53,7 +52,7 @@ class CategoryActivity : AppCompatActivity(), TaskAdapter.TaskClickInterface,
             // manager to our recycler view.
             recyclerView.layoutManager = LinearLayoutManager(this)
             // on below line we are initializing our adapter class.
-            val taskAdapter = TaskAdapter(this, this,this)
+            val taskAdapter = TaskAdapter(this, this)
 
             // on below line we are setting
             // adapter to our recycler view.

@@ -14,8 +14,7 @@ import com.example.todoapp_kotlin.database.entities.Task
 class ParentAdapter(
     val context: Context,
     private val taskClickInterface: TaskClickInterfaceParent,
-): RecyclerView.Adapter<ParentAdapter.ParentViewHolder>(),
-    TaskAdapter.TaskClickInterface, TaskAdapter.TaskDoneClickInterface {
+): RecyclerView.Adapter<ParentAdapter.ParentViewHolder>() {
 
     // on below line we are creating a
     // variable for our all notes list.
@@ -83,11 +82,4 @@ class ParentAdapter(
         fun onEditClick(task: Task)
         fun onDoneClick(task: Task)
     }
-
-    override fun onEditClick(task: Task) {
-    }
-
-    override fun onDoneClick(task: Task) {
-    }
-
 }

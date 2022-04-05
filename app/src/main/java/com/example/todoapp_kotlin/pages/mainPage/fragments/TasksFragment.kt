@@ -24,8 +24,7 @@ import com.example.todoapp_kotlin.viewmodels.MyViewModel
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class TasksFragment : Fragment(), TaskAdapter.TaskClickInterface,
-    TaskAdapter.TaskDoneClickInterface, PopupMenu.OnMenuItemClickListener {
+class TasksFragment : Fragment(), TaskAdapter.TaskClickInterface, PopupMenu.OnMenuItemClickListener {
 
     private lateinit var viewModel: MyViewModel
     private lateinit var recyclerView: RecyclerView
@@ -53,7 +52,7 @@ class TasksFragment : Fragment(), TaskAdapter.TaskClickInterface,
         // manager to our recycler view.
         recyclerView.layoutManager = LinearLayoutManager(activity)
         // on below line we are initializing our adapter class.
-        taskAdapter = TaskAdapter(requireActivity(), this,this)
+        taskAdapter = TaskAdapter(requireActivity(), this)
 
         // on below line we are setting
         // adapter to our recycler view.

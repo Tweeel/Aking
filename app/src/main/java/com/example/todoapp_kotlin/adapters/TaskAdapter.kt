@@ -16,7 +16,6 @@ import com.example.todoapp_kotlin.database.entities.Task
 class TaskAdapter(
     val context: Context,
     private val taskClickInterface: TaskClickInterface?=null,
-    private val taskDoneClickInterface: TaskDoneClickInterface?=null,
     private val parentClickInterface: ParentAdapter.TaskClickInterfaceParent?=null,
 ) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>(){
 
@@ -38,19 +37,16 @@ class TaskAdapter(
         // on below line we are setting data to item of recycler view.
         holder.title.text = allTasks[position].title
         holder.description.text = allTasks[position].description
-        holder.task.setOnClickListener{
-            taskClickInterface?.onEditClick(allTasks[position])
-        }
-        holder.image.setOnClickListener{
-            taskDoneClickInterface?.onDoneClick(allTasks[position])
-        }
 
         holder.task.setOnClickListener{
             parentClickInterface?.onEditClick(allTasks[position])
+            taskClickInterface?.onEditClick(allTasks[position])
         }
         holder.image.setOnClickListener{
             parentClickInterface?.onDoneClick(allTasks[position])
+            taskClickInterface?.onDoneClick(allTasks[position])
         }
+
 
         when(allTasks[position].categoryColor){
             "black" -> holder.color.setBackgroundResource(R.color.black)
@@ -118,11 +114,6 @@ class TaskAdapter(
         // creating a method for click action
         // on recycler view item for updating it.
         fun onEditClick(task: Task)
-    }
-
-    interface TaskDoneClickInterface {
-        // creating a method for click action
-        // on recycler view item for updating it.
         fun onDoneClick(task: Task)
     }
 }

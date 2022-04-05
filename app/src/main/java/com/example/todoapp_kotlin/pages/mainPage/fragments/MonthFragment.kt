@@ -1,6 +1,5 @@
 package com.example.todoapp_kotlin.pages.mainPage.fragments
 
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -10,22 +9,20 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todoapp_kotlin.R
-import com.example.todoapp_kotlin.adapters.TaskAdapter
+import com.example.todoapp_kotlin.adapters.ParentAdapter
+import com.example.todoapp_kotlin.database.entities.Parent
 import com.example.todoapp_kotlin.database.entities.Task
-import com.example.todoapp_kotlin.pages.addTaskPage.AddTaskActivity
 import com.example.todoapp_kotlin.viewmodels.MyViewModel
 import com.shrikanthravi.collapsiblecalendarview.data.Day
 import com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar
 
 
-class MonthFragment : Fragment(), TaskAdapter.TaskClickInterface,
-    TaskAdapter.TaskDoneClickInterface {
+class MonthFragment : Fragment() {
 
-    private lateinit var viewModel: MyViewModel
+    lateinit var viewModel: MyViewModel
     private lateinit var recyclerView: RecyclerView
 
     override fun onCreateView(
@@ -39,17 +36,9 @@ class MonthFragment : Fragment(), TaskAdapter.TaskClickInterface,
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //declare views
+        val collapsibleCalendar = view.findViewById<CollapsibleCalendar>(R.id.calander)!!
         recyclerView = view.findViewById(R.id.recyclerview)
-        // on below line we are setting layout
-        // manager to our recycler view.
-        recyclerView.layoutManager = LinearLayoutManager(activity)
-        // on below line we are initializing our adapter class.
-        val taskAdapter = TaskAdapter(requireActivity(), this,this)
-
-        // on below line we are setting
-        // adapter to our recycler view.
-        recyclerView.adapter = taskAdapter
-        recyclerView.setHasFixedSize(true)
 
         // on below line we are
         // initializing our view modal.
@@ -57,31 +46,65 @@ class MonthFragment : Fragment(), TaskAdapter.TaskClickInterface,
             requireActivity(),
             ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
         )[MyViewModel::class.java]
+        // on below line we are setting layout
+        // manager to our recycler view.
+        recyclerView.layoutManager = LinearLayoutManager(activity)
+        // on below line we are initializing our adapter class.
+        val parentAdapter = ParentAdapter(requireActivity())
 
-        //add the onswipe to delete a note
-        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT){
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
-            ): Boolean {
-                return false
-            }
+        // on below line we are setting
+        // adapter to our recycler view.
+        recyclerView.adapter = parentAdapter
+        recyclerView.setHasFixedSize(true)
 
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val task = taskAdapter.allTasks[viewHolder.adapterPosition]
-                viewModel.deleteTask(task)
-            }
-        }).attachToRecyclerView(recyclerView)
+        updateData(parentAdapter,collapsibleCalendar)
 
-        val collapsibleCalendar = view.findViewById<CollapsibleCalendar>(R.id.calander)!!
+        setCalander(parentAdapter,collapsibleCalendar)
+    }
 
-        // on below line we are calling all notes method
-        // from our view modal class to observer the changes on list.
+    private fun updateData(parentAdapter: ParentAdapter, collapsibleCalendar:CollapsibleCalendar){
+
+        val categories = ArrayList<Parent>()
+        val dates = ArrayList<String>()
         viewModel.allTasks.observe(requireActivity()) { list ->
             list?.let {
                 // on below line we are updating our list.
-                taskAdapter.updateList(it)
+                it.forEach { task ->
+                    task.date?.let{ dates.add(task.date)}
+                }
+
+                //use a hashset to delete the repeated element
+
+                //use a hashset to delete the repeated element
+                val datesSet: Set<String> = HashSet(dates)
+                dates.clear()
+                dates.addAll(datesSet)
+
+                //use the commections sort to sort the list alphabetically
+                dates.sort()
+
+                //creat a categories of each date
+                for (date in dates) {
+                    categories.add(Parent(date, emptyList()))
+                }
+
+                //then add each task to hes date categorie
+                for (category in categories) {
+                    for (task in list) {
+                        if (task.date.equals(category.title)) {
+                            val thislist = ArrayList<Task>()
+                            if (category.tasks.isEmpty()) {
+                                thislist.add(task)
+                                category.tasks=thislist
+                            } else {
+                                thislist.addAll(category.tasks)
+                                thislist.add(task)
+                                category.tasks = thislist
+                            }
+                        }
+                    }
+                }
+                parentAdapter.updateList(categories)
                 it.forEach { task ->
                     task.date?.let{
                         if(task.date[0].isDigit()){
@@ -94,7 +117,68 @@ class MonthFragment : Fragment(), TaskAdapter.TaskClickInterface,
                 }
             }
         }
+    }
 
+    private fun updateDataByDate(parentAdapter: ParentAdapter, collapsibleCalendar:CollapsibleCalendar, date:String) {
+
+        viewModel.date.value = date
+        Log.d("test",date)
+        val categories = ArrayList<Parent>()
+        val dates = ArrayList<String>()
+
+        viewModel.tasksByDate.asLiveData().observe(requireActivity()) { list ->
+            Log.d("test","in the live data")
+            list?.let {
+                Log.d("test","in the list of tasks")
+
+                categories.clear()
+                dates.clear()
+                // on below line we are updating our list.
+                it.forEach { task ->
+                    task.date?.let{ dates.add(task.date)}
+                }
+                Log.d("test",dates.size.toString())
+                dates.forEach { print(it) }
+
+                //use a hashset to delete the repeated element
+                val datesSet: Set<String> = HashSet(dates)
+                dates.clear()
+                dates.addAll(datesSet)
+                Log.d("test",dates.size.toString())
+
+                //use the commections sort to sort the list alphabetically
+                dates.sort()
+                Log.d("test","sorted"+dates.size.toString())
+
+                //creat a categories of each date
+                for (date in dates) {
+                    categories.add(Parent(date, emptyList()))
+                }
+                Log.d("test",categories.size.toString())
+
+                //then add each task to hes date categorie
+                for (category in categories) {
+                    for (task in list) {
+                        if (task.date.equals(category.title)) {
+                            val thislist = ArrayList<Task>()
+                            if (category.tasks.isEmpty()) {
+                                thislist.add(task)
+                                category.tasks=thislist
+                            } else {
+                                thislist.addAll(category.tasks)
+                                thislist.add(task)
+                                category.tasks = thislist
+                            }
+                        }
+                    }
+                }
+                parentAdapter.updateList(categories)
+                Log.d("test","parents= "+parentAdapter.allParent.size.toString())
+            }
+        }
+    }
+
+    private fun setCalander(parentAdapter: ParentAdapter,collapsibleCalendar:CollapsibleCalendar){
         collapsibleCalendar.setCalendarListener(object : CollapsibleCalendar.CalendarListener {
             override fun onDayChanged() {
 
@@ -114,15 +198,8 @@ class MonthFragment : Fragment(), TaskAdapter.TaskClickInterface,
 
                 val thistoday = if(day.day<10) "0"+(day.day).toString() else day.day.toString()
                 val thismonth= if(day.month + 1<10) "0"+(day.month+1).toString() else (day.month + 1).toString()
-                Log.d("test" ,thistoday + "/" + thismonth + "/" + day.year.toString())
 
-                viewModel.date.value = thistoday + "/" + thismonth + "/" + day.year.toString()
-                viewModel.tasksByDate.asLiveData().observe(requireActivity()) { list ->
-                    list?.let{
-                        // on below line we are updating our list.
-                        taskAdapter.updateList(it)
-                    }
-                }
+                updateDataByDate(parentAdapter,collapsibleCalendar,thistoday + "/" + thismonth + "/" + day.year.toString())
             }
 
             override fun onItemClick(v: View) {
@@ -141,24 +218,5 @@ class MonthFragment : Fragment(), TaskAdapter.TaskClickInterface,
 
             }
         })
-    }
-
-    override fun onEditClick(task: Task) {
-        val intent = Intent(this.activity, AddTaskActivity::class.java)
-        intent.putExtra("id",task.idTask.toString())
-        intent.putExtra("title",task.title)
-        intent.putExtra("description",task.description)
-        intent.putExtra("category",task.categoryName)
-        intent.putExtra("color",task.categoryColor)
-        intent.putExtra("catevoryid",task.categoryId)
-        intent.putExtra("date",task.date)
-        intent.putExtra("time",task.time)
-        intent.putExtra("state",task.state.toString())
-        startActivity(intent)
-    }
-
-    override fun onDoneClick(task: Task) {
-        if(task.state==0) viewModel.updateTask(Task(task.idTask,task.title,task.description,task.date,task.time,task.categoryId,task.categoryName,task.categoryColor,1))
-        else viewModel.updateTask(Task(task.idTask,task.title,task.description,task.date,task.time,task.categoryId,task.categoryName,task.categoryColor,0))
     }
 }

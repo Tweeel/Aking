@@ -1,21 +1,20 @@
 package com.example.todoapp_kotlin.adapters
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todoapp_kotlin.R
 import com.example.todoapp_kotlin.database.entities.Parent
 import com.example.todoapp_kotlin.database.entities.Task
-import com.example.todoapp_kotlin.pages.addTaskPage.AddTaskActivity
-import com.example.todoapp_kotlin.pages.mainPage.fragments.MonthFragment
 
-class ParentAdapter(val context: Context): RecyclerView.Adapter<ParentAdapter.ParentViewHolder>(),
+class ParentAdapter(
+    val context: Context,
+    private val taskClickInterface: TaskClickInterfaceParent,
+): RecyclerView.Adapter<ParentAdapter.ParentViewHolder>(),
     TaskAdapter.TaskClickInterface, TaskAdapter.TaskDoneClickInterface {
 
     // on below line we are creating a
@@ -36,24 +35,25 @@ class ParentAdapter(val context: Context): RecyclerView.Adapter<ParentAdapter.Pa
         holder.title.text = allParent[position].title
 
         holder.recyclerview.layoutManager = LinearLayoutManager(context)
-        taskAdapter = TaskAdapter( holder.recyclerview.context,this,this)
+        taskAdapter = TaskAdapter( holder.recyclerview.context, parentClickInterface = taskClickInterface)
         taskAdapter.updateList(allParent[position].tasks)
         holder.recyclerview.adapter = taskAdapter
 
-        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT){
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
-            ): Boolean {
-                return false
-            }
-
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val task = taskAdapter.allTasks[viewHolder.adapterPosition]
-                val fragment = MonthFragment()
-                fragment.deleteTask(task)            }
-        }).attachToRecyclerView(holder.recyclerview)
+//        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT){
+//            override fun onMove(
+//                recyclerView: RecyclerView,
+//                viewHolder: RecyclerView.ViewHolder,
+//                target: RecyclerView.ViewHolder
+//            ): Boolean {
+//                return false
+//            }
+//
+//            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+//                val task = taskAdapter.allTasks[viewHolder.adapterPosition]
+//                val fragment = MonthFragment()
+//                fragment.deleteTask(task)
+//            }
+//        }).attachToRecyclerView(holder.recyclerview)
     }
 
     override fun getItemCount() = allParent.size
@@ -66,6 +66,9 @@ class ParentAdapter(val context: Context): RecyclerView.Adapter<ParentAdapter.Pa
         // on below line we are adding a
         // new list to our all notes list.
         allParent.addAll(newList)
+        // on below line we are calling notify data
+        // change method to notify our adapter.
+        notifyDataSetChanged()
     }
 
     inner class ParentViewHolder(itView: View) :
@@ -74,31 +77,17 @@ class ParentAdapter(val context: Context): RecyclerView.Adapter<ParentAdapter.Pa
         val recyclerview = itemView.findViewById<RecyclerView>(R.id.tasks)
     }
 
+    interface TaskClickInterfaceParent {
+        // creating a method for click action
+        // on recycler view item for updating it.
+        fun onEditClick(task: Task)
+        fun onDoneClick(task: Task)
+    }
+
     override fun onEditClick(task: Task) {
-        val intent = Intent(context, AddTaskActivity::class.java)
-        intent.putExtra("id",task.idTask.toString())
-        intent.putExtra("title",task.title)
-        intent.putExtra("description",task.description)
-        intent.putExtra("category",task.categoryName)
-        intent.putExtra("color",task.categoryColor)
-        intent.putExtra("catevoryid",task.categoryId)
-        intent.putExtra("date",task.date)
-        intent.putExtra("time",task.time)
-        intent.putExtra("state",task.state.toString())
-        context.startActivity(intent)
     }
 
     override fun onDoneClick(task: Task) {
-        val fragment = MonthFragment()
-        fragment.doneTask(task)
     }
 
-    fun MonthFragment.deleteTask(task:Task){
-        viewModel?.deleteTask(task)
-    }
-
-    fun MonthFragment.doneTask(task:Task){
-        if(task.state==0) task.state=1
-        else task.state=0
-        viewModel.updateTask(task)    }
 }

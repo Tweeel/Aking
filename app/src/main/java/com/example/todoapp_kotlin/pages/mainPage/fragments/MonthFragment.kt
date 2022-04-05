@@ -1,5 +1,6 @@
 package com.example.todoapp_kotlin.pages.mainPage.fragments
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -15,12 +16,13 @@ import com.example.todoapp_kotlin.R
 import com.example.todoapp_kotlin.adapters.ParentAdapter
 import com.example.todoapp_kotlin.database.entities.Parent
 import com.example.todoapp_kotlin.database.entities.Task
+import com.example.todoapp_kotlin.pages.addTaskPage.AddTaskActivity
 import com.example.todoapp_kotlin.viewmodels.MyViewModel
 import com.shrikanthravi.collapsiblecalendarview.data.Day
 import com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar
 
 
-class MonthFragment : Fragment() {
+class MonthFragment : Fragment(), ParentAdapter.TaskClickInterfaceParent {
 
     lateinit var viewModel: MyViewModel
     private lateinit var recyclerView: RecyclerView
@@ -50,7 +52,7 @@ class MonthFragment : Fragment() {
         // manager to our recycler view.
         recyclerView.layoutManager = LinearLayoutManager(activity)
         // on below line we are initializing our adapter class.
-        val parentAdapter = ParentAdapter(requireActivity())
+        val parentAdapter = ParentAdapter(requireActivity(),this)
 
         // on below line we are setting
         // adapter to our recycler view.
@@ -68,6 +70,8 @@ class MonthFragment : Fragment() {
         val dates = ArrayList<String>()
         viewModel.allTasks.observe(requireActivity()) { list ->
             list?.let {
+                categories.clear()
+                dates.clear()
                 // on below line we are updating our list.
                 it.forEach { task ->
                     task.date?.let{ dates.add(task.date)}
@@ -218,5 +222,25 @@ class MonthFragment : Fragment() {
 
             }
         })
+    }
+
+    override fun onEditClick(task: Task) {
+        val intent = Intent(this.activity, AddTaskActivity::class.java)
+        intent.putExtra("id",task.idTask.toString())
+        intent.putExtra("title",task.title)
+        intent.putExtra("description",task.description)
+        intent.putExtra("category",task.categoryName)
+        intent.putExtra("color",task.categoryColor)
+        intent.putExtra("catevoryid",task.categoryId.toString())
+        intent.putExtra("date",task.date)
+        intent.putExtra("time",task.time)
+        intent.putExtra("state",task.state.toString())
+        startActivity(intent)
+    }
+
+    override fun onDoneClick(task: Task) {
+        if(task.state==0) task.state=1
+        else task.state=0
+        viewModel.updateTask(task)
     }
 }

@@ -15,8 +15,9 @@ import com.example.todoapp_kotlin.database.entities.Task
 
 class TaskAdapter(
     val context: Context,
-    private val taskClickInterface: TaskClickInterface,
-    private val taskDoneClickInterface: TaskDoneClickInterface
+    private val taskClickInterface: TaskClickInterface?=null,
+    private val taskDoneClickInterface: TaskDoneClickInterface?=null,
+    private val parentClickInterface: ParentAdapter.TaskClickInterfaceParent?=null,
 ) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>(){
 
     // on below line we are creating a
@@ -38,10 +39,17 @@ class TaskAdapter(
         holder.title.text = allTasks[position].title
         holder.description.text = allTasks[position].description
         holder.task.setOnClickListener{
-            taskClickInterface.onEditClick(allTasks[position])
+            taskClickInterface?.onEditClick(allTasks[position])
         }
         holder.image.setOnClickListener{
-            taskDoneClickInterface.onDoneClick(allTasks[position])
+            taskDoneClickInterface?.onDoneClick(allTasks[position])
+        }
+
+        holder.task.setOnClickListener{
+            parentClickInterface?.onEditClick(allTasks[position])
+        }
+        holder.image.setOnClickListener{
+            parentClickInterface?.onDoneClick(allTasks[position])
         }
 
         when(allTasks[position].categoryColor){

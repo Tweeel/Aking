@@ -2,7 +2,6 @@ package com.example.todoapp_kotlin.pages.addTaskPage
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -12,11 +11,14 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.lifecycle.ViewModelProvider
 import com.example.todoapp_kotlin.R
 import com.example.todoapp_kotlin.database.entities.Task
-import com.example.todoapp_kotlin.pages.mainPage.MainActivity
 import com.example.todoapp_kotlin.viewmodels.MyViewModel
 import java.util.*
 
 class AddTaskActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{
+
+    //we use this var to know where to go after clicking
+    // the add button depends on from did we start the addTaskPage
+    lateinit var page:String
 
     private lateinit var titleText : TextView
     private lateinit var descriptionText : TextView
@@ -56,7 +58,6 @@ class AddTaskActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
         )[MyViewModel::class.java]
 
         findViewById<ImageView>(R.id.rollback).setOnClickListener {
-            startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
 
@@ -79,6 +80,7 @@ class AddTaskActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
             val date = intent.getStringExtra("date")
             val time = intent.getStringExtra("time")
             val state = intent.getStringExtra("state")!!.toInt()
+            intent.getStringExtra("page")?.let { intent.getStringExtra("page") }
 
             findViewById<TextView>(R.id.title).text = "Edit Task"
             findViewById<TextView>(R.id.add).text = "Edit"
@@ -166,8 +168,6 @@ class AddTaskActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
                     viewModel.updateTask(Task(idTask =id,title=title,description= description,
                         categoryId = idCategory,categoryName = category,
                         categoryColor = color, time = time, date = date, state = state))
-
-                startActivity(Intent(this,MainActivity::class.java))
                 finish()
             }else{
                 Toast.makeText(this,"please enter a title",Toast.LENGTH_SHORT).show()

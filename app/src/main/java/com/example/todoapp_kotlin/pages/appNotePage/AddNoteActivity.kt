@@ -11,7 +11,6 @@ import com.example.todoapp_kotlin.R
 import com.example.todoapp_kotlin.database.entities.Note
 import com.example.todoapp_kotlin.pages.mainPage.MainActivity
 import com.example.todoapp_kotlin.viewmodels.MyViewModel
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -65,8 +64,6 @@ class AddNoteActivity : AppCompatActivity() {
         }
 
         findViewById<ImageView>(R.id.rollback).setOnClickListener {
-            intentToMain.putExtra("note","that a note")
-            startActivity(intentToMain)
             finish()
         }
 

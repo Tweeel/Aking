@@ -3,7 +3,6 @@
     <item
         android:id="@+id/incomplete"
         android:title="Incomplete Tasks"
-        android:checked="true"
         android:icon="@drawable/correct" />
 
     <item
@@ -14,5 +13,6 @@
     <item
         android:id="@+id/all"
         android:title="All Tasks"
-        android:icon="@drawable/correct" />
+        android:icon="@drawable/correct"
+        android:checked="true"/>
 </menu>

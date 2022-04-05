@@ -5,15 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todoapp_kotlin.R
 import com.example.todoapp_kotlin.database.entities.Parent
 import com.example.todoapp_kotlin.database.entities.Task
+import com.example.todoapp_kotlin.pages.mainPage.fragments.MonthFragment
+import com.example.todoapp_kotlin.viewmodels.MyViewModel
 
 class ParentAdapter(
     val context: Context,
     private val taskClickInterface: TaskClickInterfaceParent,
+    private val viewmodel: MyViewModel
 ): RecyclerView.Adapter<ParentAdapter.ParentViewHolder>() {
 
     // on below line we are creating a
@@ -38,21 +43,20 @@ class ParentAdapter(
         taskAdapter.updateList(allParent[position].tasks)
         holder.recyclerview.adapter = taskAdapter
 
-//        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT){
-//            override fun onMove(
-//                recyclerView: RecyclerView,
-//                viewHolder: RecyclerView.ViewHolder,
-//                target: RecyclerView.ViewHolder
-//            ): Boolean {
-//                return false
-//            }
-//
-//            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-//                val task = taskAdapter.allTasks[viewHolder.adapterPosition]
-//                val fragment = MonthFragment()
-//                fragment.deleteTask(task)
-//            }
-//        }).attachToRecyclerView(holder.recyclerview)
+        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT){
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                Toast.makeText(context,"task deleted",Toast.LENGTH_LONG).show()
+                
+            }
+        }).attachToRecyclerView(holder.recyclerview)
     }
 
     override fun getItemCount() = allParent.size
@@ -81,5 +85,10 @@ class ParentAdapter(
         // on recycler view item for updating it.
         fun onEditClick(task: Task)
         fun onDoneClick(task: Task)
+    }
+
+    fun MonthFragment.delete(){
+        Toast.makeText(context,"task deleted",Toast.LENGTH_LONG).show()
+
     }
 }

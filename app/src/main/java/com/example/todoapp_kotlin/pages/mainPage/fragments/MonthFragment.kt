@@ -42,7 +42,6 @@ class MonthFragment : Fragment(), ParentAdapter.TaskClickInterfaceParent {
         val collapsibleCalendar = view.findViewById<CollapsibleCalendar>(R.id.calander)!!
         recyclerView = view.findViewById(R.id.recyclerview)
 
-        // on below line we are
         // initializing our view modal.
         viewModel = ViewModelProvider(
             requireActivity(),
@@ -52,7 +51,7 @@ class MonthFragment : Fragment(), ParentAdapter.TaskClickInterfaceParent {
         // manager to our recycler view.
         recyclerView.layoutManager = LinearLayoutManager(activity)
         // on below line we are initializing our adapter class.
-        val parentAdapter = ParentAdapter(requireActivity(),this)
+        val parentAdapter = ParentAdapter(requireActivity(),this,viewModel)
 
         // on below line we are setting
         // adapter to our recycler view.
@@ -123,7 +122,7 @@ class MonthFragment : Fragment(), ParentAdapter.TaskClickInterfaceParent {
         }
     }
 
-    private fun updateDataByDate(parentAdapter: ParentAdapter, collapsibleCalendar:CollapsibleCalendar, date:String) {
+    private fun updateDataByDate(parentAdapter: ParentAdapter, date: String) {
 
         viewModel.date.value = date
         Log.d("test",date)
@@ -203,7 +202,10 @@ class MonthFragment : Fragment(), ParentAdapter.TaskClickInterfaceParent {
                 val thistoday = if(day.day<10) "0"+(day.day).toString() else day.day.toString()
                 val thismonth= if(day.month + 1<10) "0"+(day.month+1).toString() else (day.month + 1).toString()
 
-                updateDataByDate(parentAdapter,collapsibleCalendar,thistoday + "/" + thismonth + "/" + day.year.toString())
+                updateDataByDate(
+                    parentAdapter,
+                    thistoday + "/" + thismonth + "/" + day.year.toString()
+                )
             }
 
             override fun onItemClick(v: View) {

@@ -32,6 +32,7 @@ class CategoryActivity : AppCompatActivity(), TaskAdapter.TaskClickInterface {
 
         supportActionBar?.hide()
 
+        /*get the data from the intent*/
         if(intent.getStringExtra("category")!=null ){
 
             findViewById<ImageView>(R.id.rollback).setOnClickListener {
@@ -47,6 +48,7 @@ class CategoryActivity : AppCompatActivity(), TaskAdapter.TaskClickInterface {
             val number= intent.getStringExtra("number")!!.toInt()
 
             findViewById<TextView>(R.id.title).text = categoryName
+
             recyclerView = findViewById(R.id.recyclerview)
             // on below line we are setting layout
             // manager to our recycler view.
@@ -92,6 +94,7 @@ class CategoryActivity : AppCompatActivity(), TaskAdapter.TaskClickInterface {
                 }
             }).attachToRecyclerView(recyclerView)
 
+            /*make the button delete the category and all the tasks in it*/
             findViewById<ImageView>(R.id.delete).setOnClickListener {
                 viewModel.deleteTasksByCategoryName(viewModel.caterogy.value)
                 viewModel.deleteCaterogy(Caterogy(id,categoryName!!,color!!))
@@ -101,6 +104,7 @@ class CategoryActivity : AppCompatActivity(), TaskAdapter.TaskClickInterface {
                 finish()
             }
 
+            /*setup the dialog*/
             val new_category_dialog = Dialog(this)
             new_category_dialog.setContentView(R.layout.new_category)
             new_category_dialog.window?.setBackgroundDrawable(getDrawable(R.drawable.back_round_white))
@@ -119,6 +123,7 @@ class CategoryActivity : AppCompatActivity(), TaskAdapter.TaskClickInterface {
 
             findViewById<ImageView>(R.id.edit).setOnClickListener { new_category_dialog.show() }
 
+            /*setup the edit button*/
             category.setOnClickListener {
                 if(new_category_dialog.findViewById<TextInputEditText>(R.id.title_text).text.toString().isNotEmpty()){
                     lateinit var color : String
@@ -161,5 +166,9 @@ class CategoryActivity : AppCompatActivity(), TaskAdapter.TaskClickInterface {
     override fun onDoneClick(task: Task) {
         if(task.state==0) viewModel.updateTask(Task(task.idTask,task.title,task.description,task.date,task.time,task.categoryId,task.categoryName,task.categoryColor,1))
         else viewModel.updateTask(Task(task.idTask,task.title,task.description,task.date,task.time,task.categoryId,task.categoryName,task.categoryColor,0))
+    }
+
+    private fun setupRecyclerView(id:Int) {
+
     }
 }

@@ -1,14 +1,11 @@
 package com.example.todoapp_kotlin.pages.mainPage.fragments
 
-import android.annotation.SuppressLint
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.*
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.MenuRes
-import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -28,9 +25,7 @@ class TasksFragment : Fragment(), TaskAdapter.TaskClickInterface, PopupMenu.OnMe
 
     private lateinit var viewModel: MyViewModel
     private lateinit var recyclerView: RecyclerView
-    private lateinit var menu: ImageView
-
-     lateinit var taskAdapter: TaskAdapter
+    private lateinit var taskAdapter: TaskAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,64 +35,14 @@ class TasksFragment : Fragment(), TaskAdapter.TaskClickInterface, PopupMenu.OnMe
         return inflater.inflate(R.layout.fragment_tasks, container, false)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // on below line we are initializing
-        // all our variables.
-        menu = view.findViewById(R.id.menu)
         recyclerView = view.findViewById(R.id.recyclerview)
-        // on below line we are setting layout
-        // manager to our recycler view.
-        recyclerView.layoutManager = LinearLayoutManager(activity)
-        // on below line we are initializing our adapter class.
-        taskAdapter = TaskAdapter(requireActivity(), this)
 
-        // on below line we are setting
-        // adapter to our recycler view.
-        recyclerView.adapter = taskAdapter
-        recyclerView.setHasFixedSize(true)
+        recyclerViewSetup()
 
-        val currentDate= LocalDateTime.now()
-        val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
-        val date = currentDate.format(formatter)
-
-        // on below line we are
-        // initializing our view modal.
-        viewModel = ViewModelProvider(
-            requireActivity(),
-            ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
-        )[MyViewModel::class.java]
-
-        viewModel.date.value = date.toString()
-
-        // on below line we are calling all notes method
-        // from our view modal class to observer the changes on list.
-        viewModel.todayTasks.asLiveData().observe(requireActivity()) { list ->
-            list?.let {
-                // on below line we are updating our list.
-                taskAdapter.updateList(it)
-            }
-        }
-
-        //add the onswipe to delete a note
-        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT){
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
-            ): Boolean {
-                return false
-            }
-
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val task = taskAdapter.allTasks[viewHolder.adapterPosition]
-                viewModel.deleteTask(task)
-            }
-        }).attachToRecyclerView(recyclerView)
-
-        menu.setOnClickListener{
+        view.findViewById<ImageView>(R.id.menu).setOnClickListener{
             showMenu(it, R.menu.toolbar_menu)
         }
     }
@@ -112,7 +57,6 @@ class TasksFragment : Fragment(), TaskAdapter.TaskClickInterface, PopupMenu.OnMe
         Toast.makeText(activity,"onCreateContextMenu",Toast.LENGTH_SHORT).show()
     }
 
-    @SuppressLint("RestrictedApi")
     private fun showMenu(v: View, @MenuRes menuRes: Int) {
         val popup = PopupMenu(requireContext(), v)
         popup.menuInflater.inflate(menuRes, popup.menu)
@@ -173,5 +117,56 @@ class TasksFragment : Fragment(), TaskAdapter.TaskClickInterface, PopupMenu.OnMe
         if(task.state==0) task.state=1
         else task.state=0
         viewModel.updateTask(task)
+    }
+
+    private fun recyclerViewSetup(){
+        // on below line we are setting layout
+        // manager to our recycler view.
+        recyclerView.layoutManager = LinearLayoutManager(activity)
+        // on below line we are initializing our adapter class.
+        taskAdapter = TaskAdapter(requireActivity(), this)
+
+        // on below line we are setting
+        // adapter to our recycler view.
+        recyclerView.adapter = taskAdapter
+        recyclerView.setHasFixedSize(true)
+
+        val currentDate= LocalDateTime.now()
+        val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+        val date = currentDate.format(formatter)
+
+        // on below line we are
+        // initializing our view modal.
+        viewModel = ViewModelProvider(
+            requireActivity(),
+            ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
+        )[MyViewModel::class.java]
+
+        viewModel.date.value = date.toString()
+
+        // on below line we are calling all notes method
+        // from our view modal class to observer the changes on list.
+        viewModel.todayTasks.asLiveData().observe(requireActivity()) { list ->
+            list?.let {
+                // on below line we are updating our list.
+                taskAdapter.updateList(it)
+            }
+        }
+
+        //add the onswipe to delete a note
+        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT){
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val task = taskAdapter.allTasks[viewHolder.adapterPosition]
+                viewModel.deleteTask(task)
+            }
+        }).attachToRecyclerView(recyclerView)
     }
 }

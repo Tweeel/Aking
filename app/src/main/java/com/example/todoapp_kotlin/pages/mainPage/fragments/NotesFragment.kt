@@ -34,6 +34,20 @@ class NotesFragment : Fragment(), NoteAdapter.NoteClickInterface {
         super.onViewCreated(view, savedInstanceState)
 
         recyclerView = view.findViewById(R.id.recyclerview)
+        recyclerViewSetup()
+    }
+
+    override fun onNoteClick(note: Note) {
+        val intent = Intent(this.activity, AddNoteActivity::class.java)
+        intent.putExtra("id",note.idTile.toString())
+        intent.putExtra("text",note.text)
+        intent.putExtra("color",note.color)
+        intent.putExtra("date",note.date)
+        intent.putExtra("version",note.version.toString())
+        startActivity(intent)
+    }
+
+    fun recyclerViewSetup(){
         // on below line we are setting layout
         // manager to our recycler view.
         recyclerView.layoutManager = LinearLayoutManager(activity)
@@ -76,15 +90,5 @@ class NotesFragment : Fragment(), NoteAdapter.NoteClickInterface {
                 viewModel.deleteNote(note)
             }
         }).attachToRecyclerView(recyclerView)
-    }
-
-    override fun onNoteClick(note: Note) {
-        val intent = Intent(this.activity, AddNoteActivity::class.java)
-        intent.putExtra("id",note.idTile.toString())
-        intent.putExtra("text",note.text)
-        intent.putExtra("color",note.color)
-        intent.putExtra("date",note.date)
-        intent.putExtra("version",note.version.toString())
-        startActivity(intent)
     }
 }

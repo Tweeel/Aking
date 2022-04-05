@@ -26,8 +26,7 @@ class AddNoteActivity : AppCompatActivity() {
         setContentView(R.layout.activity_add_note)
         supportActionBar?.hide()
 
-        val intentToMain = Intent(this,MainActivity::class.java)
-
+        /*variables initialization*/
         val viewModel = ViewModelProvider(
             this, ViewModelProvider.AndroidViewModelFactory.getInstance(this.application)
         )[MyViewModel::class.java]
@@ -63,10 +62,12 @@ class AddNoteActivity : AppCompatActivity() {
                     }
         }
 
+        /*setup the roll back button*/
         findViewById<ImageView>(R.id.rollback).setOnClickListener {
             finish()
         }
 
+        /*setup the done back button*/
         findViewById<ImageView>(R.id.done).setOnClickListener{
             val note = findViewById<EditText>(R.id.note).text.toString()
             when(findViewById<RadioGroup>(R.id.colors).checkedRadioButtonId){
@@ -81,8 +82,9 @@ class AddNoteActivity : AppCompatActivity() {
                     viewModel.insertNote(Note(text=note,color=color,date=date, version = 1))
                 else
                     viewModel.updateNote(Note(idTile = id,text=note,color=color,date=date, version = 2))
-                intentToMain.putExtra("note","that a note")
-                startActivity(intentToMain)
+                val intent = Intent(this,MainActivity::class.java)
+                intent.putExtra("note","that a note")
+                startActivity(intent)
                 finish()
             }else{
                 Toast.makeText(this,"please fill the note",Toast.LENGTH_LONG).show()

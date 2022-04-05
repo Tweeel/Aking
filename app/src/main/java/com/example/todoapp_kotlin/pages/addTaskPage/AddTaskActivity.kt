@@ -67,7 +67,7 @@ class AddTaskActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
         timeText = findViewById(R.id.timePicker)
         caegoryText = findViewById(R.id.category)
 
-        /*receive data from the coming note*/
+        /*receive data from the coming task*/
         if(intent.getStringExtra("id")!=null &&
             intent.getStringExtra("title")!=null){
             id = intent.getStringExtra("id")!!.toInt()
@@ -111,6 +111,7 @@ class AddTaskActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
             this.state=state
         }
 
+        /*setup the category button*/
         val menu = findViewById<TextView>(R.id.category)
         val listPopupWindow = ListPopupWindow(this, null)
         // Set button as the list popup's anchor
@@ -144,6 +145,7 @@ class AddTaskActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
             listPopupWindow.show()
         }
 
+        /*setup the date and time pickers*/
         dateText.setOnClickListener {
             getDateTimeCalendar()
             DatePickerDialog(this,R.style.DialogTheme,this,year,month,day).show()
@@ -154,6 +156,7 @@ class AddTaskActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
             TimePickerDialog(this,R.style.DialogTheme,this,hour,minute,true).show()
         }
 
+        /*setup the add/edit button*/
         findViewById<AppCompatButton>(R.id.add).setOnClickListener {
             val title = titleText.text.toString()
             descriptionText.text?.let{ text->

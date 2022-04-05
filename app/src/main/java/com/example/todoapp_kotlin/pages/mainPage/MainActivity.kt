@@ -19,7 +19,6 @@ import com.example.todoapp_kotlin.database.entities.Caterogy
 import com.example.todoapp_kotlin.pages.addTaskPage.AddTaskActivity
 import com.example.todoapp_kotlin.pages.appNotePage.AddNoteActivity
 import com.example.todoapp_kotlin.pages.mainPage.fragments.CategiriesFragment
-import com.example.todoapp_kotlin.pages.mainPage.fragments.MonthFragment
 import com.example.todoapp_kotlin.pages.mainPage.fragments.NotesFragment
 import com.example.todoapp_kotlin.viewmodels.MyViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -64,13 +63,12 @@ class MainActivity : AppCompatActivity() {
         /*setup the fab*/
         val fab = findViewById<FloatingActionButton>(R.id.fab)
 
-        //get the drawable
-
         //change the fab icon color
         val myFabSrc = resources.getDrawable(R.drawable.add)
         myFabSrc.mutate().setColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY)
         fab.setImageDrawable(myFabSrc)
 
+        /*setup the dialog*/
         val dialog_new = Dialog(this)
         dialog_new.setContentView(R.layout.create_new)
         dialog_new.window?.setBackgroundDrawable(getDrawable(R.drawable.back_round_white))

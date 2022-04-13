@@ -41,7 +41,6 @@ class MonthFragment : Fragment(), ParentAdapter.TaskClickInterfaceParent {
         //declare views
         val collapsibleCalendar = view.findViewById<CollapsibleCalendar>(R.id.calander)!!
         recyclerView = view.findViewById(R.id.recyclerview)
-
         // initializing our view modal.
         viewModel = ViewModelProvider(
             requireActivity(),
@@ -52,7 +51,6 @@ class MonthFragment : Fragment(), ParentAdapter.TaskClickInterfaceParent {
         recyclerView.layoutManager = LinearLayoutManager(activity)
         // on below line we are initializing our adapter class.
         val parentAdapter = ParentAdapter(requireActivity(),this,viewModel)
-
         // on below line we are setting
         // adapter to our recycler view.
         recyclerView.adapter = parentAdapter

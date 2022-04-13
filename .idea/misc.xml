@@ -6,9 +6,11 @@
         <entry key="..\:/Users/houss/.gradle/caches/transforms-3/d5e72e6459f0e45f9bd592d83b00d0d0/transformed/Collapsible-Calendar-View-Android-v1.0.3/res/drawable/circle_white_stroke_background.xml" value="0.12" />
         <entry key="..\:/Users/houss/AndroidStudioProjects/ToDoApp-kotlin/app/src/main/res/drawable-v24/add.xml" value="0.1" />
         <entry key="..\:/Users/houss/AndroidStudioProjects/ToDoApp-kotlin/app/src/main/res/drawable-v24/back_round_grey.xml" value="0.187" />
+        <entry key="..\:/Users/houss/AndroidStudioProjects/ToDoApp-kotlin/app/src/main/res/drawable-v24/back_round_pink.xml" value="0.1855" />
         <entry key="..\:/Users/houss/AndroidStudioProjects/ToDoApp-kotlin/app/src/main/res/drawable-v24/back_round_white.xml" value="0.158" />
         <entry key="..\:/Users/houss/AndroidStudioProjects/ToDoApp-kotlin/app/src/main/res/drawable-v24/back_round_white_black_border.xml" value="0.158" />
         <entry key="..\:/Users/houss/AndroidStudioProjects/ToDoApp-kotlin/app/src/main/res/drawable-v24/ic_baseline_arrow_back_24.xml" value="0.1" />
+        <entry key="..\:/Users/houss/AndroidStudioProjects/ToDoApp-kotlin/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.117" />
         <entry key="..\:/Users/houss/AndroidStudioProjects/ToDoApp-kotlin/app/src/main/res/drawable-v24/menu.xml" value="0.112" />
         <entry key="..\:/Users/houss/AndroidStudioProjects/ToDoApp-kotlin/app/src/main/res/layout/activity_add.xml" value="0.15307971014492755" />
         <entry key="..\:/Users/houss/AndroidStudioProjects/ToDoApp-kotlin/app/src/main/res/layout/activity_add_note.xml" value="0.18" />
@@ -35,6 +37,7 @@
         <entry key="..\:/Users/houss/AndroidStudioProjects/ToDoApp-kotlin/app/src/main/res/layout/new_category.xml" value="0.264" />
         <entry key="..\:/Users/houss/AndroidStudioProjects/ToDoApp-kotlin/app/src/main/res/layout/note_item.xml" value="0.1" />
         <entry key="..\:/Users/houss/AndroidStudioProjects/ToDoApp-kotlin/app/src/main/res/layout/task_item.xml" value="0.1" />
+        <entry key="..\:/Users/houss/AndroidStudioProjects/ToDoApp-kotlin/app/src/main/res/layout/test.xml" value="0.264" />
         <entry key="..\:/Users/houss/AndroidStudioProjects/ToDoApp-kotlin/app/src/main/res/layout/toolbar_title_layout.xml" value="0.22" />
         <entry key="..\:/Users/houss/AndroidStudioProjects/ToDoApp-kotlin/app/src/main/res/menu/buttom_menu.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/houss/AndroidStudioProjects/ToDoApp-kotlin/app/src/main/res/menu/toolbar_menu.xml" value="0.27291666666666664" />

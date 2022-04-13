@@ -1,7 +1,8 @@
 package com.example.todoapp_kotlin.pages.addTaskPage
 
-import android.app.DatePickerDialog
-import android.app.TimePickerDialog
+import android.app.*
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -9,6 +10,10 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.lifecycle.ViewModelProvider
+import com.example.todoapp_kotlin.Notifications.channelID
+import com.example.todoapp_kotlin.Notifications.messageExtra
+import com.example.todoapp_kotlin.Notifications.notificationID
+import com.example.todoapp_kotlin.Notifications.titleExtra
 import com.example.todoapp_kotlin.R
 import com.example.todoapp_kotlin.database.entities.Task
 import com.example.todoapp_kotlin.viewmodels.MyViewModel
@@ -163,11 +168,13 @@ class AddTaskActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
                 description=text.toString()
             }
             if(title.isNotEmpty()){
-                if(id==0)
+                if(id==0){
                     viewModel.insertTask(Task(title=title,description= description,
                         categoryId = idCategory,categoryName = category,
                         categoryColor = color,time = time, date = date))
-                else
+                    createNotificationChannel(title,description)
+                    scheduleNotification(title,description,date,time)
+                } else
                     viewModel.updateTask(Task(idTask =id,title=title,description= description,
                         categoryId = idCategory,categoryName = category,
                         categoryColor = color, time = time, date = date, state = state))
@@ -204,6 +211,58 @@ class AddTaskActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
 
         timeText.text = "$savedhour:$savedminute"
         time  = "$savedhour:$savedminute"
+    }
+
+    private fun scheduleNotification(title: String, description: String, date: String, time: String) {
+        val intent = Intent (applicationContext, Notification::class.java)
+        intent.putExtra(titleExtra, title)
+        intent.putExtra(messageExtra, description)
+        val pendingIntent = PendingIntent.getBroadcast(
+            applicationContext,
+            notificationID,
+            intent,
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        )
+
+        val alarmManager = getSystemService (Context.ALARM_SERVICE) as AlarmManager
+        val thistime = getTime(time,date)
+        alarmManager.setExactAndAllowWhileIdle(
+            AlarmManager.RTC_WAKEUP,
+            thistime,
+            pendingIntent
+        )
+        showAlert(title,description)
+
+    }
+
+    private fun getTime(time: String, date: String): Long {
+        val minute = time.drop(3).toInt()
+        val hour = time.dropLast(3).toInt()
+        val day = date.dropLast(6).toInt()
+        val month = date.dropLast(3).drop(3).toInt()
+        val year = date.drop(6).toInt()
+
+        val calendar = Calendar.getInstance()
+        calendar.set(year,month,day,hour,minute)
+        return calendar.timeInMillis
+    }
+
+    private fun showAlert( title: String, description: String){
+        AlertDialog.Builder(this)
+            .setIcon(R.drawable.logo)
+            .setTitle(title)
+            .setMessage("Description: " + description)
+            .setPositiveButton("Okay") {_,_ ->}
+            .show()
+    }
+
+
+    private fun createNotificationChannel(title:String,description:String) {
+        val importance = NotificationManager.IMPORTANCE_DEFAULT
+        val channel = NotificationChannel(channelID,title,importance)
+        channel.description = description
+        val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(channel)
     }
 }
 

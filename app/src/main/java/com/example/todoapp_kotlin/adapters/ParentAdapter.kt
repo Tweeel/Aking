@@ -43,6 +43,7 @@ class ParentAdapter(
         taskAdapter.updateList(allParent[position].tasks)
         holder.recyclerview.adapter = taskAdapter
 
+
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT){
             override fun onMove(
                 recyclerView: RecyclerView,
@@ -51,10 +52,10 @@ class ParentAdapter(
             ): Boolean {
                 return false
             }
-
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val task = taskAdapter.allTasks[viewHolder.adapterPosition]
+                viewmodel.deleteTask(task)
                 Toast.makeText(context,"task deleted",Toast.LENGTH_LONG).show()
-                
             }
         }).attachToRecyclerView(holder.recyclerview)
     }
@@ -89,6 +90,5 @@ class ParentAdapter(
 
     fun MonthFragment.delete(){
         Toast.makeText(context,"task deleted",Toast.LENGTH_LONG).show()
-
     }
 }

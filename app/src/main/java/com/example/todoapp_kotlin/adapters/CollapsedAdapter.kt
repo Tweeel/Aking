@@ -51,7 +51,6 @@ class CollapsedAdapter(
             taskAdapter.updateList(emptyList())
             holder.recyclerview.adapter = taskAdapter
             holder.arrow.setBackgroundResource(R.drawable.arrow_down)
-
         }
 
         holder.constraintLayout.setOnClickListener {

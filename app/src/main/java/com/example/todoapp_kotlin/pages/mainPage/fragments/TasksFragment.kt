@@ -150,7 +150,7 @@ class TasksFragment : Fragment(), PopupMenu.OnMenuItemClickListener,
         viewModel.date.value = date.toString()
 
         val categories: MutableList<Collapsed> = ArrayList()
-        val completedTasks = Collapsed("Completed Tasks", emptyList())
+        val completedTasks = Collapsed("Completed Tasks", emptyList(),false)
         val incompletedTasks = Collapsed("Incompleted Tasks", emptyList())
         val intask: MutableList<Task> = ArrayList()
         val comtask: MutableList<Task> = ArrayList()
@@ -159,6 +159,11 @@ class TasksFragment : Fragment(), PopupMenu.OnMenuItemClickListener,
         // Get all the words from the database
         // and associate them to the adapter.
         viewModel.todayTasks.asLiveData().observe(requireActivity()) { tasks ->
+            comtask.clear()
+            intask.clear()
+            incompletedTasks.tasks = emptyList()
+            completedTasks.tasks = emptyList()
+            categories.clear()
             for (task in tasks) {
                 if (task.state == 0) {
                     intask.add(task)

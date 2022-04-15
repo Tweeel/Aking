@@ -10,22 +10,23 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todoapp_kotlin.R
-import com.example.todoapp_kotlin.adapters.TaskAdapter
+import com.example.todoapp_kotlin.adapters.CollapsedAdapter
+import com.example.todoapp_kotlin.database.entities.Collapsed
 import com.example.todoapp_kotlin.database.entities.Task
 import com.example.todoapp_kotlin.pages.addTaskPage.AddTaskActivity
 import com.example.todoapp_kotlin.viewmodels.MyViewModel
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class TasksFragment : Fragment(), TaskAdapter.TaskClickInterface, PopupMenu.OnMenuItemClickListener {
+class TasksFragment : Fragment(), PopupMenu.OnMenuItemClickListener,
+    CollapsedAdapter.TaskClickInterfaceCollapsed, CollapsedAdapter.CollapsedInterface {
 
     private lateinit var viewModel: MyViewModel
     private lateinit var recyclerView: RecyclerView
-    private lateinit var taskAdapter: TaskAdapter
+    private lateinit var collapsedAdapter: CollapsedAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,36 +67,36 @@ class TasksFragment : Fragment(), TaskAdapter.TaskClickInterface, PopupMenu.OnMe
     }
 
     override fun onMenuItemClick(item: MenuItem?): Boolean {
-        when(item?.itemId){
-            R.id.incomplete ->{
-                item.isChecked = true
-                viewModel.incompletedTasks.observe(requireActivity()) { list ->
-                    list?.let {
-                        // on below line we are updating our list.
-                        taskAdapter.updateList(it)
-                    }
-                }
-            }
-            R.id.completed ->{
-                item.isChecked = true
-                viewModel.completedTasks.observe(requireActivity()) { list ->
-                    list?.let {
-                        // on below line we are updating our list.
-                        taskAdapter.updateList(it)
-                    }
-                }
-            }
-            R.id.all ->{
-                item.isChecked = true
-                viewModel.allTasks.observe(requireActivity()) { list ->
-                    list?.let {
-                        // on below line we are updating our list.
-                        taskAdapter.updateList(it)
-                    }
-                }
-            }
-            else -> item?.let { super.onOptionsItemSelected(it) }
-        }
+//        when(item?.itemId){
+//            R.id.incomplete ->{
+//                item.isChecked = true
+//                viewModel.incompletedTasks.observe(requireActivity()) { list ->
+//                    list?.let {
+//                        // on below line we are updating our list.
+//                        taskAdapter.updateList(it)
+//                    }
+//                }
+//            }
+//            R.id.completed ->{
+//                item.isChecked = true
+//                viewModel.completedTasks.observe(requireActivity()) { list ->
+//                    list?.let {
+//                        // on below line we are updating our list.
+//                        taskAdapter.updateList(it)
+//                    }
+//                }
+//            }
+//            R.id.all ->{
+//                item.isChecked = true
+//                viewModel.allTasks.observe(requireActivity()) { list ->
+//                    list?.let {
+//                        // on below line we are updating our list.
+//                        taskAdapter.updateList(it)
+//                    }
+//                }
+//            }
+//            else -> item?.let { super.onOptionsItemSelected(it) }
+//        }
         return true
     }
 
@@ -119,54 +120,57 @@ class TasksFragment : Fragment(), TaskAdapter.TaskClickInterface, PopupMenu.OnMe
         viewModel.updateTask(task)
     }
 
+    override fun onCollapsedClick(collapsed: Collapsed) {
+        collapsed.collapsed = collapsed.collapsed != true
+        collapsedAdapter.notifyDataSetChanged()
+    }
+
     private fun recyclerViewSetup(){
-        // on below line we are setting layout
-        // manager to our recycler view.
-        recyclerView.layoutManager = LinearLayoutManager(activity)
-        // on below line we are initializing our adapter class.
-        taskAdapter = TaskAdapter(requireActivity(), this)
-
-        // on below line we are setting
-        // adapter to our recycler view.
-        recyclerView.adapter = taskAdapter
-        recyclerView.setHasFixedSize(true)
-
-        val currentDate= LocalDateTime.now()
-        val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
-        val date = currentDate.format(formatter)
-
         // on below line we are
         // initializing our view modal.
         viewModel = ViewModelProvider(
             requireActivity(),
             ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
         )[MyViewModel::class.java]
+        // on below line we are setting layout
+        // manager to our recycler view.
+        recyclerView.layoutManager = LinearLayoutManager(activity)
+        // on below line we are initializing our adapter class.
+        collapsedAdapter = CollapsedAdapter(requireActivity(), this,this,viewModel)
+
+        // on below line we are setting
+        // adapter to our recycler view.
+        recyclerView.adapter = collapsedAdapter
+        recyclerView.setHasFixedSize(true)
+
+        val currentDate= LocalDateTime.now()
+        val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+        val date = currentDate.format(formatter)
 
         viewModel.date.value = date.toString()
 
-        // on below line we are calling all notes method
-        // from our view modal class to observer the changes on list.
-        viewModel.todayTasks.asLiveData().observe(requireActivity()) { list ->
-            list?.let {
-                // on below line we are updating our list.
-                taskAdapter.updateList(it)
+        val categories: MutableList<Collapsed> = ArrayList()
+        val completedTasks = Collapsed("Completed Tasks", emptyList())
+        val incompletedTasks = Collapsed("Incompleted Tasks", emptyList())
+        val intask: MutableList<Task> = ArrayList()
+        val comtask: MutableList<Task> = ArrayList()
+
+        // Update the cached copy of the words in the adapter.
+        // Get all the words from the database
+        // and associate them to the adapter.
+        viewModel.todayTasks.asLiveData().observe(requireActivity()) { tasks ->
+            for (task in tasks) {
+                if (task.state == 0) {
+                    intask.add(task)
+                    incompletedTasks.tasks = intask
+                } else {
+                    comtask.add(task)
+                    completedTasks.tasks = comtask
+                }
             }
+            categories.add(incompletedTasks)
+            categories.add(completedTasks)
+            collapsedAdapter.updateList(categories)
         }
-
-        //add the onswipe to delete a note
-        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT){
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
-            ): Boolean {
-                return false
-            }
-
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val task = taskAdapter.allTasks[viewHolder.adapterPosition]
-                viewModel.deleteTask(task)
-            }
-        }).attachToRecyclerView(recyclerView)
     }
 }

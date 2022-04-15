@@ -75,8 +75,6 @@ class MonthFragment : Fragment(), ParentAdapter.TaskClickInterfaceParent {
                 }
 
                 //use a hashset to delete the repeated element
-
-                //use a hashset to delete the repeated element
                 val datesSet: Set<String> = HashSet(dates)
                 dates.clear()
                 dates.addAll(datesSet)

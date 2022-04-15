@@ -17,6 +17,7 @@ class TaskAdapter(
     val context: Context,
     private val taskClickInterface: TaskClickInterface?=null,
     private val parentClickInterface: ParentAdapter.TaskClickInterfaceParent?=null,
+    private val collapsedClickInterface: CollapsedAdapter.TaskClickInterfaceCollapsed?=null,
 ) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>(){
 
     // on below line we are creating a
@@ -39,10 +40,12 @@ class TaskAdapter(
         holder.description.text = allTasks[position].description
 
         holder.task.setOnClickListener{
+            collapsedClickInterface?.onEditClick(allTasks[position])
             parentClickInterface?.onEditClick(allTasks[position])
             taskClickInterface?.onEditClick(allTasks[position])
         }
         holder.image.setOnClickListener{
+            collapsedClickInterface?.onDoneClick(allTasks[position])
             parentClickInterface?.onDoneClick(allTasks[position])
             taskClickInterface?.onDoneClick(allTasks[position])
         }

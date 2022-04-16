@@ -2,11 +2,11 @@ package com.example.todoapp_kotlin.pages.mainPage.fragments
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.*
-import android.widget.ImageView
+import android.view.ContextMenu
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
-import androidx.annotation.MenuRes
-import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
@@ -21,8 +21,7 @@ import com.example.todoapp_kotlin.viewmodels.MyViewModel
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class TasksFragment : Fragment(), PopupMenu.OnMenuItemClickListener,
-    CollapsedAdapter.TaskClickInterfaceCollapsed, CollapsedAdapter.CollapsedInterface {
+class TasksFragment : Fragment(),CollapsedAdapter.TaskClickInterfaceCollapsed, CollapsedAdapter.CollapsedInterface {
 
     private lateinit var viewModel: MyViewModel
     private lateinit var recyclerView: RecyclerView
@@ -42,10 +41,6 @@ class TasksFragment : Fragment(), PopupMenu.OnMenuItemClickListener,
         recyclerView = view.findViewById(R.id.recyclerview)
 
         recyclerViewSetup()
-
-        view.findViewById<ImageView>(R.id.menu).setOnClickListener{
-            showMenu(it, R.menu.toolbar_menu)
-        }
     }
 
     override fun onCreateContextMenu(
@@ -56,48 +51,6 @@ class TasksFragment : Fragment(), PopupMenu.OnMenuItemClickListener,
         super.onCreateContextMenu(menu, v, menuInfo)
         activity?.menuInflater?.inflate(R.menu.toolbar_menu,menu)
         Toast.makeText(activity,"onCreateContextMenu",Toast.LENGTH_SHORT).show()
-    }
-
-    private fun showMenu(v: View, @MenuRes menuRes: Int) {
-        val popup = PopupMenu(requireContext(), v)
-        popup.menuInflater.inflate(menuRes, popup.menu)
-        popup.setOnMenuItemClickListener(this)
-        // Show the popup menu.
-        popup.show()
-    }
-
-    override fun onMenuItemClick(item: MenuItem?): Boolean {
-//        when(item?.itemId){
-//            R.id.incomplete ->{
-//                item.isChecked = true
-//                viewModel.incompletedTasks.observe(requireActivity()) { list ->
-//                    list?.let {
-//                        // on below line we are updating our list.
-//                        taskAdapter.updateList(it)
-//                    }
-//                }
-//            }
-//            R.id.completed ->{
-//                item.isChecked = true
-//                viewModel.completedTasks.observe(requireActivity()) { list ->
-//                    list?.let {
-//                        // on below line we are updating our list.
-//                        taskAdapter.updateList(it)
-//                    }
-//                }
-//            }
-//            R.id.all ->{
-//                item.isChecked = true
-//                viewModel.allTasks.observe(requireActivity()) { list ->
-//                    list?.let {
-//                        // on below line we are updating our list.
-//                        taskAdapter.updateList(it)
-//                    }
-//                }
-//            }
-//            else -> item?.let { super.onOptionsItemSelected(it) }
-//        }
-        return true
     }
 
     override fun onEditClick(task: Task) {

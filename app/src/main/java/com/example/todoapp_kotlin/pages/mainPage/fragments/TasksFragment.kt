@@ -2,11 +2,9 @@ package com.example.todoapp_kotlin.pages.mainPage.fragments
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.ContextMenu
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
@@ -41,16 +39,6 @@ class TasksFragment : Fragment(),CollapsedAdapter.TaskClickInterfaceCollapsed, C
         recyclerView = view.findViewById(R.id.recyclerview)
 
         recyclerViewSetup()
-    }
-
-    override fun onCreateContextMenu(
-        menu: ContextMenu,
-        v: View,
-        menuInfo: ContextMenu.ContextMenuInfo?
-    ) {
-        super.onCreateContextMenu(menu, v, menuInfo)
-        activity?.menuInflater?.inflate(R.menu.toolbar_menu,menu)
-        Toast.makeText(activity,"onCreateContextMenu",Toast.LENGTH_SHORT).show()
     }
 
     override fun onEditClick(task: Task) {

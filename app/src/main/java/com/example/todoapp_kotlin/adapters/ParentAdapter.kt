@@ -1,6 +1,8 @@
 package com.example.todoapp_kotlin.adapters
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +16,7 @@ import com.example.todoapp_kotlin.database.entities.Parent
 import com.example.todoapp_kotlin.database.entities.Task
 import com.example.todoapp_kotlin.pages.mainPage.fragments.MonthFragment
 import com.example.todoapp_kotlin.viewmodels.MyViewModel
+import com.google.android.material.snackbar.Snackbar
 
 class ParentAdapter(
     val context: Context,
@@ -52,10 +55,18 @@ class ParentAdapter(
             ): Boolean {
                 return false
             }
+            @SuppressLint("NotifyDataSetChanged")
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val task = taskAdapter.allTasks[viewHolder.adapterPosition]
                 viewmodel.deleteTask(task)
-                Toast.makeText(context,"task deleted",Toast.LENGTH_LONG).show()
+                Snackbar.make(holder.recyclerview, "are you sure you wanna delete the task", Snackbar.LENGTH_LONG)
+                    .setAction("Undo") {
+                        viewmodel.insertTask(task)
+                        taskAdapter.notifyDataSetChanged()
+                    }.setBackgroundTint(Color.WHITE)
+                    .setTextColor(Color.BLACK)
+                    .setActionTextColor(context.getColor(R.color.pink))
+                    .show()
             }
         }).attachToRecyclerView(holder.recyclerview)
     }

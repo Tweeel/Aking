@@ -1,6 +1,9 @@
 package com.example.todoapp_kotlin.adapters
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +19,7 @@ import com.example.todoapp_kotlin.database.entities.Collapsed
 import com.example.todoapp_kotlin.database.entities.Task
 import com.example.todoapp_kotlin.pages.mainPage.fragments.MonthFragment
 import com.example.todoapp_kotlin.viewmodels.MyViewModel
+import com.google.android.material.snackbar.Snackbar
 
 class CollapsedAdapter(
     val context: Context,
@@ -26,7 +30,7 @@ class CollapsedAdapter(
 
     // on below line we are creating a
     // variable for our all notes list.
-    val allCollapsed = ArrayList<Collapsed>()
+    private val allCollapsed = ArrayList<Collapsed>()
     lateinit var taskAdapter : TaskAdapter
 
 
@@ -38,6 +42,7 @@ class CollapsedAdapter(
         )
         return CollabsedViewHolder(itemView)    }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onBindViewHolder(holder: CollabsedViewHolder, position: Int) {
         holder.title.text = allCollapsed[position].title
 
@@ -45,17 +50,17 @@ class CollapsedAdapter(
         taskAdapter = TaskAdapter( holder.recyclerview.context, collapsedClickInterface = taskClickInterface)
         if(allCollapsed[position].collapsed == true){
             taskAdapter.updateList(allCollapsed[position].tasks)
-            holder.recyclerview.adapter = taskAdapter
             holder.arrow.setBackgroundResource(R.drawable.arrow_up)
         }else{
             taskAdapter.updateList(emptyList())
-            holder.recyclerview.adapter = taskAdapter
             holder.arrow.setBackgroundResource(R.drawable.arrow_down)
         }
+        holder.recyclerview.adapter = taskAdapter
 
         holder.constraintLayout.setOnClickListener {
             collapsedInterface.onCollapsedClick(allCollapsed[position])
         }
+
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT){
             override fun onMove(
                 recyclerView: RecyclerView,
@@ -64,10 +69,22 @@ class CollapsedAdapter(
             ): Boolean {
                 return false
             }
+            @SuppressLint("NotifyDataSetChanged")
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val task = taskAdapter.allTasks[viewHolder.adapterPosition]
-                viewmodel.deleteTask(task)
-                Toast.makeText(context,"task deleted", Toast.LENGTH_LONG).show()
+                Log.d("test","size = ${taskAdapter.allTasks.size}")
+                Log.d("test","position = ${viewHolder.adapterPosition}")
+                if(taskAdapter.allTasks.size!=0) {
+                    val task = taskAdapter.allTasks[viewHolder.adapterPosition]
+                    viewmodel.deleteTask(task)
+                    Snackbar.make(holder.recyclerview, "are you sure you wanna delete the task", Snackbar.LENGTH_LONG)
+                        .setAction("Undo") {
+                            viewmodel.insertTask(task)
+                            taskAdapter.notifyDataSetChanged()
+                        }.setBackgroundTint(Color.WHITE)
+                        .setTextColor(Color.BLACK)
+                        .setActionTextColor(context.getColor(R.color.pink))
+                        .show()
+                }
             }
         }).attachToRecyclerView(holder.recyclerview)
     }
@@ -75,6 +92,7 @@ class CollapsedAdapter(
     override fun getItemCount() = allCollapsed.size
 
     // below method is use to update our list of notes.
+    @SuppressLint("NotifyDataSetChanged")
     fun updateList(newList: List<Collapsed>) {
         // on below line we are clearing
         // our notes array list
@@ -89,10 +107,10 @@ class CollapsedAdapter(
 
     inner class CollabsedViewHolder(itView: View) :
         RecyclerView.ViewHolder(itView) {
-        val title = itemView.findViewById<TextView>(R.id.title)
-        val recyclerview = itemView.findViewById<RecyclerView>(R.id.tasks)
-        val constraintLayout = itemView.findViewById<ConstraintLayout>(R.id.collapsed)
-        val arrow = itemView.findViewById<ImageView>(R.id.arrow)
+        val title: TextView = itemView.findViewById(R.id.title)
+        val recyclerview: RecyclerView = itemView.findViewById(R.id.tasks)
+        val constraintLayout: ConstraintLayout = itemView.findViewById(R.id.collapsed)
+        val arrow: ImageView = itemView.findViewById(R.id.arrow)
     }
 
     interface TaskClickInterfaceCollapsed {

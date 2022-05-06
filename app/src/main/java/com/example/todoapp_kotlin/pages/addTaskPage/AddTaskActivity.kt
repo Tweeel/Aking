@@ -105,7 +105,10 @@ class AddTaskActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
             }
 
             date?.let{
-                dateText.text = date.dropLast(5)
+                if(date[0].isDigit())
+                    dateText.text = date.dropLast(5)
+                else
+                    dateText.text = date
                 this.date=date
             }
 

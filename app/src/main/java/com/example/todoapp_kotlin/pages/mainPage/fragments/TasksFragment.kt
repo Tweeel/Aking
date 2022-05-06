@@ -1,5 +1,6 @@
 package com.example.todoapp_kotlin.pages.mainPage.fragments
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -61,6 +62,7 @@ class TasksFragment : Fragment(),CollapsedAdapter.TaskClickInterfaceCollapsed, C
         viewModel.updateTask(task)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onCollapsedClick(collapsed: Collapsed) {
         collapsed.collapsed = collapsed.collapsed != true
         collapsedAdapter.notifyDataSetChanged()

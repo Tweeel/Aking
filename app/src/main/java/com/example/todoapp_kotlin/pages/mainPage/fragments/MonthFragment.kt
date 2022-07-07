@@ -3,7 +3,6 @@ package com.example.todoapp_kotlin.pages.mainPage.fragments
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -82,7 +81,7 @@ class MonthFragment : Fragment(), ParentAdapter.TaskClickInterfaceParent {
                 //use the commections sort to sort the list alphabetically
                 dates.sort()
 
-                //creat a categories of each date
+                //create a categories of each date
                 for (date in dates) {
                     categories.add(Parent(date, emptyList()))
                 }
@@ -121,39 +120,31 @@ class MonthFragment : Fragment(), ParentAdapter.TaskClickInterfaceParent {
     private fun updateDataByDate(parentAdapter: ParentAdapter, date: String) {
 
         viewModel.date.value = date
-        Log.d("test",date)
         val categories = ArrayList<Parent>()
         val dates = ArrayList<String>()
 
         viewModel.tasksByDate.asLiveData().observe(requireActivity()) { list ->
-            Log.d("test","in the live data")
             list?.let {
-                Log.d("test","in the list of tasks")
-
                 categories.clear()
                 dates.clear()
                 // on below line we are updating our list.
                 it.forEach { task ->
                     task.date?.let{ dates.add(task.date)}
                 }
-                Log.d("test",dates.size.toString())
                 dates.forEach { print(it) }
 
                 //use a hashset to delete the repeated element
                 val datesSet: Set<String> = HashSet(dates)
                 dates.clear()
                 dates.addAll(datesSet)
-                Log.d("test",dates.size.toString())
 
                 //use the commections sort to sort the list alphabetically
                 dates.sort()
-                Log.d("test","sorted"+dates.size.toString())
 
                 //creat a categories of each date
                 for (date in dates) {
                     categories.add(Parent(date, emptyList()))
                 }
-                Log.d("test",categories.size.toString())
 
                 //then add each task to hes date categorie
                 for (category in categories) {
@@ -172,7 +163,6 @@ class MonthFragment : Fragment(), ParentAdapter.TaskClickInterfaceParent {
                     }
                 }
                 parentAdapter.updateList(categories)
-                Log.d("test","parents= "+parentAdapter.allParent.size.toString())
             }
         }
     }

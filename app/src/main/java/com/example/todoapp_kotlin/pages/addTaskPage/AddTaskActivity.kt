@@ -4,7 +4,6 @@ import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -76,7 +75,6 @@ class AddTaskActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
         if(intent.getStringExtra("id")!=null &&
             intent.getStringExtra("title")!=null){
             id = intent.getStringExtra("id")!!.toInt()
-            Log.d("test",id.toString())
             val title = intent.getStringExtra("title")
             val description = intent.getStringExtra("description")
             val category = intent.getStringExtra("category")
@@ -192,7 +190,6 @@ class AddTaskActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
         val cal = Calendar.getInstance()
         day = cal.get(Calendar.DAY_OF_MONTH)
         month = cal.get(Calendar.MONTH)
-        Log.d("test",cal.get(Calendar.MONTH).toString())
         year = cal.get(Calendar.YEAR)
         hour = cal.get(Calendar.HOUR)
         minute = cal.get(Calendar.MINUTE)
@@ -201,8 +198,6 @@ class AddTaskActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
     override fun onDateSet(p0: DatePicker?, year: Int, month: Int, dayofmonth: Int) {
         savedday = if(dayofmonth<10) "0$dayofmonth" else dayofmonth.toString()
         savedmonth = if((month+1)<10) "0"+(month+1) else (month+1).toString()
-        Log.d("test",month.toString())
-
         savedyear = year.toString()
         dateText.text = "$savedday / $savedmonth"
         date = "$savedday/$savedmonth/$savedyear"

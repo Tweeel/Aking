@@ -47,65 +47,45 @@ class MyViewModel(application : Application): AndroidViewModel(application) {
     val allCategories : LiveData<List<Caterogy>> = dao.getCategories().asLiveData()
 
     /*insert*/
-    fun insertTask(task : Task){
-        viewModelScope.launch {
-            dao.insertTask(task)
-        }
+    fun insertTask(task : Task) = viewModelScope.launch {
+        dao.insertTask(task)
     }
 
-    fun insertNote(note : Note){
-        viewModelScope.launch {
-            dao.insertNote(note)
-        }
+    fun insertNote(note : Note) = viewModelScope.launch {
+        dao.insertNote(note)
     }
 
-    fun insertCategory(caterogy: Caterogy){
-        viewModelScope.launch {
-            dao.insertCategory(caterogy)
-        }
+    fun insertCategory(caterogy: Caterogy) = viewModelScope.launch {
+        dao.insertCategory(caterogy)
     }
 
     /*update*/
-    fun updateTask(task: Task){
-        viewModelScope.launch {
-            dao.updateTask(task)
-        }
+    fun updateTask(task: Task) = viewModelScope.launch {
+        dao.updateTask(task)
     }
 
-    fun updateNote(note: Note){
-        viewModelScope.launch {
-            dao.updateNote(note)
-        }
+    fun updateNote(note: Note) = viewModelScope.launch {
+        dao.updateNote(note)
     }
 
-    fun updateCaterogy(caterogy: Caterogy){
-        viewModelScope.launch {
-            dao.updateCaterogy(caterogy)
-        }
+    fun updateCaterogy(caterogy: Caterogy) = viewModelScope.launch {
+        dao.updateCaterogy(caterogy)
     }
 
     /*delete*/
-    fun deleteTask(task: Task){
-        viewModelScope.launch {
-            dao.deleteTask(task)
-        }
+    fun deleteTask(task: Task) = viewModelScope.launch {
+        dao.deleteTask(task)
     }
 
-    fun deleteNote(note: Note){
-        viewModelScope.launch {
-            dao.deleteNote(note)
-        }
+    fun deleteNote(note: Note) = viewModelScope.launch {
+        dao.deleteNote(note)
     }
 
-    fun deleteCaterogy(caterogy: Caterogy){
-        viewModelScope.launch {
-            dao.deleteCaterogy(caterogy)
-        }
+    fun deleteCaterogy(caterogy: Caterogy) = viewModelScope.launch {
+        dao.deleteCaterogy(caterogy)
     }
 
-    fun deleteTasksByCategoryName(category: String){
-        viewModelScope.launch {
-            dao.deleteTasksByCategoryName(category)
-        }
+    fun deleteTasksByCategoryName(category: String) = viewModelScope.launch {
+        dao.deleteTasksByCategoryName(category)
     }
 }

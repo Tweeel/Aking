@@ -3,7 +3,6 @@ package com.example.todoapp_kotlin.adapters
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,7 +30,6 @@ class CollapsedAdapter(
     // on below line we are creating a
     // variable for our all notes list.
     private val allCollapsed = ArrayList<Collapsed>()
-    lateinit var taskAdapter : TaskAdapter
 
 
     override fun onCreateViewHolder(collapsed: ViewGroup, viewType: Int): CollabsedViewHolder {
@@ -40,22 +38,23 @@ class CollapsedAdapter(
             R.layout.collapsed_item,
             collapsed, false
         )
-        return CollabsedViewHolder(itemView)    }
+        return CollabsedViewHolder(itemView)
+    }
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onBindViewHolder(holder: CollabsedViewHolder, position: Int) {
         holder.title.text = allCollapsed[position].title
 
         holder.recyclerview.layoutManager = LinearLayoutManager(context)
-        taskAdapter = TaskAdapter( holder.recyclerview.context, collapsedClickInterface = taskClickInterface)
+
         if(allCollapsed[position].collapsed == true){
-            taskAdapter.updateList(allCollapsed[position].tasks)
+            holder.taskAdapter.updateList(allCollapsed[position].tasks!!)
             holder.arrow.setBackgroundResource(R.drawable.arrow_up)
         }else{
-            taskAdapter.updateList(emptyList())
+            holder.taskAdapter.updateList(emptyList())
             holder.arrow.setBackgroundResource(R.drawable.arrow_down)
         }
-        holder.recyclerview.adapter = taskAdapter
+        holder.recyclerview.adapter = holder.taskAdapter
 
         holder.constraintLayout.setOnClickListener {
             collapsedInterface.onCollapsedClick(allCollapsed[position])
@@ -71,19 +70,21 @@ class CollapsedAdapter(
             }
             @SuppressLint("NotifyDataSetChanged")
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                Log.d("test","size = ${taskAdapter.allTasks.size}")
-                Log.d("test","position = ${viewHolder.adapterPosition}")
-                if(taskAdapter.allTasks.size!=0) {
-                    val task = taskAdapter.allTasks[viewHolder.adapterPosition]
+                if(holder.taskAdapter.allTasks.size!=0) {
+                    val task = holder.taskAdapter.allTasks[viewHolder.adapterPosition]
                     viewmodel.deleteTask(task)
+                    holder.taskAdapter.allTasks.removeAt(viewHolder.adapterPosition)
+                    holder.taskAdapter.notifyItemRemoved(viewHolder.adapterPosition)
                     Snackbar.make(holder.recyclerview, "are you sure you wanna delete the task", Snackbar.LENGTH_LONG)
                         .setAction("Undo") {
                             viewmodel.insertTask(task)
-                            taskAdapter.notifyDataSetChanged()
+                            holder.taskAdapter.notifyDataSetChanged()
                         }.setBackgroundTint(Color.WHITE)
                         .setTextColor(Color.BLACK)
                         .setActionTextColor(context.getColor(R.color.pink))
                         .show()
+                }else{
+                    Toast.makeText(context, "no tasks to delete", Toast.LENGTH_SHORT).show()
                 }
             }
         }).attachToRecyclerView(holder.recyclerview)
@@ -111,6 +112,8 @@ class CollapsedAdapter(
         val recyclerview: RecyclerView = itemView.findViewById(R.id.tasks)
         val constraintLayout: ConstraintLayout = itemView.findViewById(R.id.collapsed)
         val arrow: ImageView = itemView.findViewById(R.id.arrow)
+        val taskAdapter = TaskAdapter( recyclerview.context, collapsedClickInterface = taskClickInterface)
+
     }
 
     interface TaskClickInterfaceCollapsed {

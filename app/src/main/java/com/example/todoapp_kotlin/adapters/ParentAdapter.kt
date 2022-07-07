@@ -88,8 +88,8 @@ class ParentAdapter(
 
     inner class ParentViewHolder(itView: View) :
         RecyclerView.ViewHolder(itView) {
-        val title = itemView.findViewById<TextView>(R.id.title)
-        val recyclerview = itemView.findViewById<RecyclerView>(R.id.tasks)
+        val title = itemView.findViewById<TextView>(R.id.title)!!
+        val recyclerview = itemView.findViewById<RecyclerView>(R.id.tasks)!!
     }
 
     interface TaskClickInterfaceParent {

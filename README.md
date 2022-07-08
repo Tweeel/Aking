@@ -6,12 +6,12 @@ when creating a task you can choose the date, time, and category.
 #APK -> <a href="https://drive.google.com/file/d/1ydP7n5Ncp6HTgk5p4DbJ4hgM_J8nKjww/view?usp=sharing">Click here.</a>
 
 # Technologies
-Kotlin
-MVVM architecture
-Room
-Corountine
-LiveData
-ViewBinding
+Kotlin<br>
+MVVM architecture<br>
+Room<br>
+Corountine<br>
+LiveData<br>
+ViewBinding<br>
 
 # Screenshot
 <img width="2162" alt="1" src="https://user-images.githubusercontent.com/75279465/178053412-2470838c-cee1-4a8a-b09a-456540bde5c6.png">

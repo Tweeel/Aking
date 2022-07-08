@@ -37,7 +37,7 @@ class TaskAdapter(
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         // on below line we are setting data to item of recycler view.
         holder.title.text = allTasks[position].title
-        holder.description.text = allTasks[position].description
+        holder.description.text = allTasks[position].time
 
         holder.task.setOnClickListener{
             collapsedClickInterface?.onEditClick(allTasks[position])

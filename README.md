@@ -12,6 +12,7 @@ Room<br>
 Corountine<br>
 LiveData<br>
 ViewBinding<br>
+Glide<br>
 
 # Screenshot
 <img width="2162" alt="1" src="https://user-images.githubusercontent.com/75279465/178053412-2470838c-cee1-4a8a-b09a-456540bde5c6.png">
